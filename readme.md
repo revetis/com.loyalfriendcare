@@ -8,7 +8,7 @@ Projeyi yerel bilgisayarınızda sorunsuz çalıştırmak için aşağıdaki ad�
 
 #### Projeyi Klonlayın:
 
-git clone (eklenecek)
+git clone https://github.com/revetis/com.loyalfriendcare.git
 
 
 #### JDK Kontrolü: Projenin hatasız derlenmesi için bilgisayarınızda Java 21 kurulu ve çevre değişkenlerinde (Environment Variables) tanımlı olmalıdır.
