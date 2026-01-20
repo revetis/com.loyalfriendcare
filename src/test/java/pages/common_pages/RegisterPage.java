@@ -13,12 +13,17 @@ public class RegisterPage {
     //====================================================================
     //====================================================================
 
+    //=============================================
+    //=============================================
+    //=======    Register Page Locators   =========
+    //=============================================
+    //=============================================
+
     public RegisterPage(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-    @FindBy(xpath = "//*[@id=\"top_menu\"]/li[2]/a")
-    public WebElement signUpLink;
+
 
     @FindBy(xpath = "//*[@id=\"name\"]")
     public WebElement usernameInput;
