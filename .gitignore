@@ -45,3 +45,4 @@ build/
 ### REPORT ###
 /test-output/
 /target/
+configuration.properties
