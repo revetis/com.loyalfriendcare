@@ -19,8 +19,6 @@ public class RegisterPage {
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-
-
     @FindBy(id = "name")
     public WebElement usernameInput;
 
