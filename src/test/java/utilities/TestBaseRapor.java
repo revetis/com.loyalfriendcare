@@ -32,7 +32,7 @@ public abstract class TestBaseRapor {
         extentReports.attachReporter(extentSparkReporter);
 
         // Raporun kapak sayfasinda gorunmesini istediğiniz bilgileri buraya ekleyebilirsiniz.
-        extentReports.setSystemInfo("Enviroment",ConfigReader.getProperty("enviroment"));
+        extentReports.setSystemInfo("Environment",ConfigReader.getProperty("environment"));
         extentReports.setSystemInfo("Browser", ConfigReader.getProperty("browser")); // chrome, firefox
         extentReports.setSystemInfo("Automation Engineer", ConfigReader.getProperty("tester_name"));
         extentSparkReporter.config().setDocumentTitle("LoyalFriendCare Test Raporlari");
