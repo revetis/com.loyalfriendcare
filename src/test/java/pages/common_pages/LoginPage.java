@@ -13,11 +13,12 @@ public class LoginPage {
     //=============================================
     //=============================================
 
+
     public LoginPage(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-    @FindBy(id = "email")
+    @FindBy(xpath = "//*[@id=\"email\"]")
     public WebElement emailAddressInput;
 
     @FindBy(id = "password")
@@ -26,13 +27,14 @@ public class LoginPage {
     @FindBy(css = "button[type='submit']")
     public WebElement signInButton;
 
-    @FindBy(id = "checkbox1")
+    @FindBy(xpath = "//*[@id=\"checkbox1\"]")
     public WebElement rememberMeCheckbox;
 
-    @FindBy(css = "label[for='checkbox1']")
+    @FindBy(xpath = "/html/body/div/div[2]/div/form/div[3]/div[1]/div/label")
     public WebElement rememberMeCheckboxText;
 
-    @FindBy(xpath = "//a[contains(@href, 'password/reset')]")
+    @FindBy(xpath = "/html/body/div/div[2]/div/form/div[3]/div[2]/a")
     public WebElement forgotPasswordLink;
+
 
 }

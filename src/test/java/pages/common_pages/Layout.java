@@ -2,6 +2,7 @@ package pages.common_pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
@@ -17,6 +18,7 @@ public class Layout {
     //==========     Header Locators   ============
     //=============================================
     //=============================================
+
 
     @FindBy(css = "header.header")
     public WebElement header;
@@ -77,6 +79,7 @@ public class Layout {
     @FindBy(css = "#top_menu li:nth-child(2) a")
     public WebElement headerAuthUserSignOutButton;
 
+
     //=============================================
     //=============================================
     //==========     Footer Locators   ============
@@ -117,6 +120,7 @@ public class Layout {
     public WebElement footerFaqLink;
 
     @FindBy(css = "#additional_links li:nth-child(3) a")
+
     public WebElement footerCopyrightLink;
 
     //=============================================
@@ -125,6 +129,7 @@ public class Layout {
     //=============================================
     //=============================================
 
+
     @FindBy(css = ".header .semi-bold")
     public WebElement adminHeaderUsername;
 
@@ -132,6 +137,7 @@ public class Layout {
     public WebElement adminHeaderUserInfoButton;
 
     @FindBy(css = ".profile-dropdown a.dropdown-item")
+
     public List<WebElement> adminHeaderUserInfoDropdownMenuLinks;
 
     //=============================================
@@ -233,6 +239,7 @@ public class Layout {
     //=============================================
     //=============================================
 
+
     @FindBy(css = ".container-fluid.footer")
     public WebElement adminFooter;
 
@@ -243,3 +250,4 @@ public class Layout {
     public WebElement adminFooterSignature;
 
 }
+
