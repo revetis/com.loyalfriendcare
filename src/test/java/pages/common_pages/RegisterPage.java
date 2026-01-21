@@ -7,11 +7,7 @@ import utilities.Driver;
 
 public class RegisterPage {
 
-    //====================================================================
-    //====================================================================
-    //=========BU DOSYAYA BIR SEY YAZMAYIN VEYA DEGISTIRMEYIN=============
-    //====================================================================
-    //====================================================================
+
 
     //=============================================
     //=============================================
@@ -25,15 +21,18 @@ public class RegisterPage {
 
 
 
-    @FindBy(xpath = "//*[@id=\"name\"]")
+    @FindBy(id = "name")
     public WebElement usernameInput;
 
-    @FindBy(xpath = "//*[@id=\"email\"]")
+    @FindBy(id = "email")
     public WebElement emailAddressInput;
 
-    @FindBy(xpath = "//*[@id=\"password\"]")
+    @FindBy(id = "password")
     public WebElement passwordInput;
 
-    @FindBy(xpath = "//*[@id=\"password\"]")
+    @FindBy(id = "password-confirm")
     public WebElement confirmPasswordInput;
+
+    @FindBy(css = "button[type='submit']")
+    public WebElement signUpButton;
 }
