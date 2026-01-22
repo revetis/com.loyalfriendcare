@@ -9,6 +9,7 @@ import org.testng.annotations.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public abstract class TestBaseRapor {
 
@@ -21,6 +22,7 @@ public abstract class TestBaseRapor {
     // calisir ve rapor icin gerekli atamalari ve ayarlari yapar
     @BeforeTest(alwaysRun = true) // alwaysRun : her zaman çalıştır.
     public void setUpTest() {
+        Locale.setDefault(new Locale("en", "US"));
         extentReports = new ExtentReports(); // Raporlamayi baslatir
         //rapor oluştuktan sonra raporunuz nereye eklensin istiyorsanız buraya yazıyorsunuz.
         String date = new SimpleDateFormat("_yyMMdd_HHmmss").format(new Date());
@@ -32,7 +34,7 @@ public abstract class TestBaseRapor {
         extentReports.attachReporter(extentSparkReporter);
 
         // Raporun kapak sayfasinda gorunmesini istediğiniz bilgileri buraya ekleyebilirsiniz.
-        extentReports.setSystemInfo("Enviroment",ConfigReader.getProperty("enviroment"));
+        extentReports.setSystemInfo("Environment",ConfigReader.getProperty("environment"));
         extentReports.setSystemInfo("Browser", ConfigReader.getProperty("browser")); // chrome, firefox
         extentReports.setSystemInfo("Automation Engineer", ConfigReader.getProperty("tester_name"));
         extentSparkReporter.config().setDocumentTitle("LoyalFriendCare Test Raporlari");
@@ -60,6 +62,10 @@ public abstract class TestBaseRapor {
     // Raporlandırmayı sonlandırmak icin
     @AfterTest(alwaysRun = true)
     public void tearDownTest() {
-        extentReports.flush();
+        Locale.setDefault(new Locale("en", "US"));
+
+        if (extentReports != null) {
+            extentReports.flush(); // Artık exception.ftl'i bulabilecek
+        }
     }
 }

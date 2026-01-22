@@ -7,17 +7,12 @@ import utilities.Driver;
 
 public class LoginPage {
 
-    //====================================================================
-    //====================================================================
-    //=========BU DOSYAYA BIR SEY YAZMAYIN VEYA DEGISTIRMEYIN=============
-    //====================================================================
-    //====================================================================
-
     //=============================================
     //=============================================
     //=======     Login Page Locators   ===========
     //=============================================
     //=============================================
+
 
     public LoginPage(){
         PageFactory.initElements(Driver.getDriver(),this);
@@ -26,10 +21,10 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id=\"email\"]")
     public WebElement emailAddressInput;
 
-    @FindBy(xpath = "//*[@id=\"password\"]")
+    @FindBy(id = "password")
     public WebElement passwordInput;
 
-    @FindBy(xpath = "/html/body/div/div[2]/div/form/button")
+    @FindBy(css = "button[type='submit']")
     public WebElement signInButton;
 
     @FindBy(xpath = "//*[@id=\"checkbox1\"]")
@@ -40,14 +35,6 @@ public class LoginPage {
 
     @FindBy(xpath = "/html/body/div/div[2]/div/form/div[3]/div[2]/a")
     public WebElement forgotPasswordLink;
-
-
-
-
-
-
-
-
 
 
 }
