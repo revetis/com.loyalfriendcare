@@ -1,4 +1,4 @@
-package pages.user_pages;
+package pages.common_pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +16,7 @@ public class HomePageDepartmentSection {
     //======Anasayfa Departmanlar bolumu======
     //========================================
 
-    @FindBy(css = ".main_title_3")
+    @FindBy(xpath = "(//div[@class='main_title_3'])[1]")
     public WebElement departmanTitleSection;
 
     @FindBy(xpath = "//h2[text()='Departments']/ancestor::div[contains(@class,'container')]/div[contains(@class,'row')]")

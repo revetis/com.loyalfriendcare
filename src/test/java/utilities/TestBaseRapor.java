@@ -22,6 +22,7 @@ public abstract class TestBaseRapor {
     // calisir ve rapor icin gerekli atamalari ve ayarlari yapar
     @BeforeTest(alwaysRun = true) // alwaysRun : her zaman çalıştır.
     public void setUpTest() {
+        Locale.setDefault(new Locale("en", "US"));
         extentReports = new ExtentReports(); // Raporlamayi baslatir
         //rapor oluştuktan sonra raporunuz nereye eklensin istiyorsanız buraya yazıyorsunuz.
         String date = new SimpleDateFormat("_yyMMdd_HHmmss").format(new Date());
