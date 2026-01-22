@@ -100,6 +100,27 @@ public class ReusableMethods {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public static boolean isClickable(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isDisplayedAndClickable(WebElement element,int timeout){
+        try{
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+            if (wait.until(ExpectedConditions.visibilityOf(element)  )!= null && wait.until(ExpectedConditions.elementToBeClickable(element) )!= null) return true;
+
+        }catch (Exception e){
+            System.out.println("Gorunurluk ve tiklanabilirlik kontrol edilirken hata olustu: "+e.getMessage());
+        }
+        return false;
+    }
+
     public static WebElement waitForClickablility(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
