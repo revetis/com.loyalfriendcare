@@ -1,9 +1,11 @@
 package pages.admin_pages;
 
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AdminDashboardPage {
+
 
     @FindBy(xpath = "(//*[@class='text-white'])[1]")
     public WebElement adminDashboardBiriciKutuOzet;
@@ -46,5 +48,6 @@ public class AdminDashboardPage {
 
     @FindBy(xpath = "(//*[@class='text-white'])[8]")
     public WebElement adminDashboardYedinciKutuLearnMore;
+
 
 }

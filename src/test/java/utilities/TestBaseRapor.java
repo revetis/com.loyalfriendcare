@@ -62,6 +62,10 @@ public abstract class TestBaseRapor {
     // Raporlandırmayı sonlandırmak icin
     @AfterTest(alwaysRun = true)
     public void tearDownTest() {
-        extentReports.flush();
+        Locale.setDefault(new Locale("en", "US"));
+
+        if (extentReports != null) {
+            extentReports.flush(); // Artık exception.ftl'i bulabilecek
+        }
     }
 }
