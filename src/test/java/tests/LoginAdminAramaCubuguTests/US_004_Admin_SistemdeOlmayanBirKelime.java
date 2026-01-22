@@ -76,6 +76,7 @@ public class US_004_Admin_SistemdeOlmayanBirKelime extends TestBaseRapor {
         }
         Assert.assertTrue(eslesmeyenVarMi, "Eslesmeyen Sonuclar: "+eslesmeyenSonuclar);
 
+
     }
 
 }
