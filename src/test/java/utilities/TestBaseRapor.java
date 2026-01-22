@@ -9,6 +9,7 @@ import org.testng.annotations.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public abstract class TestBaseRapor {
 
@@ -60,6 +61,10 @@ public abstract class TestBaseRapor {
     // Raporlandırmayı sonlandırmak icin
     @AfterTest(alwaysRun = true)
     public void tearDownTest() {
-        extentReports.flush();
+        Locale.setDefault(new Locale("en", "US"));
+
+        if (extentReports != null) {
+            extentReports.flush(); // Artık exception.ftl'i bulabilecek
+        }
     }
 }
