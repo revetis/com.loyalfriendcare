@@ -1,9 +1,12 @@
 package pages.admin_pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
+
+import java.util.List;
 
 public class AdminLoyalFriendCare {
 
@@ -35,5 +38,10 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//*[@class='sidebar-header']")
     public WebElement adminYatakListesi;
 
+    @FindBy(xpath = "(//div[@class='container margin_60_35'])[1]/div/div/div")
+    public List<WebElement> searchResults;
 
+    public String getResultTitle(int row) {
+        return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
+    }
 }
