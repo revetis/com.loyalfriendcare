@@ -35,6 +35,7 @@ public class US_004_Admin_AramaCubugu_KelimeninBirKismi extends TestBaseRapor {
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
+
         // Sign In butonuna basin
         adminLoyalFriendCare.signInButonu.click();
         ReusableMethods.bekle(2);
