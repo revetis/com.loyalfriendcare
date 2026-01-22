@@ -26,7 +26,6 @@ public class US03 extends TestBaseRapor {
         extentTest = extentReports.createTest("Header Görünürlük Testi");
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         Assert.assertTrue(layout.header.isDisplayed());
-
     }
 
     @Test(dependsOnMethods = "TC01_HeaderGorunurlukKontrolu", priority = 1)
