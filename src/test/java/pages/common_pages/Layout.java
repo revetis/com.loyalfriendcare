@@ -23,7 +23,7 @@ public class Layout {
     @FindBy(css = "header.header")
     public WebElement header;
 
-    @FindBy(css = "#logo a")
+    @FindBy(xpath = "//*[@id=\"logo\"]/a")
     public WebElement headerLogo;
 
     @FindBy(css = "#logo img.logo_normal")
