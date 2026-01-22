@@ -55,7 +55,6 @@ public abstract class TestBaseRapor {
             extentTest.skip("Test Case is skipped: " + result.getName()); // Ignore olanlar
         }
         Driver.quitDriver();
-
     }
 
 
