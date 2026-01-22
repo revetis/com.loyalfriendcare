@@ -30,7 +30,9 @@ public class ReusableMethods {
         File finalDestination = new File(target);
         // save the screenshot to the path given
         FileUtils.copyFile(source, finalDestination);
-        return target;
+        String relativePath = "../Screenshots/" + name + date + ".png";
+
+        return relativePath;
     }
 
     //========Switching Window=====//
@@ -100,6 +102,27 @@ public class ReusableMethods {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public static boolean isClickable(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean isDisplayedAndClickable(WebElement element,int timeout){
+        try{
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+            if (wait.until(ExpectedConditions.visibilityOf(element)  )!= null && wait.until(ExpectedConditions.elementToBeClickable(element) )!= null) return true;
+
+        }catch (Exception e){
+            System.out.println("Gorunurluk ve tiklanabilirlik kontrol edilirken hata olustu: "+e.getMessage());
+        }
+        return false;
+    }
+
     public static WebElement waitForClickablility(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -147,5 +170,10 @@ public class ReusableMethods {
         });
 
         return element;
+    }
+
+    public static void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }

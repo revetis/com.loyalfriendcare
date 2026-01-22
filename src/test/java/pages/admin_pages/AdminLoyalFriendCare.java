@@ -17,8 +17,10 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "(//*[@class='btn_add'])[1]")
     public WebElement signInButonu;
 
+
     @FindBy(xpath = "(//*[@class='form-control '])[1]")
     public WebElement adminLoginsayfasiEmailKutusu;
+
 
     @FindBy(xpath = "//*[@*='password']")
     public WebElement adminLoginSayfasiPasswordKutusu;
