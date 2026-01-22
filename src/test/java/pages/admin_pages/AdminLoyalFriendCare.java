@@ -17,10 +17,10 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "(//*[@class='btn_add'])[1]")
     public WebElement signInButonu;
 
-    @FindBy(xpath = "(//*[@class='form-control '])[1]")
+    @FindBy(id = "//input[@id='email']")
     public WebElement adminLoginsayfasiEmailKutusu;
 
-    @FindBy(xpath = "//*[@*='password']")
+    @FindBy(id = "//input[@id='password']")
     public WebElement adminLoginSayfasiPasswordKutusu;
 
     @FindBy(xpath = "//*[@*='submit']")
