@@ -21,7 +21,7 @@ git clone https://github.com/revetis/com.loyalfriendcare.git
 
 * browser=chrome
 * url=https://qa.loyalfriendcare.com/en
-* enviroment=qa
+* environment=qa
 * tester_name=Adiniz
 * admin_email=size verilen admin email
 * admin_password=size verilen admin sifre
@@ -93,6 +93,6 @@ Apache POI: Data-Driven Testing (Excel entegrasyonu).
 
 Team Lead: Samet (Team 167)
 
-Scrum Master Tural (Team 167)
+Scrum Master: Tural (Team 167)
 
-Destek: Proje ile ilgili tüm sorularınız için Slack kanalımızı kullanabilirsiniz.
+>Destek: Proje ile ilgili tüm sorularınız için Slack kanalımızı kullanabilirsiniz.
