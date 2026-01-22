@@ -40,7 +40,7 @@ build/
 .DS_Store
 
 ### PROPERTIES ###
-## Buraya kendi configuration.properties inizi yazin
+configurations.properties
 
 ### REPORT ###
 /test-output/
