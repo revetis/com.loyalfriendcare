@@ -36,7 +36,4 @@ public class AdminLoyalFriendCare {
     public WebElement adminYatakListesi;
 
 
-
-
-
 }
