@@ -69,7 +69,6 @@ public class US_004_Admin_AramaCubugu_PozitivTest extends TestBaseRapor {
         }
 
 
-
         for (int i = 0; i< results.size(); i++){
             if (!adminLoyalFriendCare.getResultTitle(i).contains(aranicakSozcuk)){
                 eslesmeyenVarMi = true;

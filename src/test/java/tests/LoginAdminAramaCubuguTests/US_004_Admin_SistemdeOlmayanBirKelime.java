@@ -72,6 +72,7 @@ public class US_004_Admin_SistemdeOlmayanBirKelime extends TestBaseRapor {
             if (!adminLoyalFriendCare.getResultTitle(i).contains(aranicakSozcuk)){
                 eslesmeyenVarMi = true;
                 eslesmeyenSonuclar.add(i);
+
             }
         }
         Assert.assertTrue(eslesmeyenVarMi, "Eslesmeyen Sonuclar: "+eslesmeyenSonuclar);
