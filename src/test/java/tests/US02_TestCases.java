@@ -47,6 +47,8 @@ public class US02_TestCases extends TestBaseRapor {
 
         extentTest.pass("US_02_TC_01 Test başarıyla tamamlandı");
 
+        System.out.println("Hi There");
+
     } // main method sonu
 }
 
