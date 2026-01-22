@@ -45,6 +45,7 @@ public class US_004_Admin_AramaCubugu_KelimeninBirKismi extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
+
         // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
