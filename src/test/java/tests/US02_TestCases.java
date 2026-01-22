@@ -8,7 +8,7 @@ import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
-public class US02TC01HomePageLogoTest extends TestBaseRapor {
+public class US02_TestCases extends TestBaseRapor {
 
     Layout layout;
 
@@ -49,3 +49,5 @@ public class US02TC01HomePageLogoTest extends TestBaseRapor {
 
     } // main method sonu
 }
+
+
