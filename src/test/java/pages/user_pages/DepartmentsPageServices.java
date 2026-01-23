@@ -16,5 +16,18 @@ public class DepartmentsPageServices {
     @FindBy(xpath = "//div[contains(@class,'sub_header_in')]//h1[contains(.,'Dermatology')]")
     public WebElement dermatologyHeaderTitle;
 
+    @FindBy(xpath = "//h3[normalize-space()='Dr. Emily Chang']")
+    public WebElement drEmilyChangTitle;
+
+    @FindBy(xpath = "//div[contains(@class,'sub_header_in')]//h1[contains(.,' Dr. Emily Chang')]")
+    public WebElement drEmilyChangHeaderTitle;
+
+    @FindBy(xpath = "//h3[normalize-space()='Rabies Vaccine']")
+    public WebElement rabiesVaccineTitle;
+
+    @FindBy(xpath = "//div[contains(@class,'sub_header_in')]//h1[contains(.,' Rabies Vaccine')]")
+    public WebElement rabiesVaccineHeaderTitle;
+
+
 
 }
