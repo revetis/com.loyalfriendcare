@@ -17,4 +17,6 @@ public class UserPage {
 
     @FindBy(xpath = "(//a[@class='btn_add'])[1]")
     public WebElement userPageUserNameLink;
+
+
 }
