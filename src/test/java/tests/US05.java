@@ -86,6 +86,8 @@ public class US05 extends TestBaseRapor {
         HomePageBodySection homeSection = new HomePageBodySection();
         DepartmentsPageServices departmentsPageServices = new DepartmentsPageServices();
 
+        //-----------------------------------------------------------------------------
+
         ReusableMethods.waitForVisibility(homeSection.popularDoctorsTitle, 5);
         ReusableMethods.scrollToElement(homeSection.popularDoctorsTitle);
         extentTest.info("Popular Doctors bölümüne kaydırıldı.");
