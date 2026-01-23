@@ -44,5 +44,4 @@ public class AdminLoyalFriendCare {
     public String getResultTitle(int row) {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
-
 }

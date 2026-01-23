@@ -40,17 +40,9 @@ build/
 .DS_Store
 
 ### PROPERTIES ###
-<<<<<<< HEAD
-configurations.properties
-=======
 configuration.properties
-
->>>>>>> main
-
-
 
 
 ### REPORT ###
 /test-output/
 /target/
-configuration.properties
