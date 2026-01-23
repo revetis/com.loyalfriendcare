@@ -12,15 +12,15 @@ public class AdminLoyalFriendCare {
 
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
-    }
 
+    }
     @FindBy(xpath = "(//*[@class='btn_add'])[1]")
     public WebElement signInButonu;
 
-    @FindBy(id = "email")
+    @FindBy(id = "//input[@id='email']")
     public WebElement adminLoginsayfasiEmailKutusu;
 
-    @FindBy(id = "password")
+    @FindBy(id = "//input[@id='password']")
     public WebElement adminLoginSayfasiPasswordKutusu;
 
     @FindBy(xpath = "//*[@*='submit']")
@@ -38,10 +38,12 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//*[@class='sidebar-header']")
     public WebElement adminYatakListesi;
 
-    @FindBy(xpath = "(//*[@*='container'])[1]")
-    public WebElement aramaSonucElementi;
+    @FindBy(xpath = "(//div[@class='container margin_60_35'])[1]/div/div/div")
+    public List<WebElement> searchResults;
 
-
+    public String getResultTitle(int row) {
+        return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
+    }
 }
 
 

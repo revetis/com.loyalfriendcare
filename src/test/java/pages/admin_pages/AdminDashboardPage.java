@@ -54,4 +54,3 @@ public class AdminDashboardPage {
     public WebElement adminDashboardYedinciKutuLearnMore;
 
 }
-
