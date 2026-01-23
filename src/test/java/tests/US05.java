@@ -88,6 +88,8 @@ public class US05 extends TestBaseRapor {
 
         //-----------------------------------------------------------------------------
 
+
+
         ReusableMethods.waitForVisibility(homeSection.popularDoctorsTitle, 5);
         ReusableMethods.scrollToElement(homeSection.popularDoctorsTitle);
         extentTest.info("Popular Doctors bölümüne kaydırıldı.");
