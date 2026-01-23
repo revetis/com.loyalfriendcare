@@ -30,7 +30,9 @@ public class ReusableMethods {
         File finalDestination = new File(target);
         // save the screenshot to the path given
         FileUtils.copyFile(source, finalDestination);
-        return target;
+        String relativePath = "../Screenshots/" + name + date + ".png";
+
+        return relativePath;
     }
 
     //========Switching Window=====//
@@ -168,5 +170,10 @@ public class ReusableMethods {
         });
 
         return element;
+    }
+
+    public static void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }
