@@ -41,6 +41,7 @@ build/
 
 ### PROPERTIES ###
 configuration.properties
+confiuration.properties.example
 
 
 
@@ -49,4 +50,3 @@ configuration.properties
 ### REPORT ###
 /test-output/
 /target/
-configuration.properties
