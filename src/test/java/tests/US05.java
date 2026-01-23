@@ -79,6 +79,7 @@ public class US05 extends TestBaseRapor {
         extentTest = extentReports.createTest(
                 "US_05_TC03_PopularDoctorsServiceClickable",
                 "Departments altındaki Popular Doctors hizmetine tıklanınca detay sayfası açılmalıdır"
+
         );
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
