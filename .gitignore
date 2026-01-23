@@ -47,6 +47,10 @@ configuration.properties
 
 >>>>>>> main
 
+
+
+
 ### REPORT ###
 /test-output/
 /target/
+configuration.properties
