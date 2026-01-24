@@ -1,6 +1,8 @@
 package tests;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -15,11 +17,12 @@ import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
 import java.time.Duration;
+import java.util.Locale;
 
 public class US16 extends TestBaseRapor {
 
     @Test(priority = 1)
-    public void TC_01_UserLoginTest() {
+    public void TC_01_User_HomePageToDoctorsPageNavigationTest() {
         extentTest = extentReports.createTest("TC_01 - Kayıtlı Kullanıcı ile Sisteme Giriş Yapma İşlemi",
                 "Kayıtlı bir kullanıcı geçerli (email ve password) hesap bilgileri girerek Sign In butonuna tıklanır");
 
@@ -55,41 +58,28 @@ public class US16 extends TestBaseRapor {
         String currentUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertFalse(currentUrl.contains("/login"), "Login işlemi başarısız! Hala login sayfasında.");
         extentTest.pass("TC_01 - Kullanıcı başarıyla giriş yaptı");
-    }
 
-    @Test(priority = 2, dependsOnMethods = "TC_01_UserLoginTest")
-    public void TC_02_HomePageToDoctorsPageNavigationTest() {
-        extentTest = extentReports.createTest("TC_02 - Kayıtlı Kullanıcı, Home Page Sayfasından Doctors Sayfasına Erişebilmeli",
-                "Kayıtlı kullanıcı ile login olduktan sonra Home page header bölümünde 'Doctors' tabına üzerine mouse ile gidilerek tıklanır");
+        // 4. Kayıtlı kullanıcı ile login olduktan sonra Home page header'daki Doctors linkine mouse ile gidilir
+        extentTest.info("Adım 1: Kullanıcı Home Page'de, header'daki Doctors linkine mouse ile gidiliyor");
+        ReusableMethods.waitForVisibility(layout.headerDoctorsLink, 10);
+        ReusableMethods.hover(layout.headerDoctorsLink);
+        extentTest.pass("Doctors linkine mouse ile gidildi");
 
-        Layout layout = new Layout();
-
-
-        // 1. Kayıtlı kullanıcı ile login olduktan sonra Home page
-      //  extentTest.info("Adım 1: Kullanıcı Home Page'de, header'daki Doctors linkine mouse ile gidiliyor");
-       // ReusableMethods.waitForVisibility(layout.headerDoctorsLink, 10);
-       // ReusableMethods.hover(layout.headerDoctorsLink);
-      //  extentTest.pass("Doctors linkine mouse ile gidildi");
-
-
-        // 2. Header'dan Doctors linkine tıklanır
+        // 5. Header'dan Doctors linkine tıklanır
         extentTest.info("Adım 2: Header'dan Doctors linkine tıklanıyor");
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));wait.until(ExpectedConditions.elementToBeClickable(layout.headerDoctorsLink));
-
         layout.headerDoctorsLink.click();
         ReusableMethods.bekle(2);
         extentTest.pass("Doctors linkine tıklandı");
 
-        // 3. Home page header bölümünde "Doctors" tabına tıklanır
         extentTest.info("Adım 3: Doctors sayfasına yönlendirilme kontrolü yapılıyor");
-        String currentUrl = Driver.getDriver().getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("doctors") || currentUrl.contains("doctor"),
+        currentUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertTrue(currentUrl.toLowerCase().contains("doctors") || currentUrl.toLowerCase().contains("doctor"),
                 "Doctors sayfasına yönlendirilmedi! Mevcut URL: " + currentUrl);
         extentTest.pass("TC_02 - Doctors sayfasına başarıyla erişildi");
     }
 
-    @Test(priority = 3, dependsOnMethods = "TC_02_HomePageToDoctorsPageNavigationTest")
-    public void TC_03_DoctorsPageDoctorInformationTest() {
+    @Test(priority = 2, dependsOnMethods = "TC_01_User_HomePageToDoctorsPageNavigationTest()")
+    public void TC_02_DoctorsPageDoctorInformationTest() {
         extentTest = extentReports.createTest("TC_03 - Doctors Sayfasındaki Doktorların Bilgilerini İnceleyebilmeli",
                 "Doctors isminde tüm doktorların olduğu yeni bir sayfaya gidilir. Sayfanın body kısmında doktorlar ve bilgileri yer alır");
 
@@ -97,9 +87,10 @@ public class US16 extends TestBaseRapor {
 
         // 1. Doctors isminde tüm doktorların olduğu sayfada doktorlar görünür
         extentTest.info("Adım 1: Doctors sayfasındaki doktorların listesi kontrol ediliyor");
-        ReusableMethods.waitForVisibility(doctorsPage.doctorsList.get(0), 10);
-        Assert.assertTrue(doctorsPage.doctorsList.size() > 0, "Doctors sayfasında doktor bulunamadı!");
-        extentTest.pass("Doctors listesi görüntülendi, toplam doktor sayısı: " + doctorsPage.doctorsList.size());
+        Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Doctors");
+        ReusableMethods.waitForVisibility(doctorsPage.doctorsList2.get(0), 10);
+        Assert.assertTrue(doctorsPage.doctorsList2.size() > 0, "Doctors sayfasında doktor bulunamadı!");
+        extentTest.pass("Doctors listesi görüntülendi, toplam doktor sayısı: " + doctorsPage.doctorsList2.size());
 
         // 2. Sayfanın solunda Doctors başlığı menüsü altında listelenen doktorların isimleri görünür
         extentTest.info("Adım 2: Doctors sayfasındaki doktor isimleri kontrol ediliyor");
@@ -130,27 +121,19 @@ public class US16 extends TestBaseRapor {
         extentTest.pass("TC_03 - Seçilen doktor '" + selectedDoctorName + "' için detay sayfasına yönlendirildi");
 
 
-        extentTest.info("NOT: DoctorsPage sınıfı oluşturulmalı ve locator'lar eklenmelidir");
-        extentTest.warning("TC_03 - Test için DoctorsPage.java dosyası gereklidir");
-    }
-
-    @Test(priority = 4, dependsOnMethods = "TC_03_DoctorsPageDoctorInformationTest")
-    public void TC_04_SelectedDoctorPageAccessTest() {
-        extentTest = extentReports.createTest("TC_04 - Seçilen Doktorun Sayfasına Erişebilmeli",
-                "Doctors sayfasında seçilen bir Doktorun ismine tıklanarak o doktorun sayfasına gidilir kontrol edilir");
-
-
         DoctorDetailPage doctorDetailPage = new DoctorDetailPage();
 
         // 1. Doktor detay sayfasına yönlendirildiğini kontrol et
         extentTest.info("Adım 1: Doktor detay sayfasına yönlendirilme kontrolü yapılıyor");
-        String currentUrl = Driver.getDriver().getCurrentUrl();
+        ReusableMethods.bekle(2);
+        currentUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("/Doctors/"), "Doktor detay sayfasında değil!");
+        ReusableMethods.bekle(1);
         extentTest.pass("Doktor detay sayfasına başarıyla yönlendirildi");
 
         // 2. Doktor header başlığını kontrol et
         extentTest.info("Adım 2: Doktor header başlığı kontrol ediliyor");
-        ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 10);
+        ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 15);
         Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.isDisplayed(), "Doktor header başlığı görünür değil!");
         Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.getText().contains("Dr."), "Header başlık doktor ismi içermiyor!");
         extentTest.pass("Doktor header başlığı görüntülendi: " + doctorDetailPage.doctorHeaderTitle.getText());
@@ -166,7 +149,12 @@ public class US16 extends TestBaseRapor {
         String doctorNameText = doctorDetailPage.doctorName.getText();
         extentTest.info("Doktor ismi: " + doctorNameText);
 
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
+        ReusableMethods.bekle(2);
         Assert.assertTrue(doctorDetailPage.doctorDetailInfos.isDisplayed(), "Doktor detay bilgisi görünür değil!");
+        ReusableMethods.bekle(1);
         extentTest.info(doctorDetailPage.doctorDetailInfos.getText());
         extentTest.pass("Tüm doktor bilgileri başarıyla görüntülendi");
 
