@@ -42,6 +42,13 @@ build/
 ### PROPERTIES ###
 configuration.properties
 
+
 ### REPORT ###
 /test-output/
 /target/
+
+
+### REPORT ###
+/test-output/
+/target/
+

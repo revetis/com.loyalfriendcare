@@ -64,7 +64,7 @@ public abstract class TestBaseRapor {
         Locale.setDefault(new Locale("en", "US"));
 
         if (extentReports != null) {
-            extentReports.flush(); // Artık exception.ftl'i bulabilecek
+            extentReports.flush();
         }
     }
 }
