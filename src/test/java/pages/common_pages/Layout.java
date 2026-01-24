@@ -121,7 +121,6 @@ public class Layout {
     public WebElement footerFaqLink;
 
     @FindBy(css = "#additional_links li:nth-child(3) a")
-
     public WebElement footerCopyrightLink;
 
     //=============================================
