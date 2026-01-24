@@ -88,9 +88,9 @@ public class US16 extends TestBaseRapor {
         // 1. Doctors isminde tüm doktorların olduğu sayfada doktorlar görünür
         extentTest.info("Adım 1: Doctors sayfasındaki doktorların listesi kontrol ediliyor");
         Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Doctors");
-        ReusableMethods.waitForVisibility(doctorsPage.doctorsList2.get(0), 10);
-        Assert.assertTrue(doctorsPage.doctorsList2.size() > 0, "Doctors sayfasında doktor bulunamadı!");
-        extentTest.pass("Doctors listesi görüntülendi, toplam doktor sayısı: " + doctorsPage.doctorsList2.size());
+        ReusableMethods.waitForVisibility(doctorsPage.doctorsList.get(0), 15);
+        Assert.assertTrue(doctorsPage.doctorsList.size() > 0, "Doctors sayfasında doktor bulunamadı!");
+        extentTest.pass("Doctors listesi görüntülendi, toplam doktor sayısı: " + doctorsPage.doctorsList.size());
 
         // 2. Sayfanın solunda Doctors başlığı menüsü altında listelenen doktorların isimleri görünür
         extentTest.info("Adım 2: Doctors sayfasındaki doktor isimleri kontrol ediliyor");

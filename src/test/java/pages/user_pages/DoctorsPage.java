@@ -56,6 +56,4 @@ public class DoctorsPage {
     public List<WebElement> sidebarDoctorNames;
 
 
-
-
 }

@@ -36,7 +36,7 @@ public class DoctorDetailPage {
     public WebElement doctorDate;
 
     // Doktor detay bilgileri (Profession,Years of exp vb.)
-    @FindBy(xpath = "//div[@class='wrapper']//p")
+    @FindBy(xpath = "//section[@id='description']//p")
     public WebElement doctorDetailInfos;
 
     // ========== APPOINTMENT BOOKING FORMU ==========
