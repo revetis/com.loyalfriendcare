@@ -21,16 +21,16 @@ public class ReusableMethods {
 
     public static String getScreenshot(String name) throws IOException {
         // naming the screenshot with the current date to avoid duplication
-        String date = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+        String date = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
         // TakesScreenshot is an interface of selenium that takes the screenshot
         TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
         File source = ts.getScreenshotAs(OutputType.FILE);
         // full path to the screenshot location
-        String target = System.getProperty("user.dir") + "/target/Screenshots/" + name + date + ".png";
+        String target = System.getProperty("user.dir") + "/test-output/Screenshots/" + name + date + ".png";
         File finalDestination = new File(target);
         // save the screenshot to the path given
         FileUtils.copyFile(source, finalDestination);
-        String relativePath = "../Screenshots/" + name + date + ".png";
+        String relativePath = "Screenshots/" + name + date + ".png";
 
         return relativePath;
     }
@@ -97,7 +97,7 @@ public class ReusableMethods {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static WebElement waitForClickablility(WebElement element, int timeout) {
+    public static WebElement waitForClickability(WebElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
@@ -123,7 +123,7 @@ public class ReusableMethods {
         return false;
     }
 
-    public static WebElement waitForClickablility(By locator, int timeout) {
+    public static WebElement waitForClickability(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
@@ -188,10 +188,6 @@ public class ReusableMethods {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public static void scrollToBottom() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-    }
 
     public static void scrollToTop() {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
@@ -202,4 +198,5 @@ public class ReusableMethods {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollTo(0, 0);");
     }
+
 }

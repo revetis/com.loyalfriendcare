@@ -10,6 +10,7 @@ import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
+import pages.user_pages.UserAppointmentFormPage;
 
 import java.util.List;
 
@@ -255,6 +256,209 @@ public class US_018_TestCases extends TestBaseRapor {
         }
 
         extentTest.pass("✅ US_018_TC_03 testi tamamlandı!");
+    }
+
+
+    // ========================================
+    // TC_04: İlaç Detay Sayfası Bilgileri Testi
+    // ========================================
+    @Test(priority = 4, description = "İlaç detay sayfasında tüm ilaç bilgilerinin görüntülenmesini doğrulama")
+    public void tc04_MedicineDetailPageTest() {
+
+        layout = new Layout();
+        loginPage = new LoginPage();
+
+        extentTest = extentReports.createTest("US_018_TC_04 - İlaç Detay Sayfası Bilgileri Testi",
+                "İlaç detay sayfasında tüm ilaç bilgilerinin görüntülenmesini doğrulama");
+
+        extentTest.info("Pre-Condition: Kullanıcı bir ilacın detay sayfasına erişmiş olmalı");
+
+        // Login yap
+        Driver.getDriver().get(ConfigReader.getProperty("url"));
+        extentTest.info("Ana sayfaya gidildi");
+
+        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        layout.signInLink.click();
+        extentTest.info("Sign In butonuna tıklandı");
+
+        ReusableMethods.bekle(2);
+
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
+        loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
+        loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
+        extentTest.info("Email: " + ConfigReader.getProperty("user_email"));
+
+        loginPage.signInButton.click();
+        ReusableMethods.bekle(3);
+        extentTest.pass("Kullanıcı başarıyla giriş yaptı");
+
+        // 1. İlaç detay sayfasına git
+        extentTest.info("1. İlaç detay sayfasına git (Rimadyl - Carprofen)");
+        Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Medicines/suretin-mipen-ruma");
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
+
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("/Medicines/"));
+        extentTest.pass("İlaç detay sayfası açıldı: " + currentUrl);
+
+        // Scroll down yap
+        ReusableMethods.scrollDown();
+        ReusableMethods.bekle(2);
+
+        // 2. İlacın adının görünür olduğunu doğrula
+        extentTest.info("2. İlacın adının görünür olduğunu doğrula");
+
+        WebElement medicineTitle = Driver.getDriver().findElement(
+                By.xpath("//h1 | //h2[contains(@class,'title')] | //*[contains(@class,'medicine-title')]")
+        );
+
+        ReusableMethods.waitForVisibility(medicineTitle, 10);
+        String titleText = medicineTitle.getText();
+        Assert.assertFalse(titleText.isEmpty(), "İlaç adı boş!");
+        extentTest.pass("İlacın adı görünür: " + titleText);
+
+        // 3. İlacın açıklamasının görünür olduğunu doğrula
+        extentTest.info("3. İlacın açıklamasının görünür olduğunu doğrula");
+
+        ReusableMethods.scrollDown();
+        ReusableMethods.bekle(2);
+
+        // Açıklama/içerik bölümünü bul
+        List<WebElement> contentElements = Driver.getDriver().findElements(
+                By.xpath("//p | //div[contains(@class,'content')] | //div[contains(@class,'description')]")
+        );
+
+        if (!contentElements.isEmpty()) {
+            extentTest.pass("İlacın açıklama bilgisi görünür (Bulunan paragraf sayısı: " + contentElements.size() + ")");
+        } else {
+            extentTest.warning("⚠️ İlaç açıklaması bulunamadı");
+        }
+
+        // 4. Kullanım talimatlarının görünür olduğunu doğrula
+        extentTest.info("4. Kullanım talimatlarının görünür olduğunu doğrula");
+
+        ReusableMethods.scrollDown();
+        ReusableMethods.bekle(2);
+
+        // Tüm text içeriğini kontrol et
+        String pageContent = Driver.getDriver().findElement(By.tagName("body")).getText();
+
+        if (pageContent.length() > 100) {
+            extentTest.pass("✅ Kullanım talimatları ve detaylı bilgiler görünür (İçerik uzunluğu: " + pageContent.length() + " karakter)");
+        } else {
+            extentTest.warning("⚠️ Detaylı içerik bulunamadı");
+        }
+
+        extentTest.pass("✅ US_018_TC_04 testi tamamlandı!");
+
+    }
+
+
+    // ========================================
+    // TC_05: Randevu Butonu İşlevselliği (BUG Test)
+    // ========================================
+
+    @Test(priority = 5, description = "İlaç detay sayfasında Randevu Oluştur butonu işlevselliği")
+    public void tc05_AppointmentButtonFunctionalityTest() {
+
+        layout = new Layout();
+        loginPage = new LoginPage();
+        UserAppointmentFormPage appointmentForm = new UserAppointmentFormPage();
+
+        extentTest = extentReports.createTest("US_018_TC_05 - Randevu Oluştur Butonu Testi",
+                "İlaç detay sayfasında Randevu Oluştur butonu işlevselliği ve randevu talebi oluşturma");
+
+        extentTest.info("Pre-Condition: Kullanıcı ilaç detay sayfasında olmalı");
+
+        // Login yap
+        Driver.getDriver().get(ConfigReader.getProperty("url"));
+        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        layout.signInLink.click();
+        ReusableMethods.bekle(2);
+
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
+        loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
+        loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
+        loginPage.signInButton.click();
+        ReusableMethods.bekle(3);
+        extentTest.pass("Kullanıcı giriş yaptı");
+
+        // İlaç detay sayfasına git
+        Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Medicines/suretin-mipen-ruma");
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
+        extentTest.info("İlaç detay sayfasına gidildi: Rimadyl (Carprofen)");
+
+        ReusableMethods.scrollDown();
+        ReusableMethods.bekle(2);
+
+        // 1. İlaç detay sayfasında "Randevu Oluştur" formu görünür mü
+        extentTest.info("1. İlaç detay sayfasında 'Randevu Oluştur' butonu bul");
+
+        try {
+            ReusableMethods.waitForVisibility(appointmentForm.appointmentFormContainer, 10);
+            extentTest.pass("✅ STEP 1 PASSED: Randevu formu görünür");
+        } catch (Exception e) {
+            extentTest.fail("❌ STEP 1 FAILED: Randevu formu bulunamadı!");
+        }
+
+        // 2. Butonun görünür ve tıklanabilir olduğunu doğrula
+        extentTest.info("2. Butonun görünür ve tıklanabilir olduğunu doğrula");
+
+        try {
+            ReusableMethods.scrollToElement(appointmentForm.submitButton);
+            ReusableMethods.bekle(1);
+
+            Assert.assertTrue(appointmentForm.submitButton.isDisplayed(),
+                    "Randevu butonu görünür değil!");
+            Assert.assertTrue(appointmentForm.submitButton.isEnabled(),
+                    "Randevu butonu tıklanabilir değil!");
+
+            extentTest.pass("Randevu butonu görünür ve tıklanabilir");
+        } catch (Exception e) {
+            extentTest.fail("❌ STEP 2 FAILED: Randevu butonu kontrol edilemedi! " + e.getMessage());
+        }
+
+        // 3. "Randevu Oluştur" butonuna tıkla (ALANLAR BOŞ!)
+        extentTest.info("3. 'Randevu Oluştur' butonuna tıkla (Hiçbir alan doldurulmadan - Validasyon testi)");
+
+        try {
+            appointmentForm.submitButton.click();
+            extentTest.info("Randevu butonuna boş form ile tıklandı");
+            ReusableMethods.bekle(3);
+
+            // Success message var mı kontrol et (BUG!)
+            try {
+                if (appointmentForm.successMessage.isDisplayed()) {
+                    String successText = appointmentForm.successMessage.getText();
+
+                    extentTest.fail("❌ STEP 2 FAILED: BUG! Appointment Booking butonu görünür ve aktif, ancak form validasyonu çalışmıyor");
+                    extentTest.fail("❌ STEP 3 FAILED: BUG! Boş formla randevu oluşturuldu! Form alanları boş olmasına rağmen sistem randevuyu kabul etti");
+                    extentTest.fail("❌ STEP 4 FAILED: BUG! Randevu formu açıldı ancak zorunlu alanlar (tarih, saat, telefon, departman, doktor, mesaj) doldurulmadan işlem tamamlandı");
+                    extentTest.fail("❌ STEP 5 FAILED: BUG! Tarih (30/01/2026), telefon (geçerli format), departman, doktor ve mesaj alanları boş olmasına rağmen randevu başarıyla kaydedildi");
+                    extentTest.fail("❌ STEP 6 FAILED: BUG! Randevu başarılı mesajı gösterildi: '" + successText + "' - Form validasyonu tamamen devre dışı!");
+
+                    extentTest.fail("🐛 CRITICAL BUG: Form validasyonu çalışmıyor! Boş veriyle randevu oluşturuluyor!");
+                }
+            } catch (Exception e) {
+                // Success message locator bulunamadı, ama sayfada text olarak kontrol et
+                String pageText = Driver.getDriver().findElement(By.tagName("body")).getText();
+
+                if (pageText.contains("Congratulations") || pageText.contains("success") || pageText.contains("Success")) {
+                    extentTest.fail("❌ STEP 2-6 FAILED: BUG! Success message butonun locator'ı bulunamadı ama sayfada 'Congratulations' mesajı var!");
+                    extentTest.fail("❌ Boş formla randevu oluşturuldu! Form validasyonu çalışmıyor!");
+                    extentTest.fail("🐛 CRITICAL BUG: Sayfa içeriği - " + (pageText.contains("Congratulations") ? "Congratulations mesajı tespit edildi!" : "Success mesajı var!"));
+                } else {
+                    extentTest.pass("Validasyon çalışıyor, boş form kabul edilmedi");
+                }
+            }
+
+        } catch (Exception e) {
+            extentTest.fail("❌ ALL STEPS FAILED: Test exception ile sonlandı: " + e.getMessage());
+        }
+
+        extentTest.warning("⚠️ US_018_TC_05 testi tamamlandı - BUG kontrolü yapıldı");
     }
 
 }

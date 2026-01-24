@@ -20,6 +20,7 @@ import java.util.*;
 public class US03 extends TestBaseRapor {
     Layout layout;
     List<String> functionalErrors = new ArrayList<>();
+    List<String> duplicateErrors = new ArrayList<>();
 
     @Test(priority = 0)
     public void TC01_HeaderGorunurlukKontrolu(){
@@ -72,6 +73,12 @@ public class US03 extends TestBaseRapor {
         softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerDoctorsLink, 3));
         extentTest.info("Doctors ana linki kontrol edildi.");
 
+        softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerMedicinesLink,3));
+        extentTest.info("Medicines ana linki kontrol edildi.");
+
+        softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerVaccinationsLink,3));
+        extentTest.info("Vaccinations ana linki kontrol edildi.");
+
         // Duplicate ve Tıklama kontrolleri
         extentTest.info("Dropdown içeriklerinde mükerrer kayıt ve URL yönlendirme kontrolleri başlıyor.");
 
@@ -83,9 +90,22 @@ public class US03 extends TestBaseRapor {
         softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerDoctorSubLinks, layout.headerDoctorsLink));
         extentTest.info("Doctors dropdown menüsü tamamen tarandı.");
 
-        if (!functionalErrors.isEmpty()) {
-            extentTest.fail("Fonksiyonel hatalar tespit edildi, liste detayları aşağıdadır.");
-            Assert.fail("Hatalar:\n" + String.join("\n", functionalErrors));
+        softAssert.assertEquals(duplicateVarMi(layout.headerMedicinesSubLinks, layout.headerMedicinesLink), 0);
+        softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerMedicinesSubLinks, layout.headerMedicinesLink));
+        extentTest.info("Medicines dropdown menüsü tamamen tarandı.");
+
+        softAssert.assertEquals(duplicateVarMi(layout.headerVaccinationsSubLinks, layout.headerVaccinationsLink), 0);
+        softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerVaccinationsSubLinks, layout.headerVaccinationsLink));
+        extentTest.info("Vaccinations dropdown menüsü tamamen tarandı.");
+
+        if (!functionalErrors.isEmpty() || !duplicateErrors.isEmpty()) {
+            extentTest.fail("Fonksiyonel veya duplicate hatalar tespit edildi, liste detayları aşağıdadır.");
+            List<List<String>> errors = new ArrayList<>();
+            errors.add(functionalErrors);
+            errors.add(duplicateErrors);
+            softAssert.fail("Hatalar:\n" + String.join("\n",errors.getFirst()));
+            softAssert.fail("Hatalar:\n" + String.join("\n",errors.getLast()));
+            softAssert.assertAll();
         }
 
         softAssert.assertAll();
@@ -151,7 +171,7 @@ public class US03 extends TestBaseRapor {
 
             if (!set.add(text)) {
                 duplicateSayisi++;
-                functionalErrors.add("Duplicate Hatası: '" + text + "'");
+                duplicateErrors.add("Duplicate Hatası: '" + text + "'");
                 extentTest.warning("Mükerrer içerik raporlandı: " + text);
             }
         }
@@ -163,12 +183,26 @@ public class US03 extends TestBaseRapor {
         for (int i = 0; i < size; i++) {
             ReusableMethods.hover(hoverTarget);
             WebElement element = elementList.get(i);
-            String text = element.getText();
+            String text = element.getText().toLowerCase().replace("ç", "c")
+                    .replaceAll("dr\\.", "")
+                    .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                    .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                    .trim()
+                    .replace(" ", "-")
+                    .replaceAll("[^a-z0-9-]", "");
 
             extentTest.info("Alt linke tıklanıyor: " + text);
             element.click();
 
             // URL Kontrolü ve geri dönme...
+            String currentUrl = Driver.getDriver().getCurrentUrl();
+            String normalizedUrl = currentUrl.replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                    .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                    .replace("dr.", "");
+
+            if (!normalizedUrl.contains(text)){
+                functionalErrors.add("Link Hatasi: Beklenen parça [" + text + "] URL'de yok. URL: " + currentUrl);
+            }
             Driver.getDriver().navigate().back();
             layout = new Layout();
         }
