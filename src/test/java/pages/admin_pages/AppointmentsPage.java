@@ -29,6 +29,4 @@ public class AppointmentsPage {
         return appointment;
     }
 
-
-
 }

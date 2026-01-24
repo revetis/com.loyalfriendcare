@@ -188,10 +188,6 @@ public class ReusableMethods {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
-    public static void scrollToBottom() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-    }
 
     public static void scrollToTop() {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
@@ -202,4 +198,5 @@ public class ReusableMethods {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollTo(0, 0);");
     }
+
 }
