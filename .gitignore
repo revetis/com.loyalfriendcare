@@ -41,9 +41,14 @@ build/
 
 ### PROPERTIES ###
 configuration.properties
-confiuration.properties.example
 
 
 ### REPORT ###
 /test-output/
 /target/
+
+
+### REPORT ###
+/test-output/
+/target/
+
