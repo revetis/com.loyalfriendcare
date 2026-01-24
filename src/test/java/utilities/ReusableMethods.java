@@ -189,4 +189,14 @@ public class ReusableMethods {
     }
 
 
+    public static void scrollToTop() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, 0)");
+    }
+
+    public static void scrollToHeader() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, 0);");
+    }
+
 }
