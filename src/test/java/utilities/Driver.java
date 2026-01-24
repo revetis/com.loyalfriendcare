@@ -64,7 +64,7 @@ public class Driver {
             }
 
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(ConfigReader.getProperty("timeout"))));
         }
 
 
@@ -75,15 +75,15 @@ public class Driver {
 
     public static void closeDriver(){
         driver.close();
-        if (driver != null){
-            driver = null;
+       if (driver != null){
+           driver = null;
         }
     }
 
     public static void quitDriver(){
         driver.quit();
-        if (driver != null){
-            driver = null;
+        if (Driver.driver != null){
+          driver = null;
         }
     }
 

@@ -47,6 +47,7 @@ public abstract class TestBaseRapor {
     public void tearDownMethod(ITestResult result) throws IOException {
 
         if (result.getStatus() == ITestResult.FAILURE) { // eğer testin sonucu başarısızsa
+            ReusableMethods.waitForPageToLoad(2);
             String resimYolu = ReusableMethods.getScreenshot(result.getName());
             extentTest.fail(result.getName());
             extentTest.addScreenCaptureFromPath(resimYolu);
