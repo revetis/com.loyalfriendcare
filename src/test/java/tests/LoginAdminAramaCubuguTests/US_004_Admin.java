@@ -401,6 +401,7 @@ public class US_004_Admin extends TestBaseRapor {
     }
 
 
+
         //==========================================================
         //==========================================================
         //==========     User AramaCubugu PozitivTest  ============
@@ -416,6 +417,7 @@ public class US_004_Admin extends TestBaseRapor {
         // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
         // Arama tusuna click et
         // Sistem ilgili sonuçları icerdigini test edin
+
 
 
 
