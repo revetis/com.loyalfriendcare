@@ -31,11 +31,11 @@ public class US_012_User extends TestBaseRapor {
     // User olarak ana sayfaya girili
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Sayfanin body bolumu icerdigi konturol edilir
-    // Doktorlarin listelenib listelenmedigi konturol edilir
+    // Doktorlarin listelendigini  konturol edin
     // Doktor kartlarinin tiklanabilir olub olmadigi konturol edilir
     // Listeden herhangi bir doktora tiklanir
     // Doktor detay sayfasinin gorunur oldugunu test edin
-    //“Appointment Booking” butonunun gorunur oldugunu test edin
+    //“Appointment Booking” butonunun tiklanabilir oldugunu test edin
     // Randevu formundaki tum zorlu alanlar gecerli olarak doldurulur
     // “Appointment Booking” butonuna click edilir
     // Sistem randevu talebini başarıyla oluşturmalıdır
@@ -62,19 +62,16 @@ public class US_012_User extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
+        // Sayfanin body bolumu icerdigi konturol edilir
+
+
         // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
         Assert.assertTrue(actualUrl.contains(expextedUrlİcerik));
 
-        // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı girin
-        userLoyalFriendCare.userAramaCubugu.sendKeys("Distemper");
-        ReusableMethods.bekle(2);
 
-        // Arama tusuna click et
-        userLoyalFriendCare.searchButonu.click();
-        ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
         Assert.assertTrue(userLoyalFriendCare.aramaSonucElementi.isDisplayed());
