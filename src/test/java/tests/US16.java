@@ -11,17 +11,24 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.common_pages.HomePageDepartmentSection;
 import pages.common_pages.HomepageBodyPage;
+import org.testng.annotations.Test;
 import pages.common_pages.Layout;
 import pages.common_pages.LoginPage;
 import pages.user_pages.DoctorDetailPage;
 import pages.user_pages.DoctorsPage;
 import utilities.*;
-
 import java.lang.reflect.Method;
+import utilities.ConfigReader;
+import utilities.Driver;
+import utilities.ReusableMethods;
+import utilities.TestBaseRapor;
+
+
 import java.time.Duration;
 import java.util.Locale;
 
 public class US16 extends TestBaseRapor {
+
 
     @BeforeMethod
     public void setupSteps(Method method) {
@@ -50,6 +57,7 @@ public class US16 extends TestBaseRapor {
     @Test(priority = 1)
     public void TC_01_User_HomePageToDoctorsPageNavigationTest() {
         // setupSteps çalışmaz, kendi login'ini yapar
+
         extentTest = extentReports.createTest("TC_01 - Kayıtlı Kullanıcı ile Sisteme Giriş Yapma İşlemi",
                 "Kayıtlı bir kullanıcı geçerli (email ve password) hesap bilgileri girerek Sign In butonuna tıklanır");
 
@@ -71,6 +79,7 @@ public class US16 extends TestBaseRapor {
         String userPassword = ConfigReader.getProperty("user_password");
 
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 15);
+
         loginPage.emailAddressInput.sendKeys(userEmail);
         extentTest.info("Email girildi: " + userEmail);
 
@@ -108,7 +117,7 @@ public class US16 extends TestBaseRapor {
     @Test(priority = 2, dependsOnMethods = "TC_01_User_HomePageToDoctorsPageNavigationTest()")
     public void TC_02_DoctorsPageDoctorInformationTest() {
 
-        extentTest = extentReports.createTest("TC_03 - Doctors Sayfasındaki Doktorların Bilgilerini İnceleyebilmeli",
+        extentTest = extentReports.createTest("TC_02 - Doctors Sayfasındaki Doktorların Bilgilerini İnceleyebilmeli",
                 "Doctors isminde tüm doktorların olduğu yeni bir sayfaya gidilir. Sayfanın body kısmında doktorlar ve bilgileri yer alır");
 
         DoctorsPage doctorsPage = new DoctorsPage();
@@ -140,6 +149,7 @@ public class US16 extends TestBaseRapor {
         extentTest.info("Adım 3: Listeden bir doktor seçiliyor ve tıklanıyor");
         String selectedDoctorName = doctorsPage.doctorNames.get(0).getText();
         extentTest.info("Seçilen doktor: " + selectedDoctorName);
+
         doctorsPage.doctorNames.get(0).click();
         ReusableMethods.bekle(2);
 
@@ -161,49 +171,49 @@ public class US16 extends TestBaseRapor {
             DoctorsPage doctorsPage = new DoctorsPage();
             HomepageBodyPage homepageBodyPage = new HomepageBodyPage();
 
-        //  Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Doctors");
-        // doctorsPage.doctorNames.get(0).click();
-        //  ReusableMethods.bekle(2);
-        //  ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 15);
+        // 1. Doktor detay sayfasına yönlendirildiğini kontrol et
+        extentTest.info("Adım 1: Doktor detay sayfasına yönlendirilme kontrolü yapılıyor");
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("/Doctors/"), "Doktor detay sayfasında değil!");
+        ReusableMethods.bekle(1);
+        extentTest.pass("Doktor detay sayfasına başarıyla yönlendirildi");
 
-            // 2. Doktor header başlığını kontrol et
-            extentTest.info("Adım 2: Doktor header başlığı kontrol ediliyor");
-            ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 15);
-            Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.isDisplayed(), "Doktor header başlığı görünür değil!");
-            Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.getText().contains("Dr."), "Header başlık doktor ismi içermiyor!");
-            extentTest.pass("Doktor header başlığı görüntülendi: " + doctorDetailPage.doctorHeaderTitle.getText());
+        // 2. Doktor header başlığını kontrol et
+        extentTest.info("Adım 2: Doktor header başlığı kontrol ediliyor");
+        ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 15);
+        Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.isDisplayed(), "Doktor header başlığı görünür değil!");
+        Assert.assertTrue(doctorDetailPage.doctorHeaderTitle.getText().contains("Dr."), "Header başlık doktor ismi içermiyor!");
+        extentTest.pass("Doktor header başlığı görüntülendi: " + doctorDetailPage.doctorHeaderTitle.getText());
 
-            // 3. Doktor fotoğrafını kontrol et
-            extentTest.info("Adım 3: Doktor fotoğrafı kontrol ediliyor");
-            Assert.assertTrue(doctorDetailPage.doctorPhoto.isDisplayed(), "Doktor fotoğrafı görünür değil!");
-            extentTest.pass("Doktor fotoğrafı görüntülendi");
+        // 3. Doktor fotoğrafını kontrol et
+        extentTest.info("Adım 3: Doktor fotoğrafı kontrol ediliyor");
+        Assert.assertTrue(doctorDetailPage.doctorPhoto.isDisplayed(), "Doktor fotoğrafı görünür değil!");
+        extentTest.pass("Doktor fotoğrafı görüntülendi");
 
-            // 4. Doktor ismi ve bilgileri kontrol et
-            extentTest.info("Adım 4: Doktor ismi ve detay bilgileri kontrol ediliyor");
-            Assert.assertTrue(doctorDetailPage.doctorName.isDisplayed(), "Doktor ismi görünür değil!");
-            String doctorNameText = doctorDetailPage.doctorName.getText();
-            extentTest.info("Doktor ismi: " + doctorNameText);
+        // 4. Doktor ismi ve bilgileri kontrol et
+        extentTest.info("Adım 4: Doktor ismi ve detay bilgileri kontrol ediliyor");
+        Assert.assertTrue(doctorDetailPage.doctorName.isDisplayed(), "Doktor ismi görünür değil!");
+        String doctorNameText = doctorDetailPage.doctorName.getText();
+        extentTest.info("Doktor ismi: " + doctorNameText);
 
-            Actions actions = new Actions(Driver.getDriver());
-            actions.sendKeys(Keys.PAGE_DOWN).perform();
-            ReusableMethods.bekle(2);
+        Actions actions = new Actions(Driver.getDriver());
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
 
-            Assert.assertTrue(doctorDetailPage.doctorDetailInfos.isDisplayed(), "Doktor detay bilgisi görünür değil!");
-            ReusableMethods.bekle(1);
-            extentTest.info(doctorDetailPage.doctorDetailInfos.getText());
-            extentTest.pass("Tüm doktor bilgileri başarıyla görüntülendi");
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(doctorDetailPage.doctorDetailInfos.isDisplayed(), "Doktor detay bilgisi görünür değil!");
+        ReusableMethods.bekle(1);
+        extentTest.info(doctorDetailPage.doctorDetailInfos.getText());
+        extentTest.pass("Tüm doktor bilgileri başarıyla görüntülendi");
 
-            actions.sendKeys(Keys.PAGE_UP).perform();
-            ReusableMethods.bekle(1);
+        actions.sendKeys(Keys.PAGE_UP).perform();
+        ReusableMethods.bekle(1);
 
-        // Appointment Booking formundaki alanların görünürlüğünü kontrol et
+        // 5. Appointment Booking formunu kontrol et
         extentTest.info("Adım 5: Appointment Booking formu kontrol ediliyor");
         Assert.assertTrue(doctorDetailPage.appointmentBookingTitle.isDisplayed(), "Appointment Booking başlığı görünür değil!");
-        ReusableMethods.bekle(2);
         Assert.assertTrue(doctorDetailPage.DateInput.isDisplayed(), "Tarih input'u görünür değil!");
-        ReusableMethods.bekle(1);
         Assert.assertTrue(doctorDetailPage.phoneNumberInput.isDisplayed(), "Telefon input'u görünür değil!");
-            ReusableMethods.bekle(1);
+
         Assert.assertTrue(doctorDetailPage.createMessageTextarea.isDisplayed(), "Message textarea görünür değil!");
         ReusableMethods.bekle(1);
         extentTest.pass("Appointment Booking formu tüm alanları ile görüntülendi");
@@ -226,10 +236,6 @@ public class US16 extends TestBaseRapor {
             extentTest.fail("BUG: Telefon numarası inputunda format belirtilmemiş.");
             Assert.fail("Telefon numarası için format belirtilmemiş!");
         }
-        /*Assert.assertFalse(phonePlaceholder != null && phonePlaceholder.contains("Phone"),
-                    "Phone Number placeholder'ı bulunamadı!");
-        extentTest.info("✓ Phone Number alanı placeholder: " + phonePlaceholder);
-                 */
 
         // Mesaj alanı ne olduğunu belirten bir etiket veya placeholder kontrolü
         Assert.assertTrue(doctorDetailPage.createMessageTextarea.isDisplayed(), "Create Message textarea görünür değil!");
@@ -290,17 +296,20 @@ public class US16 extends TestBaseRapor {
             extentTest.pass("Mesaj alanına yazı yazılabildiği doğrulandı");
 
         //  Randevu olustur butonunu kontrol et
+
         extentTest.info("Adım 6: Appointment Booking butonu kontrol ediliyor");
         Assert.assertTrue(doctorDetailPage.appointmentBookingButton.isDisplayed(), "Appointment Booking butonu görünür değil!");
         Assert.assertTrue(doctorDetailPage.appointmentBookingButton.isEnabled(), "Appointment Booking butonu aktif değil!");
         extentTest.pass("Appointment Booking butonu görünür ve aktif");
 
         //  "No money charged" mesajını kontrol et
+
         extentTest.info("Adım 7: 'No money charged in this step' mesajı kontrol ediliyor");
         Assert.assertTrue(doctorDetailPage.noChargeMessage.isDisplayed(), "No charge mesajı görünür değil!");
         extentTest.pass("'No money charged in this step' mesajı görüntülendi");
 
         //  Reviews bölümünü kontrol et
+
         extentTest.info("Adım 8: Reviews bölümü kontrol ediliyor");
         ReusableMethods.bekle(1);
 
@@ -322,13 +331,7 @@ public class US16 extends TestBaseRapor {
 
         DoctorDetailPage doctorDetailPage = new DoctorDetailPage();
         DoctorsPage doctorsPage = new DoctorsPage();
-    /*
-        Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Doctors");
-        doctorsPage.doctorNames.get(0).click();
-        ReusableMethods.bekle(2);
-        ReusableMethods.waitForVisibility(doctorDetailPage.doctorHeaderTitle, 15);
 
-     */
         // 1. Geçerli yakın bir tarih takvimden seçilir yada elle girilir
         extentTest.info("Adım 1: Geçerli bir tarih giriliyor - 16.01.2026");
         ReusableMethods.waitForVisibility(doctorDetailPage.DateInput, 10);
@@ -379,7 +382,7 @@ public class US16 extends TestBaseRapor {
 
         // 6. "Appointment Booking" butonuna basılır
         extentTest.info("Adım 6: Appointment Booking butonuna tıklanıyor");
-        ReusableMethods.waitForClickablility(doctorDetailPage.appointmentBookingButton, 10);
+        ReusableMethods.waitForClickability(doctorDetailPage.appointmentBookingButton, 10);
 
         String urlBeforeClick = Driver.getDriver().getCurrentUrl();
         doctorDetailPage.appointmentBookingButton.click();
@@ -492,7 +495,7 @@ public class US16 extends TestBaseRapor {
 
             // 6. Geçersiz verilerle buton tıklama
             extentTest.info("Adım 6: Geçersiz telefon ve özel karakterlerle Appointment Booking butonuna basılıyor");
-            ReusableMethods.waitForClickablility(doctorDetailPage.appointmentBookingButton, 10);
+            ReusableMethods.waitForClickability(doctorDetailPage.appointmentBookingButton, 10);
             doctorDetailPage.appointmentBookingButton.click();
             ReusableMethods.bekle(2);
 
@@ -516,6 +519,7 @@ public class US16 extends TestBaseRapor {
         }
 
     }
+
 
 
 

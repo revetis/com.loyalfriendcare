@@ -48,7 +48,5 @@ configuration.properties
 /target/
 
 
-### REPORT ###
-/test-output/
-/target/
+
 

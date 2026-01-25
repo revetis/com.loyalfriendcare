@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
+    public WebElement aramaSonucElementi;
+
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
@@ -17,10 +19,10 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "(//*[@class='btn_add'])[1]")
     public WebElement signInButonu;
 
-    @FindBy(id = "//input[@id='email']")
+    @FindBy(xpath = "//input[@id='email']")
     public WebElement adminLoginsayfasiEmailKutusu;
 
-    @FindBy(id = "//input[@id='password']")
+    @FindBy(xpath = "//input[@id='password']")
     public WebElement adminLoginSayfasiPasswordKutusu;
 
     @FindBy(xpath = "//*[@*='submit']")
@@ -38,6 +40,12 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//*[@class='sidebar-header']")
     public WebElement adminYatakListesi;
 
+    @FindBy(xpath = "(//*[@*='container'])[1]")
+    public WebElement aramaSonucElementi;
+
+    @FindBy(xpath = "(//*[@*='img-fluid'])[1]")
+    public WebElement sonucElementlerindenBiri;
+
     @FindBy(xpath = "(//div[@class='container margin_60_35'])[1]/div/div/div")
     public List<WebElement> searchResults;
 
@@ -45,5 +53,3 @@ public class AdminLoyalFriendCare {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
-
-

@@ -42,7 +42,7 @@ public class DoctorDetailPage {
     // ========== APPOINTMENT BOOKING FORMU ==========
 
     // Appointment Booking başlığı
-    @FindBy(xpath = "//div[@class='price']//h5")
+    @FindBy(xpath = "//h5[.='Appointment Booking']")
     public WebElement appointmentBookingTitle;
 
     // Tarih seçim input'u (gg-aa-yyyy)
