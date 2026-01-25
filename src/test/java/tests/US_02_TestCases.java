@@ -48,7 +48,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Loyalfriendcare logosu sol tarafta konumlandı (X: " + logoXPosition + ")");
 
         // 5. Loyalfriendcare logosunun tıklanabilir olduğunu doğrula
-        ReusableMethods.waitForClickablility(layout.headerLogo, 10);
+        ReusableMethods.waitForClickability(layout.headerLogo, 10);
         Assert.assertTrue(layout.headerLogo.isEnabled());
         extentTest.pass("Loyalfriendcare logosu tıklanabilir durumda");
 
@@ -117,7 +117,7 @@ public class US_02_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("1. Kullanıcı ana sayfaya gitti: " + ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.headerAboutUsLink, 10).click();
+        ReusableMethods.waitForClickability(layout.headerAboutUsLink, 10).click();
         extentTest.info("About Us linkine tıklandı");
 
         ReusableMethods.bekle(2);
@@ -126,7 +126,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("About Us sayfası başarıyla açıldı");
 
         // 2. Header'daki Logo butonuna tıkla
-        ReusableMethods.waitForClickablility(layout.headerLogo, 10).click();
+        ReusableMethods.waitForClickability(layout.headerLogo, 10).click();
         extentTest.info("2. Header'daki Logo butonuna tıklandı");
 
         // 3. Sayfanın Home Page'e yönlendiğini doğrula
@@ -171,7 +171,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.info("1. Header'daki Sign Up butonunun yeşil renkte görünür olduğunu doğrula");
 
         // 2. Sign In butonuna tıkla
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -215,7 +215,7 @@ public class US_02_TestCases extends TestBaseRapor {
             ReusableMethods.bekle(2);
 
             // Sign Out butonuna tıkla
-            ReusableMethods.waitForClickablility(layout.headerAuthUserSignOutButton, 10);
+            ReusableMethods.waitForClickability(layout.headerAuthUserSignOutButton, 10);
             layout.headerAuthUserSignOutButton.click();
             extentTest.info("Sign Out butonuna tıklandı");
 
@@ -337,7 +337,7 @@ public class US_02_TestCases extends TestBaseRapor {
 
         // 2. Sign Up butonuna tıkla
         extentTest.info("2. Sign Up butonuna tıkla");
-        ReusableMethods.waitForClickablility(layout.signUpLink, 10);
+        ReusableMethods.waitForClickability(layout.signUpLink, 10);
         layout.signUpLink.click();
         extentTest.info("Sign Up butonuna tıklandı");
 
