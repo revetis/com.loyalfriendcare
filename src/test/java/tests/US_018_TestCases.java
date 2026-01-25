@@ -40,7 +40,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("Ana sayfaya gidildi: " + ConfigReader.getProperty("url"));
 
         // Sign In butonuna tıkla
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -80,7 +80,7 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // 4. Medicines menüsüne tıkla
         extentTest.info("4. Medicines menüsüne tıkla");
-        ReusableMethods.waitForClickablility(layout.headerMedicinesLink, 10);
+        ReusableMethods.waitForClickability(layout.headerMedicinesLink, 10);
         layout.headerMedicinesLink.click();
         extentTest.info("Medicines menüsüne tıklandı");
 
@@ -132,7 +132,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("3. İlaç listesinin görünür olduğunu kontrol et");
 
         // Sayfayı scroll down yap
-        ReusableMethods.scrollToBottom();
+        ReusableMethods.scrollDown();
         ReusableMethods.bekle(2);
 
         // Container kontrolü
@@ -277,7 +277,7 @@ public class US_018_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("Ana sayfaya gidildi");
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -373,7 +373,7 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // Login yap
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         ReusableMethods.bekle(2);
 
