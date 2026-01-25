@@ -52,5 +52,3 @@ public class AdminLoyalFriendCare {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
-
-
