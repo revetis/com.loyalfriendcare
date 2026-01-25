@@ -448,7 +448,8 @@ public class US_018_TestCases extends TestBaseRapor {
                 if (pageText.contains("Congratulations") || pageText.contains("success") || pageText.contains("Success")) {
                     extentTest.fail("❌ STEP 2-6 FAILED: BUG! Success message butonun locator'ı bulunamadı ama sayfada 'Congratulations' mesajı var!");
                     extentTest.fail("❌ Boş formla randevu oluşturuldu! Form validasyonu çalışmıyor!");
-                    extentTest.fail("🐛 CRITICAL BUG: Sayfa içeriği - " + (pageText.contains("Congratulations") ? "Congratulations mesajı tespit edildi!" : "Success mesajı var!"));
+                    extentTest.fail("🐛 CRITICAL BUG: Sayfa içeriği - " + (pageText.contains("Congratulations") ?
+                            "Congratulations mesajı tespit edildi!" : "Success mesajı var!"));
                 } else {
                     extentTest.pass("Validasyon çalışıyor, boş form kabul edilmedi");
                 }
