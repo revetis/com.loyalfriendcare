@@ -58,6 +58,7 @@ public class US16 extends TestBaseRapor {
     public void TC_01_User_HomePageToDoctorsPageNavigationTest() {
         // setupSteps çalışmaz, kendi login'ini yapar
 
+        System.out.println("");
         extentTest = extentReports.createTest("TC_01 - Kayıtlı Kullanıcı ile Sisteme Giriş Yapma İşlemi",
                 "Kayıtlı bir kullanıcı geçerli (email ve password) hesap bilgileri girerek Sign In butonuna tıklanır");
 
