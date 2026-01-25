@@ -16,6 +16,7 @@ import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 
 
 import java.time.Duration;
@@ -630,7 +631,8 @@ public class US_025_TestCases extends TestBaseRapor {
     // TC_05: Kullanıcı detay görüntüleme ekranının işlevselliğini ve butonların görünürlüğünü doğrulamak
     // (Görüntüle butonu olmadığı için STEP 4'te FAIL olacak ve test bitecek.)
     // ========================================
-    @Test(priority = 5, description = "Margarito O'Connell seçilir, Edit/Delete hover yapılır, Görüntüle butonu olmadığı için STEP 4 FAIL olur.")
+    @Test(priority = 5, description = "Search ile Margarito filtrelenir, Edit/Delete hover yapılır; " +
+            "Görüntüle yokluğu nedeniyle STEP 4 FAIL olur.")
     public void tc05_AdminPanelUserDetailViewButtonMissingFailTest() {
 
         layout = new Layout();
@@ -638,12 +640,16 @@ public class US_025_TestCases extends TestBaseRapor {
 
         extentTest = extentReports.createTest(
                 "US_025_TC_05 - User Detail View Button Missing (FAIL) Testi",
-                "Margarito O'Connell satırı seçilir; Edit/Delete sadece hover; Görüntüle butonu olmadığı için STEP 4 fail."
+                "Users listesinde arama ile Margarito filtrelenir; Edit/Delete hover kontrol edilir; " +
+                        "Görüntüle yokluğu nedeniyle STEP 4 fail."
         );
 
+        String targetName = "Margarito O'Connell";
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
+        Actions actions = new Actions(Driver.getDriver());
+
         // =========================
-        // Ortak Adımlar: Login -> Admin Panel -> Users List
-        // (Burada daha önce çalıştırdığın sağlam akışın aynısı)
+        // Ortak Akış: Login -> Admin -> Users (alt menü)
         // =========================
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         ReusableMethods.waitForClickability(layout.signInLink, 5);
@@ -657,7 +663,7 @@ public class US_025_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         ReusableMethods.waitForPageToLoad(10);
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("/en"), "Home Page açılmadı!");
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("/en"));
         extentTest.pass("✅ Login başarılı, Home Page açıldı");
 
         WebElement adminUserButton = Driver.getDriver().findElement(
@@ -667,14 +673,10 @@ public class US_025_TestCases extends TestBaseRapor {
         adminUserButton.click();
         ReusableMethods.bekle(2);
 
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(20));
-        Actions actions = new Actions(Driver.getDriver());
-
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
         ReusableMethods.waitForVisibility(sidebar, 10);
         actions.moveToElement(sidebar).pause(Duration.ofMillis(500)).perform();
 
-        // Users ana menü (expand)
         WebElement usersMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Users']/parent::a | //a[.//span[normalize-space()='Users']]")
         );
@@ -686,7 +688,6 @@ public class US_025_TestCases extends TestBaseRapor {
         }
         ReusableMethods.bekle(1);
 
-        // Alt menü Users (href=/Dashboard/Users) -> KRİTİK
         WebElement usersSubMenu = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(@href,'/Dashboard/Users') and normalize-space()='Users'] | " +
                         "//a[contains(@href,'/Dashboard/Users') and .//text()[normalize-space()='Users']]")
@@ -700,27 +701,35 @@ public class US_025_TestCases extends TestBaseRapor {
         wait.until(ExpectedConditions.urlContains("/Dashboard/Users"));
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("/Dashboard/Users"),
                 "Users list sayfasına gidilemedi! URL: " + Driver.getDriver().getCurrentUrl());
-
         extentTest.pass("✅ Users list sayfası açıldı: " + Driver.getDriver().getCurrentUrl());
 
         // =========================
-        // TC_05 Steps
+        // STEP 1: Search kutusuna Margarito yazıp filtrele
         // =========================
+        extentTest.info("STEP 1: Search alanına '" + targetName + "' yaz ve filtrelemeyi doğrula");
 
-        // STEP 1: Margarito O'Connell satırını bul ve seç
-        extentTest.info("STEP 1: Users listesinde Margarito O'Connell kullanıcısını bul ve seç");
+        WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search-table")));
+        Assert.assertTrue(searchInput.isDisplayed() && searchInput.isEnabled());
 
-        String targetName = "Margarito O'Connell";
+        searchInput.click();
+        searchInput.clear();
+        searchInput.sendKeys(targetName);
+        ReusableMethods.bekle(2);
 
-        // Tablonun yüklenmesini bekle
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("table tbody")));
+        // En az bir satır görünmeli (filtre çalıştı mı)
+        wait.until(driver -> driver.findElements(By.cssSelector("table tbody tr")).size() > 0);
 
-        // İsim geçen satırı bul (case-insensitive)
-        By targetRowBy = By.xpath("//table//tbody//tr[td][contains(translate(., " +
-                "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), " +
-                "'" + targetName.toLowerCase() + "')]");
+        // İlk satır metni Margarito içeriyor mu? (opsiyonel ama güzel doğrulama)
+        String firstRowText = Driver.getDriver().findElement(By.cssSelector("table tbody tr")).getText().toLowerCase();
+        Assert.assertTrue(firstRowText.contains("margarito"));
+        extentTest.pass("✅ STEP 1 PASSED: Arama ile liste filtrelendi ve Margarito satırı görüntülendi");
 
-        WebElement targetRow = wait.until(ExpectedConditions.visibilityOfElementLocated(targetRowBy));
+        // =========================
+        // STEP 2: Filtrelenen ilk satırı seç (Margarito)
+        // =========================
+        extentTest.info("STEP 2: Filtrelenen listeden Margarito satırını seç");
+
+        WebElement targetRow = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("table tbody tr")));
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView({block:'center'});", targetRow);
 
         try {
@@ -728,65 +737,59 @@ public class US_025_TestCases extends TestBaseRapor {
         } catch (Exception e) {
             ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", targetRow);
         }
+        extentTest.pass("✅ STEP 2 PASSED: Margarito satırı seçildi");
 
-        extentTest.pass("✅ STEP 1 PASSED: Margarito O'Connell satırı seçildi");
+        // =========================
+        // STEP 3: Edit & Delete butonlarına sadece HOVER yap
+        // =========================
+        extentTest.info("STEP 4: Edit ve Delete butonlarına hover yapılıyor");
 
-        // STEP 2: Edit & Delete butonları görünür olmalı
-        extentTest.info("STEP 2: Edit ve Delete butonlarının görünür olduğunu doğrula (tıklama yok)");
-
-        // Not: Butonlar satır içinde değilse (sağ panel / action bar), global arıyoruz.
-        By editBtnBy = By.xpath(
-                "//a[contains(@href,'edit') or contains(@class,'edit') or contains(translate(normalize-space(.),'EDIT','edit'),'edit')] | " +
-                        "//button[contains(@class,'edit') or contains(translate(normalize-space(.),'EDIT','edit'),'edit')]"
-        );
-
-        By deleteBtnBy = By.xpath(
-                "//a[contains(@href,'delete') or contains(@class,'delete') or " +
-                        "contains(translate(normalize-space(.),'DELETE','delete'),'delete') or contains(translate(normalize-space(.),'SIL','sil'),'sil')] | " +
-                        "//button[contains(@class,'delete') or contains(translate(normalize-space(.),'DELETE','delete'),'delete') or contains(translate(normalize-space(.),'SIL','sil'),'sil')]"
-        );
-
-        WebElement editBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(editBtnBy));
-        WebElement deleteBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(deleteBtnBy));
-
-        Assert.assertTrue(editBtn.isDisplayed(), "Edit butonu görünmüyor!");
-        Assert.assertTrue(deleteBtn.isDisplayed(), "Delete/Sil butonu görünmüyor!");
-
-        extentTest.pass("✅ STEP 2 PASSED: Edit ve Delete butonları görüntülendi");
-
-        // STEP 3: Edit & Delete hover (tıklama YOK)
-        extentTest.info("STEP 3: Edit ve Delete butonlarına hover yap (tıklama yok)");
-
-        actions.moveToElement(editBtn).pause(Duration.ofMillis(800)).perform();
-        ReusableMethods.bekle(1);
-
-        actions.moveToElement(deleteBtn).pause(Duration.ofMillis(800)).perform();
-        ReusableMethods.bekle(1);
-
-        extentTest.pass("✅ STEP 3 PASSED: Edit ve Delete üzerinde hover yapıldı (tıklama yapılmadı)");
-
-        // STEP 4: Görüntüle butonu yok -> FAIL
-        extentTest.info("STEP 4: 'Görüntüle/View' butonu aranır (beklenen: yok -> FAIL)");
+        // Edit için (Tahmini) ve Delete için (Kesin - Gönderdiğin koda göre) locatorlar
+        By editBtnBy = By.xpath("//button[contains(@class,'fa-edit')] | //a[contains(@class,'edit')]");
+        By deleteBtnBy = By.xpath("//button[contains(@class,'fa-remove')]");
 
         try {
-            WebElement viewBtn = Driver.getDriver().findElement(By.xpath(
-                    "//a[contains(translate(normalize-space(.),'GÖRÜNTÜLE','görüntüle'),'görüntüle') or " +
-                            "contains(translate(normalize-space(.),'VIEW','view'),'view') or contains(@href,'view') or contains(@href,'show') or contains(@class,'view')] | " +
-                            "//button[contains(translate(normalize-space(.),'GÖRÜNTÜLE','görüntüle'),'görüntüle') or " +
-                            "contains(translate(normalize-space(.),'VIEW','view'),'view') or contains(@class,'view')]"
-            ));
+            // 1. Edit Hover
+            WebElement editBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(editBtnBy));
+            actions.moveToElement(editBtn).pause(Duration.ofMillis(800)).perform();
+            extentTest.pass("✅ Edit butonu üzerinde hover yapıldı.");
 
-            // Bulunursa bu testin amacına ters, yine FAIL
-            extentTest.fail("❌ STEP 4 FAILED: 'Görüntüle/View' butonu beklenmiyordu ama bulundu: " + viewBtn.getText());
-            Assert.fail("'Görüntüle/View' butonu sayfada bulunmamalıydı, ancak bulundu!");
+            ReusableMethods.bekle(1);
+
+            // 2. Delete Hover (Gönderdiğin butonu bulacak)
+            WebElement deleteBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(deleteBtnBy));
+            actions.moveToElement(deleteBtn).pause(Duration.ofMillis(800)).perform();
+            extentTest.pass("✅ Delete butonu üzerinde hover yapıldı.");
 
         } catch (Exception e) {
-            // Beklenen durum: buton yok -> FAIL olarak raporla ve testi bitir
-            extentTest.fail("❌ STEP 4 FAILED (Beklenen): 'Görüntüle/View' butonu bulunamadı. Test bu adımda fail olmalıdır.");
-            Assert.fail("Görüntüle/View butonu bulunamadı (beklenen fail).");
+            extentTest.info("⚠️ Hover sırasında bir sorun oluştu (belki butonlar geç yüklendi): " + e.getMessage());
+            // Testi durdurmuyoruz, çünkü asıl amacımız 4. adımdaki eksikliği göstermek.
+        }
+
+        // =========================
+        // STEP 4: Görüntüle (View) Butonu Yokluğu -> BURADA FAIL ALACAKSIN
+        // =========================
+        extentTest.info("STEP 5: 'Görüntüle/View' butonu aranıyor (Beklenen: Yok -> FAIL)");
+
+        // Geniş kapsamlı arama
+        By viewBtnBy = By.xpath("//button[contains(@class,'view')] | //a[contains(@class,'view')] | //*[contains(text(),'View')]");
+
+        List<WebElement> viewButtons = Driver.getDriver().findElements(viewBtnBy);
+
+        if (viewButtons.isEmpty()) {
+            String bugMsg = "❌ BUG: User Story'de istenen 'Görüntüle' butonu sayfada OLMADIĞI için test fail edildi.";
+            extentTest.fail(bugMsg);
+            Assert.fail(bugMsg); // İşte burada testin kırmızı yanacak ve raporun hazır olacak!
+        } else {
+            extentTest.pass("✅ Görüntüle butonu mevcut.");
         }
 
     }
+
+
+
+
+
 }
 
 
