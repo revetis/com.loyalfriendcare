@@ -516,6 +516,7 @@ public class US16 extends TestBaseRapor {
             extentTest.info("  ✓ Geçersiz telefon ile randevu oluşturulamadı");
             extentTest.info("  ✓ Özel karakterli uzun mesaj girilebildi");
             extentTest.pass("TC_05 tamamlandı");
+            System.out.println("US16 Test Bitti");
         }
 
     }
