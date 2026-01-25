@@ -36,11 +36,13 @@ public class US_004_Admin extends TestBaseRapor {
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
-
+    AdminLoyalFriendCare adminLoyalFriendCare = new AdminLoyalFriendCare();
+    Properties properties;
+    UserLoyalFriendCare userLoyalFriendCare = new UserLoyalFriendCare();
 
     @Test
-    public void US_004_Admin_AramaCubugu_PozitivTest01() {
-        AdminLoyalFriendCare adminLoyalFriendCare = new AdminLoyalFriendCare();
+    public void US_004_Admin_AramaCubugu_PozitivTest() {
+
         extentTest = extentReports.createTest("US_004 Admin AramaCubugu PozitivTest");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
@@ -814,7 +816,6 @@ public class US_004_Admin extends TestBaseRapor {
         // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
         // Arama tusuna click et
         // Sistem ilgili sonuçları icerdigini test edin
-        Properties properties;
         ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
 
 
