@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
+    public WebElement getAramaSonucElementi;
+
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
@@ -51,5 +53,3 @@ public class AdminLoyalFriendCare {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
-
-
