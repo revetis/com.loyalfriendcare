@@ -181,7 +181,6 @@ public class US13 extends TestBaseRapor {
 
         Assert.fail();
 
-        //try cathcte visibility kontrolü
 
         // 8) Submit
         detailPage.appointmentBookingButton.click();
