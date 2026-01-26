@@ -55,7 +55,5 @@ public class UserPage {
     @FindBy(xpath = "//*[@id=\"page\"]/main/div/div[2]")
     public WebElement departmentsList;
 
-    @FindBy(xpath = "//*[@id=\"page\"]/main/div[2]/div/div/div")
-    public List<WebElement> departmentsSayfasiList;
 
 }
