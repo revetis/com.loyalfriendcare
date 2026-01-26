@@ -40,6 +40,4 @@ public class HomePageDepartmentSection {
     @FindBy(css = "a.grid_item h3")
     public List<WebElement> departmentsImagesTitle;
 
-
-
 }

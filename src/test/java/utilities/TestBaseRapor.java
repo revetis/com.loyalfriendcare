@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public abstract class TestBaseRapor {
 
-    protected static ExtentReports extentReports; //extent report'a ilk atamayi yapar
+    public static ExtentReports extentReports; //extent report'a ilk atamayi yapar
     protected static ExtentSparkReporter extentSparkReporter; // Html raporu duzenler
     protected static ExtentTest extentTest; // test pass veya failed gibi bilgileri kaydeder.
     // Ayrica ekran resmi icin de kullaniriz
@@ -47,6 +47,7 @@ public abstract class TestBaseRapor {
     public void tearDownMethod(ITestResult result) throws IOException {
 
         if (result.getStatus() == ITestResult.FAILURE) { // eğer testin sonucu başarısızsa
+            ReusableMethods.waitForPageToLoad(2);
             String resimYolu = ReusableMethods.getScreenshot(result.getName());
             extentTest.fail(result.getName());
             extentTest.addScreenCaptureFromPath(resimYolu);
@@ -64,7 +65,7 @@ public abstract class TestBaseRapor {
         Locale.setDefault(new Locale("en", "US"));
 
         if (extentReports != null) {
-            extentReports.flush(); // Artık exception.ftl'i bulabilecek
+            extentReports.flush();
         }
     }
 }
