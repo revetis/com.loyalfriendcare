@@ -178,20 +178,9 @@ public class ReusableMethods {
         js.executeScript("window.scrollBy(0,500)");
     }
 
-    public static void scrollUp() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollBy(0,-500)");
-    }
-
     public static void scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", element);
-    }
-
-
-    public static void scrollToTop() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, 0)");
     }
 
     public static void scrollToHeader() {
@@ -199,4 +188,8 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0);");
     }
 
+    public static WebElement waitForClickablility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 }
