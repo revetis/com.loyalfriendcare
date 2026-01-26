@@ -21,6 +21,7 @@ public class UserPage {
     public WebElement userPageUserNameLink;
 
     @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[3]/ul")
+
     public WebElement userDepartmentsinHeaderDropdownMenü;
 
     @FindBy(xpath = "(//*[@id=\"menu\"]/ul/li[3]/ul/li)")
@@ -50,5 +51,11 @@ public class UserPage {
     @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]/form/div[4]/div/div")
     public  WebElement appointmentFormDoctorsLink;
 
+
+    @FindBy(xpath = "//*[@id=\"page\"]/main/div/div[2]")
+    public WebElement departmentsList;
+
+    @FindBy(xpath = "//*[@id=\"page\"]/main/div[2]/div/div/div")
+    public List<WebElement> departmentsSayfasiList;
 
 }

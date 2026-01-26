@@ -1,5 +1,9 @@
 package pages.admin_pages;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5dc7a24d123e8600957533139256e8ca25386230
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -52,6 +56,8 @@ public class AdminDashboardPage {
 
     @FindBy(xpath = "(//*[@class='text-white'])[8]")
     public WebElement adminDashboardYedinciKutuLearnMore;
+
+
 
 
 
