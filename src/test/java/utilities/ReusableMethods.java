@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -201,5 +203,14 @@ public class ReusableMethods {
     public static void scrollToHeader() {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollTo(0, 0);");
+    }
+
+    public static String getFutureDate(int plusDays) {
+
+        LocalDate futureDate = LocalDate.now().plusDays(plusDays);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        return futureDate.format(formatter);
     }
 }
