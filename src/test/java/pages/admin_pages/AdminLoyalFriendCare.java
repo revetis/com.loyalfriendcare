@@ -10,12 +10,11 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
-    public WebElement getAramaSonucElementi;
-
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
     }
+
     @FindBy(xpath = "(//*[@class='btn_add'])[1]")
     public WebElement signInButonu;
 
