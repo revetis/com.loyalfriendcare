@@ -32,7 +32,7 @@ public class US02TC05SignUpButtonFunctionalityTest extends TestBaseRapor {
 
         // 2. Sign Up butonuna tıkla
         extentTest.info("2. Sign Up butonuna tıkla");
-        ReusableMethods.waitForClickablility(layout.signUpLink, 10);
+        ReusableMethods.waitForClickability(layout.signUpLink, 10);
         layout.signUpLink.click();
         extentTest.info("Sign Up butonuna tıklandı");
 

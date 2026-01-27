@@ -41,7 +41,7 @@ public class US02_TestCases extends TestBaseRapor {
         extentTest.pass("Loyalfriendcare logosu sol tarafta konumlandı (X: " + logoXPosition + ")");
 
         // 5. Loyalfriendcare logosunun tıklanabilir olduğunu doğrula
-        ReusableMethods.waitForClickablility(layout.headerLogo, 10);
+        ReusableMethods.waitForClickability(layout.headerLogo, 10);
         Assert.assertTrue(layout.headerLogo.isEnabled());
         extentTest.pass("Loyalfriendcare logosu tıklanabilir durumda");
 

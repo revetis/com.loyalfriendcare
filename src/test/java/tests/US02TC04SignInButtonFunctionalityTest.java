@@ -32,7 +32,7 @@ public class US02TC04SignInButtonFunctionalityTest extends TestBaseRapor {
         extentTest.pass("Sign In butonu görünür olduğu doğrulandı");
 
         // 3. Sign In butonuna tıkla
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -79,7 +79,7 @@ public class US02TC04SignInButtonFunctionalityTest extends TestBaseRapor {
             ReusableMethods.bekle(2);
 
             // Sign Out butonuna tıkla
-            ReusableMethods.waitForClickablility(layout.headerAuthUserSignOutButton, 10);
+            ReusableMethods.waitForClickability(layout.headerAuthUserSignOutButton, 10);
             layout.headerAuthUserSignOutButton.click();
             extentTest.info("Sign Out butonuna tıklandı");
 
