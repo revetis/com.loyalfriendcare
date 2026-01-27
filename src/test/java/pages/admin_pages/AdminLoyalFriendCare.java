@@ -10,8 +10,6 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
-    public WebElement aramaSonucElementi;
-
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
