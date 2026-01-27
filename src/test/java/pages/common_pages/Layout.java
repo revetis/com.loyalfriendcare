@@ -10,6 +10,7 @@ import utilities.Driver;
 import java.util.List;
 
 public class Layout {
+
     public Layout(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
@@ -20,6 +21,9 @@ public class Layout {
     //=============================================
     //=============================================
 
+    // Navigation bar
+    @FindBy(css = "nav#menu")
+    public WebElement headerNavigationBar;
 
     @FindBy(css = "header.header")
     public WebElement header;
