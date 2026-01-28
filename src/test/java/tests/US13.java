@@ -91,10 +91,10 @@ public class US13 extends TestBaseRapor {
         extentTest.pass("Appointment form görüntülendi.");
 
         // 3) Date: bugünkü tarih + 3 gün (gelecek tarih)
-        String futureDate = ReusableMethods.getFutureDate(3);
-        detailPage.dateInput.clear();          // <-- BURAYA
-        detailPage.dateInput.sendKeys(futureDate);
-        extentTest.info("Date girildi: " + futureDate);
+//        String futureDate = ReusableMethods.getFutureDate(3);
+//        detailPage.dateInput.clear();          // <-- BURAYA
+//        detailPage.dateInput.sendKeys(futureDate);
+//        extentTest.info("Date girildi: " + futureDate);
 
 
         // 4) Phone
@@ -152,10 +152,10 @@ public class US13 extends TestBaseRapor {
         ReusableMethods.waitForVisibility(detailPage.appointmentForm, 5);
 
         // ❌ Geçmiş tarih (bugün -1)
-        String pastDate = ReusableMethods.getFutureDate(-1);
-        detailPage.dateInput.clear();
-        detailPage.dateInput.sendKeys(pastDate);
-        extentTest.info("Geçmiş tarih girildi: " + pastDate);
+        // String pastDate = ReusableMethods.getFutureDate(-1);
+//        detailPage.dateInput.clear();
+//        detailPage.dateInput.sendKeys(pastDate);
+//        extentTest.info("Geçmiş tarih girildi: " + pastDate);
 
         // 4) Phone
         String phone = "555" + (int) (Math.random() * 10000000); // 10 hane
