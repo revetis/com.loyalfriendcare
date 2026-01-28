@@ -1,11 +1,15 @@
 package pages.admin_pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.Driver;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,24 +32,45 @@ public class BedmanagersPage {
     @FindBy(xpath = "//table[@id='tableWithSearch']/tbody/tr")
     public List<WebElement> tableBodyRows;
 
-    public Map<String, WebElement> getTableRowMap(int row) {
-        List<WebElement> cells = tableBodyRows.get(row).findElements(By.tagName("td"));
-        Map<String, WebElement> rowElements = new HashMap<>();
+    public void waitForRowsToLoad() {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(3));
 
         try {
-            rowElements.put("img", cells.get(0).findElement(By.tagName("img")));
-            rowElements.put("title", cells.get(1).findElement(By.tagName("p")));
-            rowElements.put("departments", cells.get(2).findElement(By.tagName("a")));
-
-            if (cells.size() > 3) rowElements.put("availability", cells.get(3));
-            if (cells.size() > 4) rowElements.put("editButton", cells.get(4).findElement(By.tagName("a")));
-            if (cells.size() > 5) rowElements.put("deleteButton", cells.get(5).findElement(By.tagName("button")));
-
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//table[@id='tableWithSearch']/tbody/tr"), 0));
         } catch (Exception e) {
-            System.out.println("Error occured: "+e.getMessage());
+            System.out.println("Tablo 3 saniye bekledi ama veri gelmedi. JavaScript yüklenmemiş olabilir.");
         }
+    }
+
+    public Map<String, WebElement> getTableRowMap(int row) {
+        WebElement rowElement = tableBodyRows.get(row);
+        Map<String, WebElement> rowElements = new HashMap<>();
+
+        addIfFound(rowElements, "img", rowElement, ".//td[1]//img");
+
+        addIfFound(rowElements, "title", rowElement,
+                ".//td[2]/p | .//td[2][not(.//p)]");
+
+        addIfFound(rowElements, "departments", rowElement,
+                ".//td[3]//a | .//td[3]//p | .//td[3][not(.//a or .//p)]");
+
+        addIfFound(rowElements, "availability", rowElement,
+                ".//td[4]//*[string-length(normalize-space(text())) > 0]");
+
+        addIfFound(rowElements, "editButton", rowElement,
+                ".//td[5]//a");
+
+        addIfFound(rowElements, "deleteButton", rowElement,
+                ".//td[6]//button");
 
         return rowElements;
+    }
+
+    private void addIfFound(Map<String, WebElement> map, String key, WebElement parent, String xpath) {
+        List<WebElement> elements = parent.findElements(By.xpath(xpath));
+        if (!elements.isEmpty()) {
+            map.put(key, elements.get(0));
+        }
     }
 
     @FindBy(css = "div.alert-success")
@@ -56,6 +81,9 @@ public class BedmanagersPage {
 
     @FindBy(xpath = "//tr[@class='odd']/td")
     public WebElement noMatchingFoundWarning;
+
+    @FindBy(xpath = "(//span[contains(@class, 'select2-selection__rendered')])[1]")
+    public WebElement formDepartmentSelectRendered;
 
     //Edit page
     @FindBy(xpath = "//div[@class='card-body']/h3")
@@ -110,10 +138,13 @@ public class BedmanagersPage {
     public WebElement formBedPriceInput;
 
     @FindBy(xpath = "(//input[@type='checkbox'])[2]")
-    public WebElement formAvailiblityCheckBox;
+    public WebElement formAvailabilityCheckBox;
 
     @FindBy(xpath = "(//input[@type='checkbox'])[3]")
     public WebElement formDonyChangeImageCheckbox;
+
+    @FindBy(css = ".thumbnail-wrapper.d48>img")
+    public WebElement formImageThumbnail;
 
     @FindBy(xpath = "(//input[@name='_token'])[3]")
     public WebElement formUploadBedImageInput;
