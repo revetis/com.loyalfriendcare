@@ -30,7 +30,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.info("Kullanıcı ana sayfaya gitti: " + ConfigReader.getProperty("url"));
 
         // 2. Home Page'in yüklenmesini bekle
-        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.waitForPageToLoad(3);
         extentTest.info("Home Page yüklendi");
 
         // 3. Header bölümünü kontrol et
@@ -39,7 +39,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Header bölümü başarıyla görüntülendi");
 
         // 4. Loyalfriendcare logosunun sol tarafta konumlandığını doğrula
-        ReusableMethods.waitForVisibility(layout.headerLogoImage, 10);
+        ReusableMethods.waitForVisibility(layout.headerLogoImage, 2);
         Assert.assertTrue(layout.headerLogoImage.isDisplayed());
 
         int logoXPosition = layout.headerLogoImage.getLocation().getX();
@@ -48,7 +48,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Loyalfriendcare logosu sol tarafta konumlandı (X: " + logoXPosition + ")");
 
         // 5. Loyalfriendcare logosunun tıklanabilir olduğunu doğrula
-        ReusableMethods.waitForClickability(layout.headerLogo, 10);
+        ReusableMethods.waitForClickability(layout.headerLogo, 2);
         Assert.assertTrue(layout.headerLogo.isEnabled());
         extentTest.pass("Loyalfriendcare logosu tıklanabilir durumda");
 
@@ -66,7 +66,7 @@ public class US_02_TestCases extends TestBaseRapor {
                 "Sign In ve Sign Up butonlarının görünürlüğünü, konumunu ve rengini doğrulama");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.waitForPageToLoad(3);
         layout = new Layout();
 
         // 1. Header bölümünün sağ tarafında Sign in ve Sign Up butonlarının olduğunu kontrol et
@@ -75,7 +75,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Sign In ve Sign Up butonları header'da bulundu");
 
         // 2. Sign In butonunun yeşil renkte ve görünür olduğunu doğrula
-        ReusableMethods.waitForVisibility(layout.signInLink, 10);
+        ReusableMethods.waitForVisibility(layout.signInLink, 2);
         Assert.assertTrue(layout.signInLink.isDisplayed());
 
         String signInBackgroundColor = layout.signInLink.getCssValue("background-color");
@@ -84,7 +84,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Sign In butonu yeşil renkte ve görünür");
 
         // 3. Sign Up butonunun yeşil renkte ve görünür olduğunu doğrula
-        ReusableMethods.waitForVisibility(layout.signUpLink, 10);
+        ReusableMethods.waitForVisibility(layout.signUpLink, 2);
         Assert.assertTrue(layout.signUpLink.isDisplayed());
 
         String signUpBackgroundColor = layout.signUpLink.getCssValue("background-color");
@@ -117,7 +117,7 @@ public class US_02_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("1. Kullanıcı ana sayfaya gitti: " + ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickability(layout.headerAboutUsLink, 10).click();
+        ReusableMethods.waitForClickability(layout.headerAboutUsLink, 2).click();
         extentTest.info("About Us linkine tıklandı");
 
         ReusableMethods.bekle(2);
@@ -126,7 +126,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("About Us sayfası başarıyla açıldı");
 
         // 2. Header'daki Logo butonuna tıkla
-        ReusableMethods.waitForClickability(layout.headerLogo, 10).click();
+        ReusableMethods.waitForClickability(layout.headerLogo, 2).click();
         extentTest.info("2. Header'daki Logo butonuna tıklandı");
 
         // 3. Sayfanın Home Page'e yönlendiğini doğrula
@@ -171,7 +171,7 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.info("1. Header'daki Sign Up butonunun yeşil renkte görünür olduğunu doğrula");
 
         // 2. Sign In butonuna tıkla
-        ReusableMethods.waitForClickability(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 2);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -182,8 +182,8 @@ public class US_02_TestCases extends TestBaseRapor {
         extentTest.pass("Giriş sayfasına başarıyla yönlendirildi: " + currentUrl);
 
         // 4. Giriş formunun görünür olduğunu kontrol et
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
-        ReusableMethods.waitForVisibility(loginPage.passwordInput, 10);
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 1);
+        ReusableMethods.waitForVisibility(loginPage.passwordInput, 1);
 
         Assert.assertTrue(loginPage.emailAddressInput.isDisplayed());
         Assert.assertTrue(loginPage.passwordInput.isDisplayed());
@@ -200,7 +200,7 @@ public class US_02_TestCases extends TestBaseRapor {
         loginPage.signInButton.click();
         extentTest.info("Sign In butonuna tıklandı");
 
-        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(2);
         String loggedInUrl = Driver.getDriver().getCurrentUrl();
 
         // Başarılı giriş kontrolü
@@ -331,13 +331,13 @@ public class US_02_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("1. Header'daki Sign Up butonunun yeşil renkte görünür olduğunu doğrula");
 
-        ReusableMethods.waitForVisibility(layout.signUpLink, 10);
+        ReusableMethods.waitForVisibility(layout.signUpLink, 1);
         Assert.assertTrue(layout.signUpLink.isDisplayed());
         extentTest.pass("Sign Up butonu görünür olduğu doğrulandı");
 
         // 2. Sign Up butonuna tıkla
         extentTest.info("2. Sign Up butonuna tıkla");
-        ReusableMethods.waitForClickability(layout.signUpLink, 10);
+        ReusableMethods.waitForClickability(layout.signUpLink, 1);
         layout.signUpLink.click();
         extentTest.info("Sign Up butonuna tıklandı");
 
@@ -350,10 +350,10 @@ public class US_02_TestCases extends TestBaseRapor {
 
         // 4. Kayıt formunun görünür olduğunu kontrol et
         extentTest.info("4. Kayıt formunun (ad, email, password alanları) görünür olduğunu kontrol et");
-        ReusableMethods.waitForVisibility(registerPage.usernameInput, 10);
-        ReusableMethods.waitForVisibility(registerPage.emailAddressInput, 10);
-        ReusableMethods.waitForVisibility(registerPage.passwordInput, 10);
-        ReusableMethods.waitForVisibility(registerPage.confirmPasswordInput, 10);
+        ReusableMethods.waitForVisibility(registerPage.usernameInput, 2);
+        ReusableMethods.waitForVisibility(registerPage.emailAddressInput, 2);
+        ReusableMethods.waitForVisibility(registerPage.passwordInput, 2);
+        ReusableMethods.waitForVisibility(registerPage.confirmPasswordInput, 2);
 
         Assert.assertTrue(registerPage.usernameInput.isDisplayed());
         Assert.assertTrue(registerPage.emailAddressInput.isDisplayed());
