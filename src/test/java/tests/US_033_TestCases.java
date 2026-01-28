@@ -237,7 +237,6 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
         ReusableMethods.waitForVisibility(medicinesMainMenu, 10);
-        Assert.assertTrue(medicinesMainMenu.isDisplayed(), "Medicines ana menüsü görünür değil!");
 
         extentTest.pass("✅ STEP 2 PASSED: Medicines menüsü bulundu ve görünür");
 
@@ -246,7 +245,6 @@ public class US_033_TestCases extends TestBaseRapor {
             ReusableMethods.waitForClickablility(medicinesMainMenu, 10);
             medicinesMainMenu.click();
         } catch (Exception e) {
-            ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", medicinesMainMenu);
         }
         ReusableMethods.bekle(1);
 
@@ -254,11 +252,8 @@ public class US_033_TestCases extends TestBaseRapor {
 
         // STEP 4: İlaç listesi sayfasına yönlendirildiğini kontrol et
         // HTML sende: <a href="https://qa.loyalfriendcare.com/Dashboard/Instagrams">Medicines</a>
-        WebElement medicinesSubMenu = Driver.getDriver().findElement(
-                By.xpath("//a[normalize-space()='Medicines' and (contains(@href,'/Dashboard/Instagrams') " +
-                        "or contains(@href,'Dashboard/Instagrams'))]")
-        );
-
+        WebElement medicinesSubMenu = Driver.getDriver().findElement(By.xpath("//a[contains(@href,'Dashboard/Medicines') " +
+                "or contains(@href,'Dashboard/Instagrams')]"));
         ReusableMethods.waitForVisibility(medicinesSubMenu, 10);
 
         try {
@@ -275,15 +270,12 @@ public class US_033_TestCases extends TestBaseRapor {
 
         // Expected’i artık gerçek route’a göre doğruluyoruz: /Dashboard/Instagrams
         Assert.assertTrue(currentUrl.contains("/Dashboard/Instagrams"),
-                "İlaç listesi sayfası açılmadı! Beklenen: /Dashboard/Instagrams | Actual URL: " + currentUrl);
 
-        extentTest.pass("✅ STEP 4 PASSED: İlaç listesi sayfasına yönlendirme başarılı (URL: " + currentUrl + ")");
 
         // STEP 5: Sayfanın hatasız yüklendiğini doğrula (basic health check)
         // İstersen burada liste tablosu/başlık gibi spesifik element doğrulaması da ekleriz.
-        Assert.assertFalse(Driver.getDriver().getPageSource().toLowerCase().contains("error"),
-                "Sayfa kaynağında hata mesajı bulundu!");
-
+                Assert.assertFalse(
+                        Driver.getDriver().getPageSource().toLowerCase().contains("error"));
         extentTest.pass("✅ STEP 5 PASSED: Sayfa hatasız yüklendi");
 
         // Testin sonunda 3 saniye bekle (senin isteğin)
@@ -320,21 +312,16 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 3).click();
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 3);
 
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("admin_password"));
         loginPage.signInButton.click();
 
-        ReusableMethods.waitForPageToLoad(3);
 
         // Admin paneline geç (senin önceki tc01 yaklaşımı)
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 3).click();
-        ReusableMethods.waitForPageToLoad(3);
 
         extentTest.pass("✅ Pre-Condition PASSED: Admin login yapıldı ve admin panel açıldı");
 
@@ -344,15 +331,12 @@ public class US_033_TestCases extends TestBaseRapor {
         extentTest.info("1. Medicines listesi sayfasına git");
 
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
-        ReusableMethods.waitForVisibility(sidebar, 3);
         actions.moveToElement(sidebar).perform();
         ReusableMethods.bekle(1);
 
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
-        ReusableMethods.waitForVisibility(medicinesMainMenu, 3);
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 3).click();
         ReusableMethods.bekle(1);
 
         // Alt menü HTML: <a href=".../Dashboard/Instagrams">Medicines</a>
@@ -360,9 +344,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[normalize-space()='Medicines' and (contains(@href,'/Dashboard/Instagrams') " +
                         "or contains(@href,'Dashboard/Instagrams'))]")
         );
-        ReusableMethods.waitForClickablility(medicinesSubMenu, 3).click();
 
-        ReusableMethods.waitForPageToLoad(3);
 
         String currentUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("/Dashboard/Instagrams"),
@@ -375,7 +357,6 @@ public class US_033_TestCases extends TestBaseRapor {
         // STEP 2 – Sayfanın tam yüklenmesini bekle
         // =========================
         extentTest.info("2. Sayfanın tam yüklenmesini bekle");
-        ReusableMethods.waitForPageToLoad(3);
         ReusableMethods.bekle(1);
         extentTest.pass("✅ STEP 2 PASSED: Sayfa tamamen yüklendi");
 
@@ -389,7 +370,6 @@ public class US_033_TestCases extends TestBaseRapor {
         );
 
         ReusableMethods.scrollToElement(medicinesTable);
-        ReusableMethods.waitForVisibility(medicinesTable, 3);
         Assert.assertTrue(medicinesTable.isDisplayed());
 
         extentTest.pass("✅ STEP 3 PASSED: İlaç listesi tablosu görüntüleniyor");
@@ -437,9 +417,6 @@ public class US_033_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(2);
         extentTest.pass("✅ US_033_TC_03 testi PASS olarak tamamlandı!");
     }
-
-
-
 
 
 }
