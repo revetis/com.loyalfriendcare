@@ -153,6 +153,9 @@ public class Layout {
     @FindBy(css = "nav.page-sidebar")
     public WebElement adminSidebar;
 
+    @FindBy(css = ".toggle-sidebar")
+    public WebElement adminSidebarButton;
+
     //Yonetim araclari
     @FindBy(xpath = "//ul[@class='menu-items scroll-content']/li")
     public List<WebElement> adminSidebarAdminToolList;
@@ -223,6 +226,8 @@ public class Layout {
         }
         return null;
     }
+
+
     //Departments
     @FindBy(xpath = "//span[text()='Departments']/ancestor::li")
     public WebElement adminSidebarDepartmentsLi;
@@ -260,12 +265,12 @@ public class Layout {
     @FindBy(xpath = "//span[text()='Pets adsense']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarPetsadsenseSubLinks;
 
-    //Tickets
+    //Appointments
     @FindBy(xpath = "//span[text()='Tickets']/ancestor::a")
-    public WebElement adminSidebarTicketsButton;
+    public WebElement adminSidebarAppointmentsButton;
 
     @FindBy(xpath = "//span[text()='Tickets']")
-    public WebElement adminSidebarTicketsButtonText;
+    public WebElement adminSidebarAppointmentsButtonText;
 
     //Vaccinations
     @FindBy(xpath = "//span[text()='Vaccinations']/ancestor::a")

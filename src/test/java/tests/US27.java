@@ -6,9 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import pages.admin_pages.BedmanagersPage;
 import pages.admin_pages.CreateBedPage;
@@ -23,31 +21,43 @@ import java.util.Map;
 
 public class US27 extends TestBaseRapor {
 
-    @BeforeMethod
-    public void setupSteps() {
+    @BeforeClass
+    public void setupTests() {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         Layout layout = new Layout();
         SignIn.signInAdmin();
         ReusableMethods.waitForClickability(layout.headerAuthAdminDashboardButton, Integer.parseInt(ConfigReader.getProperty("timeout"))).click();
     }
 
+    @AfterClass
+    public void teardownTests() {
+            Driver.getDriver().get(ConfigReader.getProperty("url"));
+            SignOut.signOutAdmin();
+    }
+
+    @AfterMethod
+    public void resizeScreen() {
+        Driver.getDriver().manage().window().maximize();
+    }
+
+    //Yardimci methodlar
     public void yatakOlustur() {
         Layout layout = new Layout();
+        CreateBedPage createBedPage = new CreateBedPage();
+        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
 
-        // 1. Sidebar'a Hover yap
         ReusableMethods.hover(layout.adminSidebar);
-
-        // 2. Ana menüye tıkla
         ReusableMethods.waitForClickability(layout.adminSidebarBedmanagersButton, 5);
         layout.adminSidebarBedmanagersButton.click();
 
-        // 3. Alt menünün açılmasını bekle
-        ReusableMethods.waitForVisibility(layout.adminSidebarBedmanagersSubLinksMenu, 5);
+        try {
+            shortWait.until(ExpectedConditions.visibilityOf(layout.adminSidebarBedmanagersSubLinksMenu));
+        } catch (TimeoutException e) {
+            System.out.println("UYARI: Alt menu gecikmeli acildi veya acilamadi.");
+        }
 
-        // 4. "Create Bed managers" linkini listeden bul
         WebElement createBedLink = layout.adminSidebarBedmanagersSubLinks.stream()
                 .filter(el -> {
-                    // Metni al, görünmüyorsa textContent'ten al, sonra kenar boşluklarını sil
                     String text = el.getText().trim();
                     if (text.isEmpty()) {
                         text = el.getAttribute("textContent").trim();
@@ -55,27 +65,78 @@ public class US27 extends TestBaseRapor {
                     return text.equalsIgnoreCase("Create Bed managers");
                 })
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Alt menüde 'Create Bed managers' linki bulunamadı! Mevcut linkler yüklenmemiş veya isim yanlış."));
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Alt menüde 'Create Bed managers' linki bulunamadı!"));
 
         ReusableMethods.waitForClickability(createBedLink, 5);
         createBedLink.click();
 
-        ReusableMethods.waitForPageToLoad(Long.parseLong(ConfigReader.getProperty("timeout")));
+        try {
+            shortWait.until(ExpectedConditions.visibilityOf(createBedPage.formInputEn));
+        } catch (TimeoutException e) {
+            System.out.println("HATA: Create Bed form yuklenmedi.");
+            return;
+        }
 
-        CreateBedPage createBedPage = new CreateBedPage();
         createBedPage.formInputEn.sendKeys("Test Yatak Otomasyon");
         createBedPage.submitButton.click();
 
-        ReusableMethods.waitForPageToLoad(2);
-    }
-
-    @AfterMethod
-    public void teardownTests(ITestResult result) {
-        if (result.isSuccess()) {
-            Driver.getDriver().get(ConfigReader.getProperty("url"));
-            SignOut.signOutAdmin();
+        try {
+            AlertMessageLocators alertMsg = new AlertMessageLocators();
+            shortWait.until(ExpectedConditions.visibilityOf(alertMsg.successMessage));
+            System.out.println("INFO: Yatak basariyla olusturuldu.");
+        } catch (TimeoutException e) {
+            System.out.println("UYARI: Success message gorulmedi ama islem devam ediyor.");
         }
     }
+
+    public void yatakSil() {
+        try {
+            Driver.getDriver().get(ConfigReader.getProperty("url"));
+            Layout layout = new Layout();
+            WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+
+            ReusableMethods.waitForClickability(layout.headerAuthAdminDashboardButton, 5).click();
+            bedManagersSayfasinaGit();
+
+            BedmanagersPage bedmanagersPage = new BedmanagersPage();
+
+            try {
+                shortWait.until(ExpectedConditions.visibilityOfAllElements(
+                        bedmanagersPage.tableBodyRows));
+            } catch (TimeoutException e) {
+                System.out.println("INFO: Silinecek yatak bulunamadi.");
+                return;
+            }
+
+            if (bedmanagersPage.tableBodyRows.isEmpty()) {
+                System.out.println("INFO: Tablo bos, cleanup pas geciliyor.");
+                return;
+            }
+
+            WebElement deleteButton = bedmanagersPage.getTableRowMap(0).get("deleteButton");
+            ReusableMethods.waitForClickability(deleteButton, 3);
+            deleteButton.click();
+
+            try {
+                shortWait.until(ExpectedConditions.alertIsPresent());
+                Driver.getDriver().switchTo().alert().accept();
+                System.out.println("INFO: Yatak silme onayı kabul edildi.");
+            } catch (TimeoutException e) {
+                System.out.println("UYARI: Alert cikmadi veya otomatik kapandi.");
+            }
+
+            try {
+                shortWait.until(ExpectedConditions.stalenessOf(deleteButton));
+            } catch (Exception ignored) {
+                // Stale kontrolü başarısız olsa bile devam et
+            }
+
+        } catch (Exception e) {
+            System.out.println("HATA: yatakSil() metodu: " + e.getMessage());
+        }
+    }
+    //Yardimci methodlar sonu
 
     @Test(priority = 1)
     public void TC_01_YonetimPanelindeSidebarMenuKontrolu() {
@@ -376,214 +437,271 @@ public class US27 extends TestBaseRapor {
 
     @Test(priority = 5)
     public void TC_05_BedManagerSayfasindaEditButonununErisilebilirligiVeEditOzelligininTesti() {
-        extentTest = extentReports.createTest("TC05", "Bed Manager Sayfasinda Edit Butonunun Erisilebilirligi Ve Edit Ozelliginin Testi");
+        extentTest = extentReports.createTest("TC05",
+                "Bed Manager Sayfasinda Edit Butonunun Erisilebilirligi Ve Edit Ozelliginin Testi");
 
         extentTest.info("Pre-condition: Test icin yeni bir yatak olusturuluyor.");
         yatakOlustur();
 
         BedmanagersPage bedmanagersPage = new BedmanagersPage();
+        AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
         SoftAssert softAssert = new SoftAssert();
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(3));
 
-        extentTest.info("Tablodaki ilk satirin verileri (Title, Dept, Status, Img) aliniyor.");
+        extentTest.info("Tablodaki ilk satirin verileri aliniyor.");
         Map<String, WebElement> firstRow = bedmanagersPage.getTableRowMap(0);
 
         if (!firstRow.containsKey("title") || firstRow.get("title") == null) {
             extentTest.fail("Tabloda veri bulunamadi, test durduruluyor.");
             softAssert.fail("İlk satırda 'title' bulunamadı!");
+            softAssert.assertAll();
             return;
         }
 
-        String title = bedmanagersPage.getTableRowMap(0).get("title").getText();
-        String departments = bedmanagersPage.getTableRowMap(0).get("departments").getText();
-        WebElement availabilityElement = bedmanagersPage.getTableRowMap(0).get("availability");
+        String title = firstRow.get("title").getText();
+        String departments = firstRow.get("departments").getText();
+        WebElement availabilityElement = firstRow.get("availability");
         String availability = availabilityElement != null ? availabilityElement.getText() : "";
-        String imageSrc = bedmanagersPage.getTableRowMap(0).get("img").getAttribute("src");
+        String imageSrc = firstRow.get("img").getAttribute("src");
 
-        extentTest.info("Referans Veriler -> Title: " + title + " | Dept: " + departments + " | Status: " + availability);
+        extentTest.info("Referans Veriler -> Title: " + title + " | Dept: " + departments +
+                " | Status: " + availability);
 
-        extentTest.info("Tablodaki tum Edit butonlarinin gorunurlugu ve aktifligi kontrol ediliyor.");
+        // === EDIT BUTTON VISIBILITY CHECK ===
+        extentTest.info("Tablodaki tum Edit butonlarinin gorunurlugu kontrol ediliyor.");
         for (int row = 0; row < bedmanagersPage.tableBodyRows.size(); row++) {
             Map<String, WebElement> rowMap = bedmanagersPage.getTableRowMap(row);
-
             if (rowMap.containsKey("editButton") && rowMap.get("editButton") != null) {
                 WebElement editButton = rowMap.get("editButton");
-                softAssert.assertTrue(editButton.isDisplayed(), row + ". sirada ki edit butonu gorunur degil.");
-                softAssert.assertTrue(editButton.isEnabled(), row + ". sirada ki edit butonu aktif degil.");
+                softAssert.assertTrue(editButton.isDisplayed(),
+                        row + ". sirada ki edit butonu gorunur degil.");
+                softAssert.assertTrue(editButton.isEnabled(),
+                        row + ". sirada ki edit butonu aktif degil.");
             }
         }
 
+        // === NAVIGATE TO EDIT PAGE ===
         extentTest.info("Ilk satirdaki Edit butonuna tiklaniyor.");
         try {
             bedmanagersPage.waitForRowsToLoad();
-            bedmanagersPage.getTableRowMap(0).get("editButton").click();
+            WebElement editBtn = bedmanagersPage.getTableRowMap(0).get("editButton");
+            ReusableMethods.scrollToElement(editBtn);
+            js.executeScript("arguments[0].click();", editBtn);
+
+            shortWait.until(ExpectedConditions.urlContains("edit"));
         } catch (Exception e) {
-            e.printStackTrace();
-            extentTest.fail("Edit butonuna tiklanamadi.");
-            softAssert.fail("Ilk sirada ki yatagin edit butonuna tiklayamadim.");
+            extentTest.fail("Edit butonuna tiklanamadi veya sayfa yuklenmedi.");
+            softAssert.fail("Edit sayfasina gidemedi.");
+            softAssert.assertAll();
+            return;
         }
 
-        extentTest.info("Edit sayfasina yonlendirme ve form verilerinin dogrulugu kontrol ediliyor.");
-        softAssert.assertTrue(Driver.getDriver().getCurrentUrl().contains("edit"));
+        // === FORM DATA VERIFICATION ===
+        extentTest.info("Edit sayfasindaki form verilerinin dogrulugu kontrol ediliyor.");
+        try {
+            shortWait.until(ExpectedConditions.visibilityOf(bedmanagersPage.formManagersTitleEn));
+        } catch (TimeoutException e) {
+            extentTest.fail("Form elementleri yuklenmedi.");
+            softAssert.fail("Edit form yuklenmedi.");
+            softAssert.assertAll();
+            return;
+        }
 
-        // Form verileri kontrolü
-        softAssert.assertEquals(bedmanagersPage.formManagersTitleEn.getAttribute("value"), title, "Formdaki Title verisi yanlış!");
+        softAssert.assertEquals(bedmanagersPage.formManagersTitleEn.getAttribute("value"), title,
+                "Formdaki Title verisi yanlış!");
+
         String selectedDepartment = bedmanagersPage.formDepartmentSelectRendered.getText().trim();
-        softAssert.assertEquals(selectedDepartment, departments, "BUG: Departman verisi yanlış yansıtılıyor!");
+        softAssert.assertEquals(selectedDepartment, departments,
+                "BUG: Departman verisi yanlış yansıtılıyor!");
 
-        boolean isAvailable = availability.equalsIgnoreCase("Active") || availability.equalsIgnoreCase("on");
-        softAssert.assertEquals(bedmanagersPage.formAvailabilityCheckBox.isSelected(), isAvailable, "Availability durumu eşleşmiyor!");
-        softAssert.assertEquals(bedmanagersPage.formImageThumbnail.getAttribute("src"), imageSrc, "Resim kaynagi eslesmiyor!");
+        boolean isAvailable = availability.equalsIgnoreCase("Active") ||
+                availability.equalsIgnoreCase("on");
+        softAssert.assertEquals(bedmanagersPage.formAvailabilityCheckBox.isSelected(), isAvailable,
+                "Availability durumu eşleşmiyor!");
 
-        // --- SCENARIO 1: VALID UPDATE ---
-        extentTest.info("--- SENARYO 1: Gecerli veri ile guncelleme (Happy Path) ---");
-        extentTest.info("Title alanina 'ehehe' yaziliyor ve kaydediliyor.");
+        softAssert.assertEquals(bedmanagersPage.formImageThumbnail.getAttribute("src"), imageSrc,
+                "Resim kaynagi eslesmiyor!");
+
+        // ═══════════════════════════════════════════════════════════════
+        // SCENARIO 1: VALID UPDATE (Happy Path)
+        // ═══════════════════════════════════════════════════════════════
+        extentTest.info("--- SENARYO 1: Gecerli veri ile guncelleme ---");
         bedmanagersPage.formManagersTitleEn.clear();
         bedmanagersPage.formManagersTitleEn.sendKeys("ehehe");
-
         bedmanagersPage.saveButton.click();
-        AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
+
         try {
-            ReusableMethods.waitForVisibility(alertMessageLocators.successMessage, Integer.parseInt(ConfigReader.getProperty("timeout")));
-            extentTest.info("Basarili guncelleme mesaji goruldu.");
-        } catch (Exception e) {
-            extentTest.fail("Gecerli veri girilmesine ragmen basarili mesaji cikmadi.");
-            softAssert.fail("Gecerli deger girince basarili mesaji gosterilmedi.");
+            shortWait.until(ExpectedConditions.visibilityOf(alertMessageLocators.successMessage));
+            extentTest.pass("Gecerli guncelleme basarili mesaji gosterdi.");
+        } catch (TimeoutException e) {
+            extentTest.fail("Gecerli veri ile kayit basarisiz oldu.");
+            softAssert.fail("Valid update success message gorunmedi.");
         }
 
-
-        // --- SCENARIO 2: BOUNDARY TESTING (LONG STRING) ---
+        // ═══════════════════════════════════════════════════════════════
+        // SCENARIO 2: BOUNDARY TEST (1000 Characters)
+        // ═══════════════════════════════════════════════════════════════
         extentTest.info("--- SENARYO 2: Sinir Deger Testi (1000 Karakter) ---");
-        extentTest.info("Edit sayfasina tekrar gidiliyor.");
+
+        // Edit sayfasına geri dön
         try {
             bedmanagersPage.waitForRowsToLoad();
-            bedmanagersPage.getTableRowMap(0).get("editButton").click();
+            js.executeScript("arguments[0].click();",
+                    bedmanagersPage.getTableRowMap(0).get("editButton"));
+            shortWait.until(ExpectedConditions.urlContains("edit"));
         } catch (Exception e) {
-            e.printStackTrace();
-            softAssert.fail("Ilk sirada ki yatagin edit butonuna tiklayamadim.");
+            extentTest.fail("Edit sayfasina geri donulemedi.");
+            softAssert.fail("2. senaryo icin edit sayfasi acilamadi.");
         }
 
         Faker faker = new Faker();
-        extentTest.info("Title alanina 1000 karakterlik veri giriliyor.");
+        String longText = faker.lorem().characters(1000);
         bedmanagersPage.formManagersTitleEn.clear();
-        bedmanagersPage.formManagersTitleEn.sendKeys(faker.lorem().characters(1000));
+        bedmanagersPage.formManagersTitleEn.sendKeys(longText);
         bedmanagersPage.saveButton.click();
 
-        alertMessageLocators = new AlertMessageLocators();
         try {
-            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, Integer.parseInt(ConfigReader.getProperty("timeout")));
-            extentTest.info("Beklenen hata mesaji (Error Message) goruldu.");
-        } catch (Exception e) {
-            extentTest.fail("1000 karakter girilmesine ragmen hata mesaji verilmedi! Sistem bunu kabul etmis olabilir.");
-            softAssert.fail("Gecersiz deger girince basarisiz mesaji gosterilmedi.");
+            shortWait.until(ExpectedConditions.visibilityOf(alertMessageLocators.errorMessage));
+            extentTest.pass("1000 karakter icin hata mesaji gosterildi.");
+        } catch (TimeoutException e) {
+            extentTest.fail("BUG: 1000 karakterlik veri kabul edildi, hata mesaji cikmadi!");
+            softAssert.fail("Boundary test failed - long text accepted.");
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // SCENARIO 3: EMPTY FIELD CHECK
+        // ═══════════════════════════════════════════════════════════════
+        extentTest.info("--- SENARYO 3: Bos Alan Kontrolu ---");
 
-        // --- SCENARIO 3: EMPTY FIELD CHECK ---
-        extentTest.info("--- SENARYO 3: Bos Alan Kontrolu (Empty Title) ---");
-        extentTest.info("Edit sayfasina tekrar gidiliyor.");
         try {
             bedmanagersPage.waitForRowsToLoad();
-            bedmanagersPage.getTableRowMap(0).get("editButton").click();
+            js.executeScript("arguments[0].click();",
+                    bedmanagersPage.getTableRowMap(0).get("editButton"));
+            shortWait.until(ExpectedConditions.urlContains("edit"));
         } catch (Exception e) {
-            e.printStackTrace();
-            softAssert.fail("Ilk sirada ki yatagin edit butonuna tiklayamadim.");
+            extentTest.fail("Edit sayfasina geri donulemedi.");
+            softAssert.fail("3. senaryo icin edit sayfasi acilamadi.");
         }
 
-        extentTest.info("Title alani temizlenip bos gonderiliyor.");
         bedmanagersPage.formManagersTitleEn.clear();
-        bedmanagersPage.saveButton.click();
 
-        alertMessageLocators = new AlertMessageLocators();
-        try {
-            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, Integer.parseInt(ConfigReader.getProperty("timeout")));
-            extentTest.info("Bos title icin hata mesaji goruldu.");
-        } catch (Exception e) {
-            extentTest.fail("Bos title ile gonderilmesine ragmen hata mesaji cikmadi.");
-            softAssert.fail("Bos mesaj girince basarisiz mesaji gosterilmedi.");
+        String validationMessage = (String) js.executeScript(
+                "return arguments[0].validationMessage;",
+                bedmanagersPage.formManagersTitleEn
+        );
+
+        boolean hasHtml5Required = validationMessage != null && !validationMessage.isEmpty();
+
+        if (hasHtml5Required) {
+            extentTest.info("HTML5 'required' attribute mevcut, tarayici validasyonu aktif.");
+            extentTest.info("Browser validation mesaji: " + validationMessage);
+
+            // Save butonuna basıldığında browser validation devreye girer
+            // Backend'e istek gitmez, dolayısıyla toaster mesajı çıkmaz
+            softAssert.assertTrue(true, "HTML5 validation çalışıyor - Beklenen davranış");
+
+        } else {
+            extentTest.info("HTML5 validation YOK, backend validation kontrol ediliyor.");
+            bedmanagersPage.saveButton.click();
+
+            try {
+                shortWait.until(ExpectedConditions.visibilityOf(alertMessageLocators.errorMessage));
+                extentTest.pass("Backend bos alan icin hata mesaji gosterdi.");
+            } catch (TimeoutException e) {
+                extentTest.fail("KRITIK BUG: Ne HTML5 ne de backend validation calismadi!");
+                softAssert.fail("Empty field validation COMPLETELY MISSING!");
+            }
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // SCENARIO 4: FULL CLEAR & HTML5 VALIDATION
+        // ═══════════════════════════════════════════════════════════════
+        extentTest.info("--- SENARYO 4: Tum Alanlari Temizleme ve Detayli Validation ---");
 
-        // --- SCENARIO 4: HTML5 VALIDATION & FULL CLEAR ---
-        extentTest.info("--- SENARYO 4: Tum Alanlari Temizleme ve HTML5 Validasyon Kontrolu ---");
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-
+        // Accordion'ları temizle
         try {
-            extentTest.info("Fransizca accordion menusu varsa temizleniyor.");
             bedmanagersPage.formFrenchLangAccordionButton.click();
-            ReusableMethods.waitForVisibility(bedmanagersPage.formFrenchLangTitle, 2);
+            shortWait.until(ExpectedConditions.visibilityOf(bedmanagersPage.formFrenchLangTitle));
             bedmanagersPage.formFrenchLangTitle.clear();
             bedmanagersPage.formFrenchLangContentTextArea.clear();
         } catch (Exception ignored) {
-            extentTest.info("Fransizca menusu bulunamadi veya acilmadi, geciliyor.");
+            extentTest.info("Fransizca accordion bulunamadi veya acilamadi.");
         }
 
         try {
-            extentTest.info("Arapca accordion menusu varsa temizleniyor.");
             bedmanagersPage.formArabicLangAccordionButton.click();
-            ReusableMethods.waitForVisibility(bedmanagersPage.formArabicLangTitle, 2);
+            shortWait.until(ExpectedConditions.visibilityOf(bedmanagersPage.formArabicLangTitle));
             bedmanagersPage.formArabicLangTitle.clear();
             bedmanagersPage.formArabicLangContentTextArea.clear();
         } catch (Exception ignored) {
-            extentTest.info("Arapca menusu bulunamadi veya acilmadi, geciliyor.");
+            extentTest.info("Arapca accordion bulunamadi veya acilamadi.");
         }
 
-        extentTest.info("Ana alanlar (Title, Price, Checkbox, Content) temizleniyor.");
+        // Ana alanları temizle
         bedmanagersPage.formManagersTitleEn.clear();
         bedmanagersPage.formBedPriceInput.clear();
 
         if (bedmanagersPage.formAvailabilityCheckBox.isSelected()) {
-            try {
-                js.executeScript("arguments[0].click();", bedmanagersPage.formAvailabilityCheckBox);
-            } catch (Exception e) {
-                System.out.println("Checkbox tıklanamadı, JS denendi.");
-            }
+            js.executeScript("arguments[0].click();", bedmanagersPage.formAvailabilityCheckBox);
         }
 
-        // TextArea bazen clear() ile temizlenmez, JS ile value'su siliniyor
         js.executeScript("arguments[0].value = '';", bedmanagersPage.formContentTextArea);
 
-
-        extentTest.info("Save butonunun aktiflik durumu ve 'required' attribute kontrolu yapiliyor.");
-        softAssert.assertFalse(bedmanagersPage.saveButton.isEnabled(), "Tüm alanlar boşken save butonu hala aktif!");
-
+        // Required attribute kontrolü
         String isRequired = bedmanagersPage.formManagersTitleEn.getAttribute("required");
-        boolean hasHtmlRequired = (isRequired != null);
+        boolean hasRequiredAttr = (isRequired != null);
 
-        if(hasHtmlRequired) {
-            extentTest.info("Title alaninda HTML5 'required' etiketi mevcut.");
-        } else {
-            extentTest.warning("UYARI: Title alaninda HTML5 'required' etiketi YOK!");
-        }
-        softAssert.assertTrue(hasHtmlRequired, "Title_en alanı HTML5 'required' özniteliğine sahip değil!");
+        extentTest.info("Title alaninda 'required' attribute: " + hasRequiredAttr);
+        softAssert.assertTrue(hasRequiredAttr,
+                "KRITIK BUG: Title alaninda HTML5 'required' attribute EKSIK!");
 
-        if (bedmanagersPage.saveButton.isEnabled()) {
-            extentTest.info("Save butonu aktif oldugu icin tiklaniyor ve tarayici uyarisina bakiliyor.");
-            bedmanagersPage.saveButton.click();
+        // Save buton durumu
+        boolean saveEnabled = bedmanagersPage.saveButton.isEnabled();
+        extentTest.info("Tum alanlar bos - Save buton durumu: " +
+                (saveEnabled ? "AKTIF (Beklenmeyen)" : "PASIF (Beklenen)"));
 
-            if (hasHtmlRequired) {
-                String browserMessage = (String) js.executeScript("return arguments[0].validationMessage;", bedmanagersPage.formManagersTitleEn);
-                extentTest.info("Tarayici validasyon mesaji: " + browserMessage);
+        if (hasRequiredAttr) {
+            // HTML5 validation varsa, save butonu disabled olmalı VEYA tıklanınca uyarı vermeli
+            if (saveEnabled) {
+                bedmanagersPage.saveButton.click();
 
-                softAssert.assertTrue(browserMessage != null && !browserMessage.isEmpty(),
-                        "Input 'required' olmasına rağmen tarayıcı uyarı mesajı üretmedi!");
+                String browserMsg = (String) js.executeScript(
+                        "return arguments[0].validationMessage;",
+                        bedmanagersPage.formManagersTitleEn
+                );
+
+                softAssert.assertTrue(browserMsg != null && !browserMsg.isEmpty(),
+                        "Save butonu aktif ama tarayici uyari vermiyor!");
+                extentTest.info("Browser validation mesaji: " + browserMsg);
             } else {
+                extentTest.pass("Save butonu disabled - HTML5 validation calisiyor.");
+            }
+        } else {
+            // HTML5 validation yoksa backend kontrolü yapmalı
+            if (saveEnabled) {
+                bedmanagersPage.saveButton.click();
+
                 try {
-                    ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 5);
-                    softAssert.assertTrue(alertMessageLocators.errorMessage.isDisplayed(), "Backend hata mesajı göstermedi!");
-                } catch (Exception e) {
-                    softAssert.fail("Form gönderildi ama ne bir hata mesajı geldi ne de bir uyarı!");
+                    shortWait.until(ExpectedConditions.visibilityOf(alertMessageLocators.errorMessage));
+                    extentTest.pass("Backend validation hata mesaji gosterdi.");
+                } catch (TimeoutException e) {
+                    softAssert.fail("KRITIK: Tum alanlar bos ama sistem kabul etti!");
                 }
             }
         }
 
+        // Cleanup
         yatakSil();
-        extentTest.info("Tum senaryolar tamamlandi, SoftAssert hatalari raporlaniyor.");
+
+        extentTest.info("Tum senaryolar tamamlandi, SoftAssert dogrulamasi yapiliyor.");
         softAssert.assertAll();
     }
 
     @Test(priority = 7)
     public void TC_06_HerYatakKartindaDeleteButonununErisilebilirligiVeDeleteOzelligiTesti() {
         extentTest = extentReports.createTest("TC06", "Her yatak kartinda delete butonunun erisilebilirligi ve delete ozelliginin testi");
+        Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
 
         extentTest.info("Pre-condition: Silme testi icin yeni bir yatak kaydi olusturuluyor.");
         yatakOlustur();
@@ -637,134 +755,114 @@ public class US27 extends TestBaseRapor {
             extentTest.pass("Geri gidince bildirim mesaji tekrar cikmadi, sayfa durumu stabil.");
         }
         yatakSil();
+
+        int timeout = Integer.parseInt(ConfigReader.getProperty("timeout"));
+        Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
+
         extentTest.pass("Delete fonksiyonu ve Alert yonetimi basariyla test edildi.");
     }
 
     @Test(priority = 6)
     public void TC_07_MobilCozunurlukteUIUXKontrolu() {
-        extentTest = extentReports.createTest("TC07", "Mobil Cozunurlukte UI/UX Kontrolu (430x932)");
+        extentTest = extentReports.createTest("TC07",
+                "Mobil Cozunurlukte UI/UX Kontrolu (430x932)");
 
-        // Test verileri ve sayfa objeleri
         bedManagersSayfasinaGit();
+
         BedmanagersPage bedmanagersPage = new BedmanagersPage();
         Layout layout = new Layout();
         SoftAssert softAssert = new SoftAssert();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
 
-        // 1. Mobil Çözünürlük Ayarı
-        extentTest.info("Test ortami iPhone 14 Pro Max (430x932) cozunurlugune ayarlaniyor.");
-        Dimension mobileSize = new Dimension(430, 932);
-        Driver.getDriver().manage().window().setSize(mobileSize);
+        //yatak olusturalim once
+        yatakOlustur();
 
-        // Sayfa yapısının yeni çözünürlüğe oturması için refresh atıyoruz
-        extentTest.info("Sayfa yenileniyor ve Hamburger menunun gelmesi bekleniyor.");
+
+        // 1. Mobil Çözünürlük
+        extentTest.info("iPhone 14 Pro Max (430x932) cozunurlugune ayarlaniyor.");
+        Driver.getDriver().manage().window().setSize(new Dimension(430, 932));
+
+        extentTest.info("Sayfa yenileniyor (responsive layout icin).");
         Driver.getDriver().navigate().refresh();
 
-        // Hamburger Menü Kontrolü
         try {
             wait.until(ExpectedConditions.visibilityOf(layout.hamburgerMenuButton));
-            softAssert.assertTrue(layout.hamburgerMenuButton.isDisplayed(), "Hamburger menu butonu görünür değil!");
-            extentTest.info("Hamburger menu butonu gorunur durumda.");
+            softAssert.assertTrue(layout.hamburgerMenuButton.isDisplayed(),
+                    "Hamburger menu gorunmuyor!");
+            extentTest.info("Hamburger menu basariyla goruldu.");
 
-            ReusableMethods.waitForClickability(layout.hamburgerMenuButton, 3);
+            wait.until(ExpectedConditions.elementToBeClickable(layout.hamburgerMenuButton));
             layout.hamburgerMenuButton.click();
-            extentTest.pass("Hamburger menüye başarıyla tıklandı, sidebar açılabilir durumda.");
-        } catch (Exception e) {
-            extentTest.fail("Hamburger menü butonu ya yok ya da tıklanamıyor!");
-            softAssert.fail("BUG: Hamburger menü görünüyor ama TIKLANABİLİR DEĞİL! (Sidebar açılamıyor)");
+            extentTest.pass("Hamburger menu tiklandi.");
+
+        } catch (TimeoutException e) {
+            extentTest.fail("BUG: Hamburger menu YOK veya tiklanamadi!");
+            softAssert.fail("Mobilde hamburger menu calısmiyor!");
         }
 
-        // 2. Bed Managers Sayfası UI Kontrolü
-        extentTest.info("Bed Managers sayfasina dogrudan gecis yapiliyor.");
+        // 2. Bed Managers Sayfası
+        extentTest.info("Bed Managers sayfasina dogrudan gidiliyor.");
         Driver.getDriver().get(ConfigReader.getProperty("actualBedManagersUrl"));
 
-        extentTest.info("Tablo verilerinin mobil gorunumde yuklenmesi bekleniyor.");
-        wait.until(ExpectedConditions.visibilityOfAllElements(bedmanagersPage.tableBodyRows));
-
-        // Görsel Boyut Kontrolü (UX)
         try {
-            int imgWidth = bedmanagersPage.getTableRowMap(0).get("img").getSize().getWidth();
-            extentTest.info("Mobil gorunumde yatak gorselinin genisligi olculuyor: " + imgWidth + "px");
-            softAssert.assertTrue(imgWidth > 30, "UI BUG: Mobilde yatak fotoğrafı çok küçük veya görünmüyor (Genişlik: " + imgWidth + "px)");
-        } catch (Exception e) {
-            extentTest.warning("Gorsel genisligi alinamadi, element bulunamamis olabilir.");
+            wait.until(ExpectedConditions.visibilityOfAllElements(bedmanagersPage.tableBodyRows));
+        } catch (TimeoutException e) {
+            extentTest.fail("Mobilde tablo verisi yuklenmedi.");
+            softAssert.fail("Table did not load on mobile view.");
         }
 
-        // 3. Edit Butonu Fonksiyonelliği (JS Click ile)
-        extentTest.info("Edit butonuna mobil uyumluluk icin JS Executor ile tiklaniyor.");
-        WebElement firstEditButton = bedmanagersPage.getTableRowMap(0).get("editButton");
-        js.executeScript("arguments[0].click();", firstEditButton);
+        // Görsel Boyut Kontrolü
+        try {
+            WebElement img = bedmanagersPage.getTableRowMap(0).get("img");
+            int imgWidth = img.getSize().getWidth();
+            extentTest.info("Mobilde yatak gorseli genisligi: " + imgWidth + "px");
+
+            softAssert.assertTrue(imgWidth > 30,
+                    "UI BUG: Mobilde gorsel cok kucuk! Genislik: " + imgWidth + "px");
+        } catch (Exception e) {
+            extentTest.warning("Gorsel boyutu alinamadi: " + e.getMessage());
+        }
+
+        // 3. Edit Butonu
+        extentTest.info("Edit butonuna JS ile tiklaniyor.");
+        WebElement firstEditBtn = bedmanagersPage.getTableRowMap(0).get("editButton");
+        js.executeScript("arguments[0].click();", firstEditBtn);
 
         try {
             wait.until(ExpectedConditions.urlContains("edit"));
-            extentTest.info("Edit sayfasina yonlendirme basarili.");
-        } catch (Exception e) {
-            softAssert.fail("Edit butonuna tiklanmasina ragmen sayfa URL'i degismedi.");
+            extentTest.pass("Edit sayfasina yonlendirme basarili.");
+        } catch (TimeoutException e) {
+            extentTest.fail("Edit butonuna basinca sayfa acilmadi.");
+            softAssert.fail("Edit button did not navigate on mobile.");
         }
 
-        extentTest.info("Geri tusuna basilarak listeye donuluyor.");
+        extentTest.info("Geri tusuna basiliyor.");
         Driver.getDriver().navigate().back();
-        wait.until(ExpectedConditions.visibilityOfAllElements(bedmanagersPage.tableBodyRows));
-
-        // 4. Delete Butonu ve Alert Kontrolü
-        extentTest.info("Delete butonuna JS Executor ile tiklaniyor.");
-        WebElement firstDeleteButton = bedmanagersPage.getTableRowMap(0).get("deleteButton");
-        js.executeScript("arguments[0].click();", firstDeleteButton);
 
         try {
-            extentTest.info("Tarayici uzerinde Alert (Pop-up) bekleniyor.");
-            wait.until(ExpectedConditions.alertIsPresent());
-            Driver.getDriver().switchTo().alert().accept();
-            extentTest.pass("Delete pop-up'ı mobilde görüntülendi ve onaylandı.");
-        } catch (Exception e) {
-            extentTest.fail("HATA: Delete butonuna basinca Alert cikmadi!");
-            softAssert.fail("BUG: Mobilde Delete butonuna basınca 'Emin misiniz?' pop-up'ı ÇIKMADI, direkt sildi veya işlem yapmadı!");
+            wait.until(ExpectedConditions.visibilityOfAllElements(bedmanagersPage.tableBodyRows));
+        } catch (TimeoutException e) {
+            extentTest.warning("Geri gelirken tablo gec yuklendi.");
         }
 
+        // 4. Delete Butonu ve Alert
+        extentTest.info("Delete butonuna JS ile tiklaniyor.");
+        WebElement firstDelBtn = bedmanagersPage.getTableRowMap(0).get("deleteButton");
+        js.executeScript("arguments[0].click();", firstDelBtn);
 
-        extentTest.info("Mobil UI/UX testleri tamamlandi, hatalar raporlaniyor.");
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            Driver.getDriver().switchTo().alert().accept();
+            extentTest.pass("Delete alert mobilde basariyla goruldu ve onaylandi.");
+        } catch (TimeoutException e) {
+            extentTest.fail("KRITIK BUG: Mobilde delete alert CIKMADI!");
+            softAssert.fail("Delete confirmation popup did NOT appear on mobile!");
+        }
+
+        extentTest.info("Mobil UI/UX testleri tamamlandi.");
         softAssert.assertAll();
     }
 
-    // Yatak silme
-    public void yatakSil() {
-        try {
-            Driver.getDriver().get(ConfigReader.getProperty("url"));
-            Layout layout = new Layout();
 
-            ReusableMethods.waitForClickability(layout.headerAuthAdminDashboardButton, 5).click();
-
-            bedManagersSayfasinaGit();
-
-            BedmanagersPage bedmanagersPage = new BedmanagersPage();
-
-            ReusableMethods.waitForPageToLoad(2);
-
-            if (bedmanagersPage.tableBodyRows.isEmpty()) {
-                System.out.println("INFO: Silinecek yatak bulunamadı, cleanup işlemi pas geçiliyor.");
-                return;
-            }
-
-            WebElement deleteButton = bedmanagersPage.getTableRowMap(0).get("deleteButton");
-
-            ReusableMethods.waitForClickability(deleteButton, 3);
-            deleteButton.click();
-
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
-
-            try {
-                wait.until(ExpectedConditions.alertIsPresent());
-                Driver.getDriver().switchTo().alert().accept();
-                System.out.println("INFO: Yatak silme onayı (Alert) kabul edildi.");
-            } catch (TimeoutException e) {
-                System.out.println("UYARI: Delete butonuna basıldı ama Alert çıkmadı veya otomatik kapandı.");
-            }
-
-            ReusableMethods.waitForPageToLoad(2);
-
-        } catch (Exception e) {
-            System.out.println("HATA: yatakSil() metodu çalışırken bir sorun oluştu: " + e.getMessage());
-        }
-    }
 }

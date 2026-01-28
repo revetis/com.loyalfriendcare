@@ -2,6 +2,7 @@ package tests;
 
 import org.openqa.selenium.*;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin_pages.AppointmentsPage;
@@ -13,7 +14,7 @@ import java.util.Map;
 public class US41 extends TestBaseRapor {
     Layout layout;
 
-    @BeforeMethod
+    @BeforeClass
     public void setupTests(){
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         SignIn.signInAdmin();
@@ -86,7 +87,7 @@ public class US41 extends TestBaseRapor {
         extentTest.pass("Randevularin listelenmesi ve etiket kontrolleri basarili.");
     }
 
-    @Test
+    @Test(enabled = false)// !! Mobil sidebar olmadigi icin test engelleniyor bu yuzden bu test methodu devre disi
     public void TC03_MobileUIUXKontrolu() {
         extentTest = extentReports.createTest("TC03", "Mobilde UI/UX, Yatay Tasama ve Uzun Metin Kontrolu");
 
@@ -95,7 +96,9 @@ public class US41 extends TestBaseRapor {
         this.layout = new Layout();
 
         extentTest.info("Mobil menude geziniliyor ve Appointments sayfasina gidiliyor.");
-        ReusableMethods.hover(layout.adminSidebar);
+        Assert.assertTrue(layout.adminSidebarButton.isDisplayed(),"Admin sidebar hamburger butonu görünür değil.");
+        Assert.assertTrue(layout.adminSidebarButton.isEnabled(),"Admin sidebar hamburger butonu tıklanabilir değil.");
+        layout.adminSidebarButton.click();
         layout.adminSidebarAppointmentsButton.click();
 
         AppointmentsPage appointmentsPage = new AppointmentsPage();

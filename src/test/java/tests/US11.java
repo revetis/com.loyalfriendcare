@@ -20,7 +20,7 @@ public class US11 extends TestBaseRapor {
     HomePageDepartmentSection homePageDepartmentSection;
     int timeout = 3;
 
-    @BeforeMethod
+    @BeforeClass
     public void setupSteps() {
         homePageDepartmentSection = new HomePageDepartmentSection();
         Driver.getDriver().get(ConfigReader.getProperty("url"));
@@ -28,7 +28,7 @@ public class US11 extends TestBaseRapor {
         SignIn.signInUser();
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDownTests(ITestResult result){
         // Mobil testlerden (TC_08) sonra pencereyi eski haline getir
         Driver.getDriver().manage().window().maximize();
