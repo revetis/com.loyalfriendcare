@@ -3,10 +3,10 @@ package pages.common_pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Layout {
@@ -152,6 +152,34 @@ public class Layout {
 
     @FindBy(css = "nav.page-sidebar")
     public WebElement adminSidebar;
+
+    //Yonetim araclari
+    @FindBy(xpath = "//ul[@class='menu-items scroll-content']/li")
+    public List<WebElement> adminSidebarAdminToolList;
+
+    public WebElement getTool(int row){
+        return adminSidebarAdminToolList.get(row).findElement(By.xpath("./a"));
+    }
+    public WebElement getToolWithName(String name){
+        for (WebElement tool : adminSidebarAdminToolList){
+            if (tool.findElement(By.xpath("./a")).getText().equals(name)){
+                return tool.findElement(By.xpath("./a"));
+            }
+        }
+        return null;
+    }
+
+    public List<WebElement> getToolSubList(int row){
+        try {
+            return adminSidebarAdminToolList.get(row).findElements(By.xpath(".//ul[contains(@class,'sub-menu')]//li/a"));
+        } catch (Exception e) {
+            return new ArrayList<>();//eger sublist yoksa bos liste donuyoruz ve listenin bos olup olmmadigini kontrol ediyoruz
+        }
+    }
+
+    @FindBy(css = ".toggle-sidebar")
+    public WebElement hamburgerMenuButton;
+
     //Logo
     @FindBy(css = ".sidebar-header img.brand")
     public WebElement adminSidebarLogo;
@@ -183,8 +211,18 @@ public class Layout {
     @FindBy(xpath = "//span[text()='Bed managers']/ancestor::a")
     public WebElement adminSidebarBedmanagersButton;
 
+    @FindBy(xpath = "//span[text()='Bed managers']/ancestor::li//ul")
+    public WebElement adminSidebarBedmanagersSubLinksMenu;
+
     @FindBy(xpath = "//span[text()='Bed managers']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarBedmanagersSubLinks;
+
+    public WebElement getBedManagersSubLink(String name){
+        for (WebElement el :adminSidebarBedmanagersSubLinks){
+            if (el.findElement(By.xpath("./a")).getText().equalsIgnoreCase(name))return el.findElement(By.xpath("./a"));
+        }
+        return null;
+    }
     //Departments
     @FindBy(xpath = "//span[text()='Departments']/ancestor::li")
     public WebElement adminSidebarDepartmentsLi;
