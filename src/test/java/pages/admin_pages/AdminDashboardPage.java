@@ -1,14 +1,11 @@
 package pages.admin_pages;
 
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
 public class AdminDashboardPage {
-
-
 
     public AdminDashboardPage() {
         PageFactory.initElements(Driver.getDriver(), this);
@@ -55,13 +52,6 @@ public class AdminDashboardPage {
 
     @FindBy(xpath = "(//*[@class='text-white'])[8]")
     public WebElement adminDashboardYedinciKutuLearnMore;
-
-
-    @FindBy(xpath = "(//*[@class='btn_add'])[1]")
-    public WebElement adminDasboardNesrinBora;
-
-
-
 
 
 
