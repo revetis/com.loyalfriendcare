@@ -107,12 +107,12 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
         ReusableMethods.waitForVisibility(sidebar, 10);
 
-// Sidebar'ı açmak için hover
+        // Sidebar'ı açmak için hover
         actions.moveToElement(sidebar).perform();
         ReusableMethods.bekle(1);
         extentTest.info("Sidebar'a hover yapıldı, sidebar açıldı");
 
-// Medicines ana menüsünü bul (ana başlık)
+        // Medicines ana menüsünü bul (ana başlık)
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
@@ -122,7 +122,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         extentTest.pass("✅ STEP 5 PASSED: Sidebar açıldı ve Medicines ana menüsü görünür");
 
-// 6. Medicines menüsünün alt menülerinin görünür olduğunu doğrula (hover öncelikli, gerekirse click fallback)
+        // 6. Medicines menüsünün alt menülerinin görünür olduğunu doğrula (hover öncelikli, gerekirse click fallback)
         extentTest.info("6. Medicines menüsünün alt menülerini (hover ile) doğrula");
 
         By subMedicines = By.xpath(
@@ -184,6 +184,11 @@ public class US_033_TestCases extends TestBaseRapor {
         extentTest.pass("✅ US_033_TC_01 testi başarıyla tamamlandı!");
     }
 
+
+    // ========================================
+    // TC_02: Medicines menüsüne tıklayarak ilaç listesi
+    // sayfasına erişimi doğrulama
+    // ========================================
 
     @Test(priority = 2, description = "Medicines menüsüne tıklayarak ilaç listesi sayfasına " +
             "erişimi doğrular (Instagrams route)")
@@ -287,6 +292,10 @@ public class US_033_TestCases extends TestBaseRapor {
         extentTest.pass("✅ US_033_TC_02 testi PASS olarak tamamlandı!");
     }
 
+    // ========================================
+    // TC_03: İlaç listesi sayfasında tüm ilaçların
+    // bilgilerinin görüntülenmesini doğrulama
+    // ========================================
 
     @Test(priority = 3,
             description = "Medicines list sayfasında tüm ilaç bilgilerinin görüntülenmesini " +
@@ -311,21 +320,21 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 10).click();
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
+        ReusableMethods.waitForClickablility(layout.signInLink, 3).click();
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 3);
 
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("admin_password"));
         loginPage.signInButton.click();
 
-        ReusableMethods.waitForPageToLoad(10);
+        ReusableMethods.waitForPageToLoad(3);
 
         // Admin paneline geç (senin önceki tc01 yaklaşımı)
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10).click();
-        ReusableMethods.waitForPageToLoad(10);
+        ReusableMethods.waitForClickablility(adminUserButton, 3).click();
+        ReusableMethods.waitForPageToLoad(3);
 
         extentTest.pass("✅ Pre-Condition PASSED: Admin login yapıldı ve admin panel açıldı");
 
@@ -335,15 +344,15 @@ public class US_033_TestCases extends TestBaseRapor {
         extentTest.info("1. Medicines listesi sayfasına git");
 
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
-        ReusableMethods.waitForVisibility(sidebar, 10);
+        ReusableMethods.waitForVisibility(sidebar, 3);
         actions.moveToElement(sidebar).perform();
         ReusableMethods.bekle(1);
 
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
-        ReusableMethods.waitForVisibility(medicinesMainMenu, 10);
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 10).click();
+        ReusableMethods.waitForVisibility(medicinesMainMenu, 3);
+        ReusableMethods.waitForClickablility(medicinesMainMenu, 3).click();
         ReusableMethods.bekle(1);
 
         // Alt menü HTML: <a href=".../Dashboard/Instagrams">Medicines</a>
@@ -351,9 +360,9 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[normalize-space()='Medicines' and (contains(@href,'/Dashboard/Instagrams') " +
                         "or contains(@href,'Dashboard/Instagrams'))]")
         );
-        ReusableMethods.waitForClickablility(medicinesSubMenu, 10).click();
+        ReusableMethods.waitForClickablility(medicinesSubMenu, 3).click();
 
-        ReusableMethods.waitForPageToLoad(10);
+        ReusableMethods.waitForPageToLoad(3);
 
         String currentUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("/Dashboard/Instagrams"),
@@ -366,7 +375,7 @@ public class US_033_TestCases extends TestBaseRapor {
         // STEP 2 – Sayfanın tam yüklenmesini bekle
         // =========================
         extentTest.info("2. Sayfanın tam yüklenmesini bekle");
-        ReusableMethods.waitForPageToLoad(10);
+        ReusableMethods.waitForPageToLoad(3);
         ReusableMethods.bekle(1);
         extentTest.pass("✅ STEP 2 PASSED: Sayfa tamamen yüklendi");
 
@@ -380,7 +389,7 @@ public class US_033_TestCases extends TestBaseRapor {
         );
 
         ReusableMethods.scrollToElement(medicinesTable);
-        ReusableMethods.waitForVisibility(medicinesTable, 10);
+        ReusableMethods.waitForVisibility(medicinesTable, 3);
         Assert.assertTrue(medicinesTable.isDisplayed());
 
         extentTest.pass("✅ STEP 3 PASSED: İlaç listesi tablosu görüntüleniyor");
@@ -428,5 +437,9 @@ public class US_033_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(2);
         extentTest.pass("✅ US_033_TC_03 testi PASS olarak tamamlandı!");
     }
+
+
+
+
 
 }
