@@ -21,6 +21,7 @@ import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -57,10 +58,10 @@ public class US_012_User extends TestBaseRapor {
     UserLoyalFriendCare userLoyalFriendCare =new UserLoyalFriendCare();
 
     @Test
-    public void US_004_UserAramaCubugu_PozitivTest() {
+    public void US_004_UserRandevuTalebi01() {
 
         UserLoyalFriendCare userLoyalFriendCare =new UserLoyalFriendCare();
-        extentTest = extentReports.createTest("US_004 User AramaCubugu PozitivTest");
+        extentTest = extentReports.createTest("US_004 User Randevu Talebinin Olusdurulmasi");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
@@ -117,37 +118,23 @@ public class US_012_User extends TestBaseRapor {
                 .sendKeys(Keys.TAB)
                 .sendKeys(Keys.TAB)
                 .sendKeys(Keys.TAB).perform();
+
+        WebElement wellDrop = Driver.getDriver().findElement
+                  (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
+        wellDrop.click();
+        doctorDetailPage.anycategory.click();
         doctorDetailPage.doctorDetailSelection.click();
-        DoctorDetailNameİtems doctorDetailNameİtems = new DoctorDetailNameİtems(Driver.getDriver());
-
-        doctorDetailPage.doctorSelectionDropdown.click();
-        ReusableMethods.bekle(2);
-
-        doctorDetailNameİtems.selectRandomCategory();
-        ReusableMethods.bekle(2);
-        doctorDetailPage.creatMessage.sendKeys("Hello can you accept my appointment");
+        doctorDetailPage.doctorSectionName.click();
         doctorDetailPage.appointmentBookingButton.click();
 
+        // Sistem randevu talebini başarıyla oluşturmalıdır
+        doctorDetailPage.appointmentBookingButton.click();
 
-
-
-
-
-
-
-
-
+        // Sistem tarafından gösterilen mesajin gorunur oldugunu konturol edin
+        Assert.assertTrue(doctorDetailPage.sonucAcceptMessage.isDisplayed());
         ReusableMethods.bekle(5);
 
 
-
-
-
-
-
-
-        // Sistem ilgili sonuçları icerdigini test edin
-        //Assert.assertTrue(userLoyalFriendCare.aramaSonucElementi.isDisplayed());
     }
 
 
@@ -173,7 +160,85 @@ public class US_012_User extends TestBaseRapor {
     // Sistem tarafından gösterilen mesajin gorunur olmadigini konturol edin
 
 
+    @Test
+    public void US_004_UserRandevuTalebi02() {
 
+        UserLoyalFriendCare userLoyalFriendCare =new UserLoyalFriendCare();
+        extentTest = extentReports.createTest("US_004 User Randevu Talebi: Zorlu alanlarin bos birakilmasi");
+        // https://qa.loyalfriendcare.com/en url sayfasina gidi
+        Driver.getDriver().get(ConfigReader.getProperty("url"));
+
+        // Sign In butonuna basin
+        userLoyalFriendCare.signInButonu.click();
+        ReusableMethods.bekle(1);
+
+        // User olarak siteye girin
+        userLoyalFriendCare.userLoginsayfasiEmailKutusu.sendKeys(ConfigReader.getProperty("user_email"));
+        userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
+        userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
+
+        // User olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        String expextedUrlİcerik = "qa.loyalfriendcare.com";
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+
+        Assert.assertTrue(actualUrl.contains(expextedUrlİcerik));
+
+        // Sayfanin body bolumu icerdigi konturol edilir
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollBy(0,1300)");
+        ReusableMethods.bekle(1);
+        HomePageBodySection homePageBodySection =new HomePageBodySection();
+        Assert.assertTrue(homePageBodySection.popularDoctorsTitle.isDisplayed());
+
+        // Doktorlarin listelendigini  konturol edin
+        HomepageBodyPage homepageBodyPage = new HomepageBodyPage();
+        Assert.assertTrue(homepageBodyPage.popularDoctorlarListesininGorunurlugu(),
+                "Popular doctors listelenmedi!");
+
+        // Doktor kartlarinin tiklanabilir olub olmadigi konturol edilir
+        Assert.assertTrue(homepageBodyPage.DoktorKartlarininClickable(),
+                "Doktor kartlarindan biri kliklənə bilən deyil!");
+
+        // Listeden herhangi bir doktora tiklanir
+        homepageBodyPage.popularDoctorLocate.click();
+
+        // Doktor detay sayfasinin gorunur oldugunu test edin
+        DoctorDetailPage doctorDetailPage = new DoctorDetailPage();
+        Assert.assertTrue(doctorDetailPage.appointmentBookingButton.isDisplayed());
+
+        //“Appointment Booking” butonunun tiklanabilir oldugunu test edin
+        Assert.assertTrue(doctorDetailPage.appointmentBookingButton.isEnabled());
+
+        // Randevu formundaki tum zorlu alanlar gecerli olarak doldurulur
+        Actions actions = new Actions(Driver.getDriver());
+        WebElement hizmetSecimi = Driver.getDriver().findElement
+                (By.xpath("//input[@id='Date']"));
+        actions.click(hizmetSecimi)
+                .sendKeys("")
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys("")
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).perform();
+
+        WebElement wellDrop = Driver.getDriver().findElement
+                (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
+        wellDrop.click();
+        doctorDetailPage.anycategory.click();
+        doctorDetailPage.doctorDetailSelection.click();
+        doctorDetailPage.doctorSectionName.click();
+        doctorDetailPage.appointmentBookingButton.click();
+
+        // Sistem randevu talebini başarıyla oluşturmalıdır
+        doctorDetailPage.appointmentBookingButton.click();
+
+        // Sistem tarafından gösterilen mesajin gorunur oldugunu konturol edin
+        Assert.assertFalse(doctorDetailPage.sonucAcceptMessage.isDisplayed());
+        ReusableMethods.bekle(5);
+
+
+    }
 
 
 }

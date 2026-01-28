@@ -73,17 +73,17 @@ public class DoctorDetailPage {
     public WebElement wellnessDropdown;
 
     // Doctor selection dropdown (Dr. Alejandro Martinez)
-    @FindBy(xpath = "(//div[@class='nice-select wide'])[3]")
-    public WebElement doctorSelectionDropdown;
+    @FindBy(xpath = "//li[contains(text(),'Dr. Olivia Bennett')]")
+    public WebElement doctorSectionName;
 
-    @FindBy(xpath = "(//div[@class='nice-select wide'])[2]")
+    @FindBy(xpath = "(//div[@class='nice-select wide'])[3]")
     public WebElement doctorDetailSelection;
 
     @FindBy(xpath = "//ul[@class='list']/li[@class='option']")
     public List<WebElement> categoryOptions;
 
-    @FindBy(xpath = "//div[contains(@class,'nice-select')]")
-    WebElement categoryDropdowns;
+    @FindBy(xpath = "//li[contains(text(),'Dermatology')]")
+    public WebElement anycategory;
 
     // Create Message textarea
     @FindBy(xpath = "//textarea[@placeholder='Create Message']")
@@ -92,6 +92,9 @@ public class DoctorDetailPage {
     // Appointment Booking butonu (yeşil buton)
     @FindBy(id = "submit-contact-detail")
     public WebElement appointmentBookingButton;
+
+    @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]")
+    public WebElement sonucAcceptMessage;
 
     @FindBy(xpath = "//*[@*='Create Message']")
     public WebElement creatMessage;
