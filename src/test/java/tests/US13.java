@@ -91,7 +91,7 @@ public class US13 extends TestBaseRapor {
         extentTest.pass("Appointment form görüntülendi.");
 
         // 3) Date: bugünkü tarih + 3 gün (gelecek tarih)
-//        String futureDate = ReusableMethods.getFutureDate(3);
+        // String futureDate = ReusableMethods.getFutureDate(3);
 //        detailPage.dateInput.clear();          // <-- BURAYA
 //        detailPage.dateInput.sendKeys(futureDate);
 //        extentTest.info("Date girildi: " + futureDate);

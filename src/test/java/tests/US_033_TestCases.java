@@ -49,7 +49,7 @@ public class US_033_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("Ana sayfaya gidildi: " + ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
         ReusableMethods.bekle(1);
@@ -93,7 +93,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
 
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         String buttonText = adminUserButton.getText();
         adminUserButton.click();
         extentTest.info("Admin user butonuna tıklandı: " + buttonText);
@@ -163,7 +163,7 @@ public class US_033_TestCases extends TestBaseRapor {
                     "menüsüne click ile expand denenecek.");
 
             try {
-                ReusableMethods.waitForClickablility(medicinesMainMenu, 5);
+                ReusableMethods.waitForClickability(medicinesMainMenu, 5);
                 medicinesMainMenu.click();
             } catch (Exception e) {
                 ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();",
@@ -213,7 +213,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         // PRE-CONDITION: admin login (tc01 ile aynıysa burayı ortak metoda alabilirsin)
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
 
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
@@ -227,7 +227,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         adminUserButton.click();
 
         ReusableMethods.waitForPageToLoad(10);
@@ -251,7 +251,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         // STEP 3: Medicines menüsüne tıkla (alt menü açılması / yönlendirme için)
         try {
-            ReusableMethods.waitForClickablility(medicinesMainMenu, 10);
+            ReusableMethods.waitForClickability(medicinesMainMenu, 10);
             medicinesMainMenu.click();
         } catch (Exception e) {
             ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();",
@@ -272,7 +272,7 @@ public class US_033_TestCases extends TestBaseRapor {
         ReusableMethods.waitForVisibility(medicinesSubMenu, 10);
 
         try {
-            ReusableMethods.waitForClickablility(medicinesSubMenu, 10);
+            ReusableMethods.waitForClickability(medicinesSubMenu, 10);
             medicinesSubMenu.click();
         } catch (Exception e) {
             ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();",
@@ -333,7 +333,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 10).click();
+        ReusableMethods.waitForClickability(layout.signInLink, 10).click();
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
 
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
@@ -346,7 +346,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10).click();
+        ReusableMethods.waitForClickability(adminUserButton, 10).click();
         ReusableMethods.waitForPageToLoad(10);
 
         extentTest.pass("✅ Pre-Condition PASSED: Admin login yapıldı ve admin panel açıldı");
@@ -365,7 +365,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
         ReusableMethods.waitForVisibility(medicinesMainMenu, 10);
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 10).click();
+        ReusableMethods.waitForClickability(medicinesMainMenu, 10).click();
         ReusableMethods.bekle(1);
 
         // Alt menü HTML: <a href=".../Dashboard/Instagrams">Medicines</a>
@@ -373,7 +373,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[normalize-space()='Medicines' and (contains(@href,'/Dashboard/Instagrams') " +
                         "or contains(@href,'Dashboard/Instagrams'))]")
         );
-        ReusableMethods.waitForClickablility(medicinesSubMenu, 10).click();
+        ReusableMethods.waitForClickability(medicinesSubMenu, 10).click();
 
         ReusableMethods.waitForPageToLoad(10);
 
@@ -441,7 +441,7 @@ public class US_033_TestCases extends TestBaseRapor {
         // =========================
         extentTest.info("7. Scroll up yap (header'a dön)");
 
-        ReusableMethods.scrollToHeader();
+        ReusableMethods.scrollToTop();
         ReusableMethods.bekle(1);
 
         extentTest.pass("✅ STEP 7 PASSED: Scroll up yapıldı");

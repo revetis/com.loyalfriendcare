@@ -195,11 +195,11 @@ public class US01 extends TestBaseRapor {
         // Scroll to top button'a tıkla ve sayfanın en üste gittiğini doğrula
         homepageBodyPage.scrollToTopButton.click();
         ReusableMethods.bekle(2);
-        // Sayfanın en üste gittiğini doğrula
-        //Long scrollPosition = (Long) js.executeScript("return window.pageYOffset;");
-        //Assert.assertTrue(scrollPosition < 100, "Scroll to top button tıklandığında sayfa en üste gitmedi!");
-        extentTest.pass("Scroll to top button görünür, tıklanabilir ve çalışıyor");
 
+        // Sayfanın en üste gittiğini doğrula - Header elementi ile
+        ReusableMethods.waitForVisibility(layout.header, 15);
+        Assert.assertTrue(layout.header.isDisplayed(), "Header görünür değil, sayfa en üste gitmedi!");
+        extentTest.pass("Scroll to top button görünür, tıklanabilir ve çalışıyor");
         extentTest.pass("TC01 - Home Page Elements testi başarıyla tamamlandı");
 
     }
