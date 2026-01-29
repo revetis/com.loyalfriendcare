@@ -1,14 +1,18 @@
 package pages.common_pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Layout {
+
     public Layout(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
@@ -19,38 +23,69 @@ public class Layout {
     //=============================================
     //=============================================
 
-    @FindBy(xpath = "/html/body/header")
+    // Navigation bar
+    @FindBy(css = "nav#menu")
+    public WebElement headerNavigationBar;
+
+    @FindBy(css = "header.header")
     public WebElement header;
 
     @FindBy(xpath = "//*[@id=\"logo\"]/a")
     public WebElement headerLogo;
 
-    @FindBy(xpath = "//*[@id=\"logo\"]/a/img[1]")
+    @FindBy(css = "#logo img.logo_normal")
     public WebElement headerLogoImage;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[1]/span/a")
+    @FindBy(xpath = "//nav[@id='menu']//a[text()='Home']")
     public WebElement headerHomeLink;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[2]/span/a")
+    @FindBy(xpath = "//nav[@id='menu']//a[text()='About Us']")
     public WebElement headerAboutUsLink;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[3]/span/a")
+    @FindBy(xpath = "//nav[@id='menu']//a[contains(text(),'Departments')]")
     public WebElement headerDepartmentsLink;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[4]/span/a")
+    @FindBy(css = "#menu > ul > li:nth-child(3) li")
+    public List<WebElement> headerDepartmentsSubLinks;
+
+    @FindBy(xpath = "//nav[@id='menu']//a[contains(text(),'Doctors')]")
     public WebElement headerDoctorsLink;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[5]/span/a")
+    @FindBy(css = "#menu > ul > li:nth-child(4) li")
+    public List<WebElement> headerDoctorSubLinks;
+
+    @FindBy(xpath = "//nav[@id='menu']//a[contains(text(),'Medicines')]")
     public WebElement headerMedicinesLink;
 
-    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[6]/span/a")
+    @FindBy(css = "#menu > ul > li:nth-child(5) li")
+    public List<WebElement> headerMedicinesSubLinks;
+
+    @FindBy(xpath = "//nav[@id='menu']//a[contains(text(),'Vaccinations')]")
     public WebElement headerVaccinationsLink;
 
-    @FindBy(xpath = "//*[@id=\"top_menu\"]/li[2]/a")
+    @FindBy(css = "#menu > ul > li:nth-child(6) li")
+    public List<WebElement> headerVaccinationsSubLinks;
+
+    @FindBy(css = "#top_menu li:nth-child(2) a")
     public WebElement signUpLink;
 
-    @FindBy(xpath = "//*[@id=\"top_menu\"]/li[1]/a")
+    @FindBy(css = "#top_menu li:nth-child(1) a")
     public WebElement signInLink;
+
+    //For Auth Admin
+    @FindBy(css = "#top_menu li:nth-child(1) a")
+    public WebElement headerAuthAdminDashboardButton;
+
+    @FindBy(css = "#top_menu li:nth-child(2) a")
+    public WebElement headerAuthAdminSignOutButton;
+
+    //For Auth User
+    @FindBy(css = "#top_menu li:nth-child(1) a")
+    public WebElement headerAuthUserDashboardButton;
+
+    @FindBy(css = "#top_menu li:nth-child(2) a")
+    public WebElement headerAuthUserSignOutButton;
+
 
     //=============================================
     //=============================================
@@ -58,40 +93,40 @@ public class Layout {
     //=============================================
     //=============================================
 
-    @FindBy(xpath = "//*[@id=\"page\"]/footer/div/div[1]/div[1]/h3/a")
+    @FindBy(css = "footer h3 a")
     public WebElement footerLogo;
 
-    @FindBy(xpath = "//*[@id=\"page\"]/footer/div/div[1]/div[1]/h3/a/img")
+    @FindBy(css = "footer h3 img")
     public WebElement footerLogoImg;
 
-    @FindBy(xpath = "//*[@id=\"collapse_ft_1\"]/p")
+    @FindBy(css = "#collapse_ft_1 p")
     public WebElement footerDescription;
 
-    @FindBy(xpath = "//*[@id=\"page\"]/footer/div/div[1]/div[2]/h3")
+    @FindBy(css = "h3[data-target='#collapse_ft_2']")
     public WebElement footerDepartmentsSectionHeader;
 
-    @FindBy(xpath = "//*[@id=\"collapse_ft_2\"]/ul/li")
+    @FindBy(css = "#collapse_ft_2 ul li")
     public List<WebElement> footerDepartmentsSectionLinks;
 
-    @FindBy(xpath = "//*[@id=\"page\"]/footer/div/div[1]/div[3]/h3")
+    @FindBy(css = "h3[data-target='#collapse_ft_4']")
     public WebElement footerSocialMenuSectionHeader;
 
-    @FindBy(xpath = "//*[@id=\"collapse_ft_4\"]/div/ul/li")
+    @FindBy(css = "#collapse_ft_4 ul li")
     public List<WebElement> footerSocialMenuSectionLinks;
 
-    @FindBy(xpath = "//*[@id=\"page\"]/footer/div/div[1]/div[4]/h3")
+    @FindBy(css = "h3[data-target='#collapse_ft_3']")
     public WebElement footerContactsSectionHeader;
 
-    @FindBy(xpath = "//*[@id=\"collapse_ft_3\"]/ul/li")
+    @FindBy(css = "#collapse_ft_3 ul li")
     public List<WebElement> footerContactsSectionLinks;
 
-    @FindBy(xpath = "//*[@id=\"additional_links\"]/li[1]/a")
+    @FindBy(css = "#additional_links li:nth-child(1) a")
     public WebElement footerTermsLink;
 
-    @FindBy(xpath = "//*[@id=\"additional_links\"]/li[2]/a")
+    @FindBy(css = "#additional_links li:nth-child(2) a")
     public WebElement footerFaqLink;
 
-    @FindBy(xpath = "//*[@id=\"additional_links\"]/li[3]/a")
+    @FindBy(css = "#additional_links li:nth-child(3) a")
     public WebElement footerCopyrightLink;
 
     //=============================================
@@ -100,13 +135,15 @@ public class Layout {
     //=============================================
     //=============================================
 
-    @FindBy(xpath = "/html/body/div[1]/div[1]/div[2]/div[1]/span")
+
+    @FindBy(css = ".header .semi-bold")
     public WebElement adminHeaderUsername;
 
-    @FindBy(xpath = "/html/body/div[1]/div[1]/div[2]/div[2]/button")
+    @FindBy(css = "button.profile-dropdown-toggle")
     public WebElement adminHeaderUserInfoButton;
 
-    @FindBy(xpath = "/html/body/div[1]/div[1]/div[2]/div[2]/div/a")
+    @FindBy(css = ".profile-dropdown a.dropdown-item")
+
     public List<WebElement> adminHeaderUserInfoDropdownMenuLinks;
 
     //=============================================
@@ -115,90 +152,107 @@ public class Layout {
     //=============================================
     //=============================================
 
-    @FindBy(xpath = "/html/body/nav")
+    @FindBy(css = "nav.page-sidebar")
     public WebElement adminSidebar;
+
+    //Yonetim araclari
+    @FindBy(xpath = "//ul[@class='menu-items scroll-content']/li")
+    public List<WebElement> adminSidebarAdminToolList;
+
+    public WebElement getTool(int row){
+        return adminSidebarAdminToolList.get(row).findElement(By.xpath("./a"));
+    }
+
+    public List<WebElement> getToolSubList(int row){
+        try {
+            return adminSidebarAdminToolList.get(row).findElements(By.xpath(".//ul[contains(@class,'sub-menu')]//li/a"));
+        } catch (Exception e) {
+            return new ArrayList<>();//eger sublist yoksa bos liste donuyoruz ve listenin bos olup olmmadigini kontrol ediyoruz
+        }
+    }
+
     //Logo
-    @FindBy(xpath = "/html/body/nav/div[1]/img")
+    @FindBy(css = ".sidebar-header img.brand")
     public WebElement adminSidebarLogo;
     //DashboardLink
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[1]/a")
+    @FindBy(xpath = "//span[text()='Dashboard']/ancestor::a")
     public WebElement adminSidebarDashboardLink;
     //Roles
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[2]/a")
+    @FindBy(xpath = "//span[text()='Roles']/ancestor::a")
     public WebElement adminSidebarRolesButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[2]")
+    @FindBy(xpath = "//span[text()='Roles']/ancestor::li")
     public WebElement adminSidebarRolesLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[2]/ul/li")
+    @FindBy(css = "li.open ul.sub-menu li")
     public List<WebElement> adminSidebarRolesSubLinks;
     //Users
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[3]")
+    @FindBy(xpath = "//span[text()='Users']/ancestor::li")
     public WebElement adminSidebarUsersLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[3]/a")
+    @FindBy(xpath = "//span[text()='Users']/ancestor::a")
     public WebElement adminSidebarUsersButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[3]/ul/li")
+    @FindBy(xpath = "//span[text()='Users']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarUsersSubLinks;
     //Bed managers
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[4]")
+    @FindBy(xpath = "//span[text()='Bed managers']/ancestor::li")
     public WebElement adminSidebarBedmanagersLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[4]/a")
+    @FindBy(xpath = "//span[text()='Bed managers']/ancestor::a")
     public WebElement adminSidebarBedmanagersButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[4]/ul/li")
+    @FindBy(xpath = "//span[text()='Bed managers']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarBedmanagersSubLinks;
     //Departments
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[5]")
+    @FindBy(xpath = "//span[text()='Departments']/ancestor::li")
     public WebElement adminSidebarDepartmentsLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[5]/a")
+    @FindBy(xpath = "//span[text()='Departments']/ancestor::a")
     public WebElement adminSidebarDepartmentsButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[5]/ul/li")
+    @FindBy(xpath = "//span[text()='Departments']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarDepartmentsSubLinks;
     //Doctors
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[6]")
+    @FindBy(xpath = "//span[text()='Doctors']/ancestor::li")
     public WebElement adminSidebarDoctorsLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[6]/a")
+    @FindBy(xpath = "//span[text()='Doctors']/ancestor::a")
     public WebElement adminSidebarDoctorsButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[6]/ul/li")
+    @FindBy(xpath = "//span[text()='Doctors']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarDoctorsSubLinks;
     //Medicines
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[7]")
+    @FindBy(xpath = "//span[text()='Medicines']/ancestor::li")
     public WebElement adminSidebarMedicinesLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[7]/a")
+    @FindBy(xpath = "//span[text()='Medicines']/ancestor::a")
     public WebElement adminSidebarMedicinesButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[7]/ul/li")
+    @FindBy(xpath = "//span[text()='Medicines']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarMedicinesSubLinks;
     //Pets adsense
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[8]")
+    @FindBy(xpath = "//span[text()='Pets adsense']/ancestor::li")
     public WebElement adminSidebarPetsadsenseLi;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[8]/a")
+    @FindBy(xpath = "//span[text()='Pets adsense']/ancestor::a")
     public WebElement adminSidebarPetsadsenseButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[8]/ul/li")
+    @FindBy(xpath = "//span[text()='Pets adsense']/ancestor::li//ul/li")
     public List<WebElement> adminSidebarPetsadsenseSubLinks;
 
     //Tickets
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[12]/a")
+    @FindBy(xpath = "//span[text()='Tickets']/ancestor::a")
     public WebElement adminSidebarTicketsButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[12]/a/span")
+    @FindBy(xpath = "//span[text()='Tickets']")
     public WebElement adminSidebarTicketsButtonText;
 
     //Vaccinations
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[13]/a")
+    @FindBy(xpath = "//span[text()='Vaccinations']/ancestor::a")
     public WebElement adminSidebarVaccinationsButton;
 
-    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[13]/a/span")
+    @FindBy(xpath = "//span[text()='Vaccinations']")
     public WebElement adminSidebarVaccinationsButtonText;
 
 
@@ -208,71 +262,15 @@ public class Layout {
     //=============================================
     //=============================================
 
-    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]")
+
+    @FindBy(css = ".container-fluid.footer")
     public WebElement adminFooter;
 
-    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/p[1]")
+    @FindBy(css = ".footer p.pull-left")
     public WebElement adminFooterCopyrightSection;
 
-    @FindBy(xpath = "/html/body/div[1]/div[2]/div[2]/div/p[2]")
+    @FindBy(css = ".footer p.pull-right")
     public WebElement adminFooterSignature;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
