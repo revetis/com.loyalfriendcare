@@ -3,7 +3,9 @@ package tests;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -20,7 +22,7 @@ public class US11 extends TestBaseRapor {
     HomePageDepartmentSection homePageDepartmentSection;
     int timeout = 3;
 
-    @BeforeMethod
+    @BeforeClass
     public void setupSteps() {
         homePageDepartmentSection = new HomePageDepartmentSection();
         Driver.getDriver().get(ConfigReader.getProperty("url"));
@@ -33,9 +35,6 @@ public class US11 extends TestBaseRapor {
         // Mobil testlerden (TC_08) sonra pencereyi eski haline getir
         Driver.getDriver().manage().window().maximize();
 
-        if (result.getStatus() == ITestResult.SUCCESS) {
-            SignOut.signOutUser();
-        }
     }
 
     @DataProvider(name = "negatifVeriler")
@@ -72,9 +71,13 @@ public class US11 extends TestBaseRapor {
     @Test(priority = 1)
     public void TC_01_DepartmanBolumuGorunurlukTesti() {
         extentTest = extentReports.createTest("TC_01 - Departman Bölümü Görünürlük Kontrolü");
+
+        extentTest.info("Sayfa asagi kaydiriliyor ve Departman bolumu araniyor.");
         ReusableMethods.scrollToElement(homePageDepartmentSection.departmanTitleSection);
 
+        extentTest.info("Departman bolumunun gorunur oldugu dogrulaniyor.");
         Assert.assertTrue(homePageDepartmentSection.departmanTitleSection.isDisplayed());
+
         extentTest.pass("Departmanlar bölümü başarıyla görüntüleniyor.");
     }
 
@@ -83,11 +86,14 @@ public class US11 extends TestBaseRapor {
         extentTest = extentReports.createTest("TC_02 - Departman Başlığı ve Alt Başlık Kontrolü");
         ReusableMethods.scrollToElement(homePageDepartmentSection.departmanTitleSection);
 
+        extentTest.info("Departman basligi (Title) kontrol ediliyor.");
         Assert.assertTrue(homePageDepartmentSection.departmanTitle.isDisplayed());
         Assert.assertEquals(homePageDepartmentSection.departmanTitle.getText(), "Departments");
         extentTest.info("Ana başlığın 'Departments' olduğu doğrulandı.");
 
+        extentTest.info("Departman aciklama metni (Description) kontrol ediliyor.");
         Assert.assertTrue(homePageDepartmentSection.departmanDescription.isDisplayed());
+
         extentTest.pass("Başlık ve alt başlık başarıyla görüntülendi.");
     }
 
@@ -95,37 +101,58 @@ public class US11 extends TestBaseRapor {
     public void TC_03_DepartmentsLinkiVeYonlendirmeKontrolu() {
         extentTest = extentReports.createTest("TC_03 - Departments Bağlantısı ve Yönlendirme Kontrolü");
 
+        extentTest.info("'Departments' linkinin gorunur ve tiklanabilir oldugu kontrol ediliyor.");
         Assert.assertTrue(ReusableMethods.isDisplayedAndClickable(homePageDepartmentSection.departmentsLink, timeout));
         extentTest.info("Departments linkinin aktif olduğu doğrulandı.");
 
-        homePageDepartmentSection.departmentsLink.click();
+        extentTest.info("Linke tiklaniyor ve sayfa yonlendirmesi bekleniyor.");
+        Actions actions = new Actions(Driver.getDriver());
+
+        actions.sendKeys(Keys.PAGE_UP).perform();
+
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].click()",homePageDepartmentSection.departmentsLink);
+
+        ReusableMethods.waitForPageToLoad(2);
+
         String expectedUrl = ConfigReader.getProperty("departmentsUrl");
+        extentTest.info("Gidilen URL kontrol ediliyor. Beklenen: " + expectedUrl);
         Assert.assertEquals(Driver.getDriver().getCurrentUrl(), expectedUrl);
+
         extentTest.pass("Departments sayfasına başarıyla yönlendirme yapıldı.");
     }
 
     @Test(priority = 4)
     public void TC_04_DepartmanKartlariVeDetaySayfasiKontrolu() {
         extentTest = extentReports.createTest("TC_04 - Departman Görsel Kartları ve Detay Sayfası Kontrolü");
-        ReusableMethods.scrollToElement(homePageDepartmentSection.departmanTitleSection);
+        Driver.getDriver().navigate().back();
+
+        homePageDepartmentSection = new HomePageDepartmentSection();
 
         // 1. Resimlerin yüklenmesi kontrolü
+        extentTest.info("Departman gorsellerinin yuklenip yuklenmedigi kontrol ediliyor.");
         int numberOfDepartments = homePageDepartmentSection.departmentsImages.size();
+        ReusableMethods.waitForPageToLoad(2);
+        ReusableMethods.scrollToElement(homePageDepartmentSection.departmanBodySection);
+
         for (int i = 0; i < numberOfDepartments; i++) {
-            ReusableMethods.scrollToElement(homePageDepartmentSection.departmentsImages.get(i));
+            ReusableMethods.waitForVisibility(homePageDepartmentSection.departmentsImages.get(i),3);
             Assert.assertTrue(homePageDepartmentSection.departmentsImages.get(i).isDisplayed());
             Assert.assertTrue(homePageDepartmentSection.departmentsImagesTitle.get(i).isDisplayed());
         }
         extentTest.info("Tüm departman resimleri ve başlıkları başarıyla yüklendi.");
 
         // 2. Her bir departmana TEK TEK tıklayıp sayfa yönlendirmesini kontrol etme
+        extentTest.info("Her bir departman kartina tiklanarak detay sayfasi kontrolu yapiliyor.");
         for (int i = 0; i < numberOfDepartments; i++) {
             // Sayfa yenilendiğinde elementler kaybolabileceği için Page Object'i tazeliyoruz
             homePageDepartmentSection = new HomePageDepartmentSection();
             String deptName = homePageDepartmentSection.departmentsImagesTitle.get(i).getText().toLowerCase().trim().replace(" ","-");
 
             // Tıkla ve doğrula
+            extentTest.info("Tiklanilan departman: " + deptName);
             homePageDepartmentSection.departmentsImageLinks.get(i).click();
+
             Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(deptName), deptName + " sayfasına gidilemedi! Gidilen sayfa: "+Driver.getDriver().getCurrentUrl());
             extentTest.info(deptName + " sayfasına başarıyla yönlendirme yapıldı.");
 
@@ -142,6 +169,8 @@ public class US11 extends TestBaseRapor {
         extentTest = extentReports.createTest("TC_05", "Departman Ayrıntı Sayfasındaki Formun Görünürlük ve Düzen Kontrolü");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
+
+        extentTest.info("Ilk departman detay sayfasina gidiliyor.");
         homePageDepartmentSection.departmentsImageLinks.getFirst().click();
         ReusableMethods.waitForPageToLoad(timeout);
 
@@ -157,6 +186,7 @@ public class US11 extends TestBaseRapor {
         extentTest.info("Form ve başlık görünür durumda.");
 
         // 3. Formdaki TÜM alanlar için Label (Etiket) Kontrolü
+        extentTest.info("Form alanlarinin yanindaki etiketlerin (Label) varligi kontrol ediliyor.");
         WebElement[] formLabels = {
                 departmentPage.departmentFormDateLabel,
                 departmentPage.departmentFormPhoneLabel,
@@ -202,6 +232,7 @@ public class US11 extends TestBaseRapor {
         extentTest.pass("Form gönderme butonu aktif ve görünür.");
 
         // 6. Telefon Formatı Bilgisi
+        extentTest.info("Telefon numarasi alani icin placeholder (ipucu) kontrol ediliyor.");
         String phonePlaceholder = departmentPage.departmentFormPhoneNumberInput.getAttribute("placeholder");
         if(phonePlaceholder.equalsIgnoreCase("Phone Number")){
             extentTest.fail("BUG BULUNDU (Adım 6): Telefon numarası inputunda format belirtilmemiş. Sadece 'Phone Number' yazıyor.");
@@ -217,13 +248,11 @@ public class US11 extends TestBaseRapor {
     @Test(priority = 6, dataProvider = "pozitifVeriSeti")
     public void TC_06_DepartmanAyrintiSayfasiFormuPozitifTestiDinamik(String tarih, String telefon, String mesaj){
         extentTest = extentReports.createTest("TC_06","Departman Ayrıntı Sayfası Form Pozitif Testi");
-        homePageDepartmentSection.departmentsImageLinks.getFirst().click();
-        ReusableMethods.waitForPageToLoad(timeout);
 
         DepartmentPage departmentPage = new DepartmentPage();
+        extentTest.info("TEST VERILERI -> Tarih: " + tarih + " | Tel: " + telefon + " | Mesaj: " + mesaj);
 
         // 1. Geçerli Tarih
-
         departmentPage.departmentFormDateInput.sendKeys(tarih);
 
         // 2. Geçerli Telefon
@@ -232,14 +261,17 @@ public class US11 extends TestBaseRapor {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         // 3. Departman Seç (Wellness)
         js.executeScript("arguments[0].value='56';", departmentPage.hiddenDepartmentSelect);
+        extentTest.info("Departman secildi.");
 
         // 4. Doktor Seç (Dr. Marcus)
         js.executeScript("arguments[0].value='21';", departmentPage.hiddenDoctorSelect);
+        extentTest.info("Doktor secildi.");
 
         // 5. Mesaj Yaz
         departmentPage.departmentFormTextArea.sendKeys(mesaj);
 
         // 6. Gönder ve Onayla
+        extentTest.info("Form gonderiliyor (Submit).");
         departmentPage.departmentFormSubmitButton.submit();
 
         AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
@@ -253,10 +285,12 @@ public class US11 extends TestBaseRapor {
         Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         extentTest = extentReports.createTest("TC_07", "Departman Formu Negatif Testi");
         Driver.getDriver().get(ConfigReader.getProperty("url"));
+
         homePageDepartmentSection.departmentsImageLinks.getFirst().click();
         ReusableMethods.waitForPageToLoad(timeout);
 
         DepartmentPage departmentPage = new DepartmentPage();
+        extentTest.info("NEGATIF TEST VERILERI -> Tarih: " + tarih + " | Tel: " + telefon + " | Mesaj: " + mesaj);
 
         // 1. Geçersiz Tarih (Çok eski ve saçma bir tarih)
         departmentPage.departmentFormDateInput.sendKeys(tarih);
@@ -268,14 +302,16 @@ public class US11 extends TestBaseRapor {
         departmentPage.departmentFormTextArea.sendKeys(mesaj);
 
         // 4. Formu Gönder
+        extentTest.info("Gecersiz verilerle form gonderiliyor.");
         departmentPage.departmentFormSubmitButton.submit();
-        ReusableMethods.waitForPageToLoad(timeout);
 
         AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
 
         try {
-            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, timeout);
+            extentTest.info("Hata mesaji (Error Toast) bekleniyor.");
+            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 1);
             Assert.assertTrue(alertMessageLocators.errorMessage.isDisplayed());
+            extentTest.pass("Sistem gecersiz veri girisine karsi beklenen hata mesajini verdi.");
         } catch (Exception e) {
             Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(ConfigReader.getProperty("timeout"))));
             extentTest.fail("BUG BULUNDU (Adım 1-4): Geçersiz veriler girildi (tarih, telefon, uzun mesaj) ancak sistem uyarı vermeden formu kabul etti!");
@@ -290,10 +326,12 @@ public class US11 extends TestBaseRapor {
         // 1. Tarayıcıyı mobil boyutuna (iPhone 12 Pro) getir
         Dimension mobileSize = new Dimension(390, 844);
         Driver.getDriver().manage().window().setSize(mobileSize);
+        extentTest.info("Tarayici penceresi mobil cozunurluge (390x844) ayarlandi.");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
         // 1b. YATAY KAYDIRMA (OVERFLOW) KONTROLÜ
+        extentTest.info("JS Executor ile yatay tasma (Horizontal Overflow) kontrolu yapiliyor.");
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         boolean isOverflowing = (Boolean) js.executeScript("return document.documentElement.scrollWidth > document.documentElement.clientWidth;");
         Assert.assertFalse(isOverflowing, "HATA: Mobil görünümde yatay kaydırma (overflow) tespit edildi!");
@@ -310,6 +348,7 @@ public class US11 extends TestBaseRapor {
         Assert.assertTrue(departmentPage.departmentForm.isDisplayed());
 
         // Form alanında da taşma kontrolü
+        extentTest.info("Randevu formunun ekrana sigip sigmadigi kontrol ediliyor.");
         boolean isFormOverflowing = (Boolean) js.executeScript("return document.documentElement.scrollWidth > document.documentElement.clientWidth;");
         Assert.assertFalse(isFormOverflowing, "HATA: Randevu formu mobil ekrandan taştı!");
         extentTest.pass("Randevu oluşturma formu mobil ekrana tam oturdu, taşma yok.");

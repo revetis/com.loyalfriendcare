@@ -23,7 +23,8 @@ public class US_018_TestCases extends TestBaseRapor {
     // TC_01: Giriş Yapmış Kullanıcının Medicines Sayfasına Erişimi
     // ========================================
 
-    @Test(priority = 1, description = "Giriş yapmış kullanıcının Home Page'den Medicines sayfasına erişimini doğrulama")
+    @Test(priority = 1, description = "Giriş yapmış kullanıcının Home Page'den Medicines " +
+            "sayfasına erişimini doğrulama")
     public void tc01_LoggedInUserMedicinesAccessTest() {
 
         layout = new Layout();
@@ -32,7 +33,8 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest = extentReports.createTest("US_018_TC_01 - Medicines Sayfası Erişim Testi",
                 "Giriş yapmış kullanıcının Home Page'den Medicines sayfasına erişimini doğrulama");
 
-        extentTest.info("Pre-Condition: Kullanıcı sisteme başarıyla giriş yapmış olmalı ve Home Page'de olmalı");
+        extentTest.info("Pre-Condition: Kullanıcı sisteme başarıyla giriş yapmış olmalı " +
+                "ve Home Page'de olmalı");
 
         // 1. Sisteme geçerli kullanıcı bilgileriyle giriş yap
         extentTest.info("1. Sisteme geçerli kullanıcı bilgileriyle giriş yap");
@@ -47,7 +49,7 @@ public class US_018_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Login bilgilerini gir
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 2);
         loginPage.emailAddressInput.sendKeys("tural.seyidov.user@loyalfriendcare.com");
         loginPage.passwordInput.sendKeys("Loyal.123123");
         extentTest.info("Email: tural.seyidov.user@loyalfriendcare.com | Password: Loyal.123123");
@@ -65,7 +67,7 @@ public class US_018_TestCases extends TestBaseRapor {
         // 2. Home Page'in yüklendiğini doğrula
         extentTest.info("2. Home Page'in yüklendiğini doğrula");
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.waitForPageToLoad(3);
         ReusableMethods.bekle(2);
 
         String currentUrl = Driver.getDriver().getCurrentUrl();
@@ -74,7 +76,7 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // 3. Navbar'da Medicines menüsünü bul
         extentTest.info("3. Navbar'da Medicines menüsünü bul");
-        ReusableMethods.waitForVisibility(layout.headerMedicinesLink, 10);
+        ReusableMethods.waitForVisibility(layout.headerMedicinesLink, 2);
         Assert.assertTrue(layout.headerMedicinesLink.isDisplayed());
         extentTest.pass("Medicines menüsü navbar'da bulundu");
 
@@ -87,7 +89,7 @@ public class US_018_TestCases extends TestBaseRapor {
         // 5. Sayfanın Medicines listesi sayfasına yönlendiğini kontrol et
         extentTest.info("5. Sayfanın Medicines listesi sayfasına yönlendiğini kontrol et");
         ReusableMethods.bekle(2);
-        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.waitForPageToLoad(3);
 
         String medicinesUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertTrue(medicinesUrl.contains("/Medicines") || medicinesUrl.contains("/medicines" + medicinesUrl));
@@ -132,7 +134,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("3. İlaç listesinin görünür olduğunu kontrol et");
 
         // Sayfayı scroll down yap
-        ReusableMethods.scrollDown();
+        ReusableMethods.scrollToBottom();
         ReusableMethods.bekle(2);
 
         // Container kontrolü
@@ -152,7 +154,7 @@ public class US_018_TestCases extends TestBaseRapor {
 
         if (medicineItems.size() == 0) {
             // Tekrar scroll yap ve tekrar dene
-            ReusableMethods.scrollToHeader();
+            ReusableMethods.scrollToTop();
             ReusableMethods.bekle(2);
 
             medicineItems = Driver.getDriver().findElements(
