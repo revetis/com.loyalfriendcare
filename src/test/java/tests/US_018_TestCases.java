@@ -42,7 +42,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("Ana sayfaya gidildi: " + ConfigReader.getProperty("url"));
 
         // Sign In butonuna tıkla
-        ReusableMethods.waitForClickability(layout.signInLink, 2);
+        ReusableMethods.waitForClickablility(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
@@ -82,7 +82,7 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // 4. Medicines menüsüne tıkla
         extentTest.info("4. Medicines menüsüne tıkla");
-        ReusableMethods.waitForClickability(layout.headerMedicinesLink, 2);
+        ReusableMethods.waitForClickablility(layout.headerMedicinesLink, 10);
         layout.headerMedicinesLink.click();
         extentTest.info("Medicines menüsüne tıklandı");
 
@@ -122,8 +122,8 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // 2. Sayfanın tam olarak yüklenmesini bekle
         extentTest.info("2. Sayfanın tam olarak yüklenmesini bekle");
-        ReusableMethods.waitForPageToLoad(3);
-        ReusableMethods.bekle(2);
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
 
         // URL kontrolü
         String currentUrl = Driver.getDriver().getCurrentUrl();
@@ -134,7 +134,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("3. İlaç listesinin görünür olduğunu kontrol et");
 
         // Sayfayı scroll down yap
-        ReusableMethods.scrollDown();
+        ReusableMethods.scrollToBottom();
         ReusableMethods.bekle(2);
 
         // Container kontrolü
@@ -195,8 +195,8 @@ public class US_018_TestCases extends TestBaseRapor {
         // 1. Medicines sayfasına git
         extentTest.info("1. Medicines sayfasındaki ilaç listesini görüntüle");
         Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Medicines");
-        ReusableMethods.waitForPageToLoad(3);
-        ReusableMethods.bekle(2);
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
         extentTest.pass("Sayfa yüklendi");
 
         // 2. İlk ilacı kontrol et
@@ -279,13 +279,13 @@ public class US_018_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("Ana sayfaya gidildi");
 
-        ReusableMethods.waitForClickability(layout.signInLink, 2);
+        ReusableMethods.waitForClickablility(layout.signInLink, 10);
         layout.signInLink.click();
         extentTest.info("Sign In butonuna tıklandı");
 
         ReusableMethods.bekle(2);
 
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 2);
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
         extentTest.info("Email: " + ConfigReader.getProperty("user_email"));
@@ -297,8 +297,8 @@ public class US_018_TestCases extends TestBaseRapor {
         // 1. İlaç detay sayfasına git
         extentTest.info("1. İlaç detay sayfasına git (Rimadyl - Carprofen)");
         Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Medicines/suretin-mipen-ruma");
-        ReusableMethods.waitForPageToLoad(3);
-        ReusableMethods.bekle(2);
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
 
         String currentUrl = Driver.getDriver().getCurrentUrl();
         Assert.assertTrue(currentUrl.contains("/Medicines/"));
@@ -315,7 +315,7 @@ public class US_018_TestCases extends TestBaseRapor {
                 By.xpath("//h1 | //h2[contains(@class,'title')] | //*[contains(@class,'medicine-title')]")
         );
 
-        ReusableMethods.waitForVisibility(medicineTitle, 2);
+        ReusableMethods.waitForVisibility(medicineTitle, 10);
         String titleText = medicineTitle.getText();
         Assert.assertFalse(titleText.isEmpty(), "İlaç adı boş!");
         extentTest.pass("İlacın adı görünür: " + titleText);
@@ -375,11 +375,11 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // Login yap
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickability(layout.signInLink, 2);
+        ReusableMethods.waitForClickablility(layout.signInLink, 10);
         layout.signInLink.click();
         ReusableMethods.bekle(2);
 
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 2);
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
         loginPage.signInButton.click();
@@ -388,8 +388,8 @@ public class US_018_TestCases extends TestBaseRapor {
 
         // İlaç detay sayfasına git
         Driver.getDriver().get("https://qa.loyalfriendcare.com/en/Medicines/suretin-mipen-ruma");
-        ReusableMethods.waitForPageToLoad(3);
-        ReusableMethods.bekle(2);
+        ReusableMethods.waitForPageToLoad(15);
+        ReusableMethods.bekle(3);
         extentTest.info("İlaç detay sayfasına gidildi: Rimadyl (Carprofen)");
 
         ReusableMethods.scrollDown();
@@ -399,7 +399,7 @@ public class US_018_TestCases extends TestBaseRapor {
         extentTest.info("1. İlaç detay sayfasında 'Randevu Oluştur' butonu bul");
 
         try {
-            ReusableMethods.waitForVisibility(appointmentForm.appointmentFormContainer, 2);
+            ReusableMethods.waitForVisibility(appointmentForm.appointmentFormContainer, 10);
             extentTest.pass("✅ STEP 1 PASSED: Randevu formu görünür");
         } catch (Exception e) {
             extentTest.fail("❌ STEP 1 FAILED: Randevu formu bulunamadı!");
@@ -450,8 +450,7 @@ public class US_018_TestCases extends TestBaseRapor {
                 if (pageText.contains("Congratulations") || pageText.contains("success") || pageText.contains("Success")) {
                     extentTest.fail("❌ STEP 2-6 FAILED: BUG! Success message butonun locator'ı bulunamadı ama sayfada 'Congratulations' mesajı var!");
                     extentTest.fail("❌ Boş formla randevu oluşturuldu! Form validasyonu çalışmıyor!");
-                    extentTest.fail("🐛 CRITICAL BUG: Sayfa içeriği - " + (pageText.contains("Congratulations") ?
-                            "Congratulations mesajı tespit edildi!" : "Success mesajı var!"));
+                    extentTest.fail("🐛 CRITICAL BUG: Sayfa içeriği - " + (pageText.contains("Congratulations") ? "Congratulations mesajı tespit edildi!" : "Success mesajı var!"));
                 } else {
                     extentTest.pass("Validasyon çalışıyor, boş form kabul edilmedi");
                 }

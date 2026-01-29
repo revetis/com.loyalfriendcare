@@ -55,7 +55,6 @@ public abstract class TestBaseRapor {
         } else if (result.getStatus() == ITestResult.SKIP) { // eğer test çalıştırılmadan geçilmezse
             extentTest.skip("Test Case is skipped: " + result.getName()); // Ignore olanlar
         }
-       //BURADAKİ Driver.quitDriver(); SATIRINI aşağıya taşıdık
     }
 
 
@@ -67,6 +66,6 @@ public abstract class TestBaseRapor {
         if (extentReports != null) {
             extentReports.flush();
         }
-        Driver.quitDriver(); //TARAYICI yı her bir testte değil testlerin sonunda kapatıyoruz
+        Driver.quitDriver();
     }
 }
