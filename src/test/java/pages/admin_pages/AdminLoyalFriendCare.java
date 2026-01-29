@@ -68,6 +68,9 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//span[normalize-space()='Doctors Store successfully.']")
     public WebElement doctorStoreSuccess;
 
+    @FindBy(xpath = "(//*[@*='container'])[1]")
+    public WebElement aramaSonucElementi;
+
     public String getResultTitle(int row) {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
