@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utilities.ConfigReader;
 import utilities.Driver;
 
 import java.time.Duration;
@@ -43,25 +44,36 @@ public class BedmanagersPage {
     }
 
     public Map<String, WebElement> getTableRowMap(int row) {
-        WebElement rowElement = tableBodyRows.get(row);
+        Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+
         Map<String, WebElement> rowElements = new HashMap<>();
 
-        addIfFound(rowElements, "img", rowElement, ".//td[1]//img");
+        try {
+            WebElement rowElement = tableBodyRows.get(row);
 
-        addIfFound(rowElements, "title", rowElement,
-                ".//td[2]/p | .//td[2][not(.//p)]");
+            addIfFound(rowElements, "img", rowElement, ".//td[1]//img");
 
-        addIfFound(rowElements, "departments", rowElement,
-                ".//td[3]//a | .//td[3]//p | .//td[3][not(.//a or .//p)]");
+            addIfFound(rowElements, "title", rowElement,
+                    ".//td[2]/p | .//td[2][not(.//p)]");
 
-        addIfFound(rowElements, "availability", rowElement,
-                ".//td[4]//*[string-length(normalize-space(text())) > 0]");
+            addIfFound(rowElements, "departments", rowElement,
+                    ".//td[3]//a | .//td[3]//p | .//td[3][not(.//a or .//p)]");
 
-        addIfFound(rowElements, "editButton", rowElement,
-                ".//td[5]//a");
+            addIfFound(rowElements, "availability", rowElement,
+                    ".//td[4]//*[string-length(normalize-space(text())) > 0]");
 
-        addIfFound(rowElements, "deleteButton", rowElement,
-                ".//td[6]//button");
+            addIfFound(rowElements, "editButton", rowElement,
+                    ".//td[5]//a");
+
+            addIfFound(rowElements, "deleteButton", rowElement,
+                    ".//td[6]//button");
+
+        } catch (Exception e) {
+            System.out.println("Satır haritalanırken hata: " + e.getMessage());
+        } finally {
+            int timeout = Integer.parseInt(ConfigReader.getProperty("timeout"));
+            Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(timeout));
+        }
 
         return rowElements;
     }

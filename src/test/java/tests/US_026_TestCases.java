@@ -51,7 +51,7 @@ public class US_026_TestCases extends TestBaseRapor {
         extentTest.info("1. Admin paneline giriş yap");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 3);
+        ReusableMethods.waitForClickability(layout.signInLink, 3);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -73,7 +73,7 @@ public class US_026_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -100,7 +100,7 @@ public class US_026_TestCases extends TestBaseRapor {
         );
 
         try {
-            ReusableMethods.waitForClickablility(usersMainMenu, 3);
+            ReusableMethods.waitForClickability(usersMainMenu, 3);
             usersMainMenu.click();
         } catch (Exception e) {
             ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", usersMainMenu);
@@ -156,7 +156,7 @@ public class US_026_TestCases extends TestBaseRapor {
         extentTest.info("5. Butonun görünür ve tıklanabilir olduğunu kontrol et");
 
         // Tıklanabilirlik kontrolü
-        ReusableMethods.waitForClickablility(adminUsersPage.addUserButton, 3);
+        ReusableMethods.waitForClickability(adminUsersPage.addUserButton, 3);
         Assert.assertTrue(adminUsersPage.addUserButton.isEnabled());
 
         // Hover efekti kontrolü
@@ -200,7 +200,7 @@ public class US_026_TestCases extends TestBaseRapor {
 
         // Login ve Admin Panel (TC_01'den tekrar)
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -216,7 +216,7 @@ public class US_026_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -249,7 +249,7 @@ public class US_026_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(1);
 
         // Add User butonuna tıkla
-        ReusableMethods.waitForClickablility(adminUsersPage.addUserButton, 10);
+        ReusableMethods.waitForClickability(adminUsersPage.addUserButton, 10);
         adminUsersPage.addUserButton.click();
         extentTest.info("Add User butonuna tıklandı");
         ReusableMethods.bekle(1);
@@ -387,7 +387,7 @@ public class US_026_TestCases extends TestBaseRapor {
         extentTest.info("1. Yeni kullanıcı formunu aç");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 10);
+        ReusableMethods.waitForClickability(layout.signInLink, 10);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -403,7 +403,7 @@ public class US_026_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -435,7 +435,7 @@ public class US_026_TestCases extends TestBaseRapor {
         ReusableMethods.bekle(1);
 
         // Add User butonuna tıkla
-        ReusableMethods.waitForClickablility(adminUsersPage.addUserButton, 10);
+        ReusableMethods.waitForClickability(adminUsersPage.addUserButton, 10);
         adminUsersPage.addUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -637,7 +637,7 @@ public class US_026_TestCases extends TestBaseRapor {
 
         // Login ve Admin Panel
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.waitForClickablility(layout.signInLink, 3);
+        ReusableMethods.waitForClickability(layout.signInLink, 3);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -653,7 +653,7 @@ public class US_026_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 3);
+        ReusableMethods.waitForClickability(adminUserButton, 3);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 

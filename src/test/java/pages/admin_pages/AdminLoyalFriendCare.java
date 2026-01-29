@@ -10,7 +10,6 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
-
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
@@ -48,9 +47,28 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "(//div[@class='container margin_60_35'])[1]/div/div/div")
     public List<WebElement> searchResults;
 
+    @FindBy(xpath = "//div[@class='sidebar-header']")
+    public WebElement adminSidebarHeader;
+
+    @FindBy(xpath = "//span[normalize-space()='Doctors']")
+    public WebElement doctorElementSidebar;
+
+    @FindBy(xpath = "//a[normalize-space()='Create Doctors']")
+    public WebElement createDoctorButton;
+
+    @FindBy(xpath = "//input[@id='Title_en']")
+    public WebElement newDoctorCreateGap1;
+
+    @FindBy(xpath = "//input[@id='body_en']")
+    public WebElement getNewDoctorCreateGap2;
+
+    @FindBy(xpath = "//*[@type='submit']")
+    public WebElement doctorSave;
+
+    @FindBy(xpath = "//span[normalize-space()='Doctors Store successfully.']")
+    public WebElement doctorStoreSuccess;
+
     public String getResultTitle(int row) {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
-
-
