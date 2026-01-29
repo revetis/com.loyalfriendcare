@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.common_pages.HomePageBodySection;
 import pages.common_pages.HomepageBodyPage;
 import pages.user_pages.*;
 import utilities.ConfigReader;
