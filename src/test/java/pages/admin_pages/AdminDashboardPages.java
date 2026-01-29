@@ -56,4 +56,14 @@ public class AdminDashboardPages {
     // Medicines list submenu
     @FindBy(xpath = "//span[normalize-space()='Medicines']/ancestor::li//a[normalize-space()='Medicines']")
     public WebElement medicinesListSubMenu;
+
+    @FindBy(xpath = "//span[normalize-space()='Departments']/ancestor::a")
+    public WebElement adminSidebarDepartmentsButton;
+
+    @FindBy(xpath = "//span[normalize-space()='Departments']/ancestor::li//ul//a[normalize-space()='Departments']")
+    public WebElement departmentsListSubMenu;
+
+    @FindBy(xpath = "/html/body/nav/div[2]/div[1]/ul/li[5]/span/i")
+    public WebElement sidebarDepartmentsIcon;
+
 }

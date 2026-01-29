@@ -135,62 +135,66 @@ public class US13 extends TestBaseRapor {
 
         extentTest = extentReports.createTest(
                 "US_013_TC03_Negative",
-                "Geçmiş tarih ile randevu oluşturulamamalı"
+                "Geçmiş tarih ile randevu oluşturulamamalı (negatif senaryo)"
         );
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
         HomePageBodySection homeSection = new HomePageBodySection();
-        VaccineDetailPage detailPage = new VaccineDetailPage();
 
         // Vaccine detayına git
         ReusableMethods.scrollToElement(homeSection.vaccinationsTitle);
         ReusableMethods.waitForVisibility(homeSection.felineHerpesvirusVaccineLink, 5);
         homeSection.felineHerpesvirusVaccineLink.click();
+        extentTest.info("Feline Herpesvirus Vaccine detay sayfasına gidildi.");
 
-
+        VaccineDetailPage detailPage = new VaccineDetailPage();
         ReusableMethods.waitForVisibility(detailPage.appointmentForm, 5);
+        Assert.assertTrue(detailPage.appointmentForm.isDisplayed(), "Appointment form görünmüyor!");
+        extentTest.pass("Appointment form görüntülendi.");
 
-        // ❌ Geçmiş tarih (bugün -1)
+        // Geçmiş tarih (bugün -1)
         String pastDate = ReusableMethods.getFutureDate(-1);
         detailPage.dateInput.clear();
         detailPage.dateInput.sendKeys(pastDate);
         extentTest.info("Geçmiş tarih girildi: " + pastDate);
 
-        // 4) Phone
-        String phone = "555" + (int) (Math.random() * 10000000); // 10 hane
+        // Phone
+        String phone = "555" + (int) (Math.random() * 10000000);
         detailPage.phoneNumberInput.clear();
         detailPage.phoneNumberInput.sendKeys(phone);
+        extentTest.info("Phone girildi: " + phone);
 
-        // 5) Wellness dropdown: 2. sıradaki seç
+        // Wellness dropdown: 2. seçenek
         detailPage.wellnessDropdown.click();
         ReusableMethods.bekle(1);
         detailPage.wellnessOptions.get(1).click();
         extentTest.info("Wellness 2. seçenek seçildi.");
 
-        // 6) Doctor dropdown: 2. sıradaki seç
+        // Doctor dropdown: 2. seçenek
         detailPage.doctorDropdown.click();
         ReusableMethods.bekle(1);
         detailPage.doctorOptions.get(1).click();
         extentTest.info("Doctor 2. seçenek seçildi.");
 
-        // 7) Message
-        String msg = "Automation test - appointment request.";
+        // Message
+        String msg = "Automation test - appointment request (negative).";
         detailPage.messageTextArea.sendKeys(msg);
         extentTest.info("Message girildi.");
 
-        Assert.fail();
-
-
-        // 8) Submit
+        // Submit
         detailPage.appointmentBookingButton.click();
         extentTest.info("Appointment Booking butonuna tıklandı.");
 
-        Assert.assertEquals(detailPage.successAlerts.size(), 0,
-                "BUG: Geçmiş tarih ile success mesajı çıktı!");
 
+        boolean successShown = detailPage.successAlerts.size() > 0;
 
-
-    }
-
-}
+        if (successShown) {
+            extentTest.fail("BUG: Geçmiş tarih ile success mesajı görüntülendi!");
+            Assert.fail("BUG: Geçmiş tarih ile success mesajı görüntülendi!");
+        } else {
+            extentTest.pass("Geçmiş tarih ile success mesajı çıkmadı. Negatif senaryo başarılı.");
+            Assert.assertEquals(detailPage.successAlerts.size(), 0,
+                    "Geçmiş tarih ile success mesajı çıkmamalıydı!");
+        }
+    }}

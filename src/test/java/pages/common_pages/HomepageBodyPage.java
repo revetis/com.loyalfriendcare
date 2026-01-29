@@ -95,5 +95,8 @@ public class HomepageBodyPage {
         randomDoctor.click(); // Random doktoru klikləyir
     }
 
+    @FindBy(css = "#top_menu a.btn_add")
+    public WebElement headerSignIn;
+
 
 }
