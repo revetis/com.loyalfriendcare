@@ -105,7 +105,6 @@ public class US24 extends TestBaseRapor {
         adminAddUserPage1 = new AdminAddUserPage();
         adminRolesPages1 = new AdminRolesPages();
 
-        SignIn.signInAdmin();
 
         // Ana sayfada sag üst kösedeki isminin yazili oldugu butona tiklayın
         adminLoyalFriendCare1.adminPanelineGirisButonu.click();
