@@ -40,7 +40,7 @@ public class US31 extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]"));
 
-        ReusableMethods.waitForClickablility(adminUserButton, 10);
+        ReusableMethods.waitForClickability(adminUserButton, 10);
         String buttonText = adminUserButton.getText();
         adminUserButton.click();
         extentTest.info("Admin user butonuna tıklandı: " + buttonText);
