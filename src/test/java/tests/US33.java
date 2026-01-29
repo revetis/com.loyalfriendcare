@@ -440,7 +440,7 @@ public class US33 extends TestBaseRapor {
         // =========================
         extentTest.info("7. Scroll up yap (header'a dön)");
 
-        ReusableMethods.scrollToHeader();
+        ReusableMethods.scrollToTop();
         ReusableMethods.bekle(1);
 
         extentTest.pass("✅ STEP 7 PASSED: Scroll up yapıldı");

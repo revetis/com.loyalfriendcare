@@ -31,8 +31,6 @@ public class DepartmentsPage {
     @FindBy(xpath = "//table[@id='tableWithSearch']/tbody/tr/td[3]/p")
     public List<WebElement> departmentNames;
 
-    @FindBy(xpath = "//a[contains(text(),'Next')]")
-    public WebElement nextButton;
 
     public Map<String, WebElement> getTableRowMap(int row) {
         List<WebElement> cells = allRows.get(row).findElements(By.tagName("td"));
@@ -58,4 +56,25 @@ public class DepartmentsPage {
 
         return rowElements;
     }
+    public boolean isDepartmentsPageOpened() {
+        return departmentsHeader.isDisplayed();
+    }
+
+    public int getDepartmentRowCount() {
+        return allRows.size();
+    }
+
+    @FindBy(xpath = "//label[contains(.,'Title')]/following-sibling::input")
+    public WebElement titleDepartmentInput;
+
+    @FindBy(xpath = "//button[@type='submit' and .//span[normalize-space()='Save Departments']]")
+    public WebElement saveButton;
+
+
+    @FindBy(xpath = "//table[@id='tableWithSearch']/tbody/tr")
+    public List<WebElement> filteredRows;
+
+    @FindBy(xpath = "//table[@id='tableWithSearch']/tbody/tr[1]/td[3]/p")
+    public WebElement firstRowDepartmentName;
+
 }

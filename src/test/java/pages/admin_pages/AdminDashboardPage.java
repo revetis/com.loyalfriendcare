@@ -53,9 +53,8 @@ public class AdminDashboardPage {
     @FindBy(xpath = "(//*[@class='text-white'])[8]")
     public WebElement adminDashboardYedinciKutuLearnMore;
 
-
-
-
+    @FindBy(xpath = "//h2[contains(text(),'Users in your Database')]")
+    public WebElement adminDashboardUsersInDatabaseText;
 
 }
 

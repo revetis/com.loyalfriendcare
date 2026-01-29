@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Samet Suite">
+    <test name="Samet Tests 1">
+        <classes>
+            <class name="tests.US03"></class>
+            <class name="tests.US11"></class>
+        </classes>
+    </test>
+    <test name="Samet Tests 2">
+        <classes>
+            <class name="tests.US19"></class>
+            <class name="tests.US27"></class>
+            <class name="tests.US41"></class>
+        </classes>
+    </test>
+</suite>

@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public abstract class TestBaseRapor {
 
-    public static ExtentReports extentReports; //extent report'a ilk atamayi yapar
+    protected static ExtentReports extentReports; //extent report'a ilk atamayi yapar
     protected static ExtentSparkReporter extentSparkReporter; // Html raporu duzenler
     protected static ExtentTest extentTest; // test pass veya failed gibi bilgileri kaydeder.
     // Ayrica ekran resmi icin de kullaniriz
@@ -55,17 +55,15 @@ public abstract class TestBaseRapor {
         } else if (result.getStatus() == ITestResult.SKIP) { // eğer test çalıştırılmadan geçilmezse
             extentTest.skip("Test Case is skipped: " + result.getName()); // Ignore olanlar
         }
-        Driver.quitDriver();
     }
 
 
     // Raporlandırmayı sonlandırmak icin
     @AfterTest(alwaysRun = true)
     public void tearDownTest() {
-        Locale.setDefault(new Locale("en", "US"));
-
         if (extentReports != null) {
             extentReports.flush();
         }
+        Driver.quitDriver();
     }
 }

@@ -1,11 +1,23 @@
 package pages.user_pages;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.Driver;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+
 public class DoctorDetailPage {
+
+    public Actions categoryDropdown;
 
     public DoctorDetailPage(){
         PageFactory.initElements(Driver.getDriver(), this);
@@ -39,6 +51,12 @@ public class DoctorDetailPage {
     @FindBy(xpath = "//section[@id='description']//p")
     public WebElement doctorDetailInfos;
 
+    @FindBy(xpath = "//*[@*='Appointment Booking']")
+    public WebElement doctorDetailBaslik;
+
+    @FindBy(xpath = "//select[@name='doctor_id']")
+    public WebElement doctorSelectionDropdown;
+
     // ========== APPOINTMENT BOOKING FORMU ==========
 
     // Appointment Booking başlığı
@@ -58,8 +76,17 @@ public class DoctorDetailPage {
     public WebElement wellnessDropdown;
 
     // Doctor selection dropdown (Dr. Alejandro Martinez)
+    @FindBy(xpath = "//li[contains(text(),'Dr. Olivia Bennett')]")
+    public WebElement doctorSectionName;
+
     @FindBy(xpath = "(//div[@class='nice-select wide'])[3]")
-    public WebElement doctorSelectionDropdown;
+    public WebElement doctorDetailSelection;
+
+    @FindBy(xpath = "//ul[@class='list']/li[@class='option']")
+    public List<WebElement> categoryOptions;
+
+    @FindBy(xpath = "//li[contains(text(),'Dermatology')]")
+    public WebElement anycategory;
 
     // Create Message textarea
     @FindBy(xpath = "//textarea[@placeholder='Create Message']")
@@ -69,9 +96,18 @@ public class DoctorDetailPage {
     @FindBy(id = "submit-contact-detail")
     public WebElement appointmentBookingButton;
 
+    @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]")
+    public WebElement sonucAcceptMessage;
+
+    @FindBy(xpath = "//*[@*='Create Message']")
+    public WebElement creatMessage;
+
     // "No money charged in this step" mesajı
     @FindBy(xpath = "//*[contains(text(), 'No money charged in this step')]")
     public WebElement noChargeMessage;
+
+    @FindBy(xpath = "(//input[@class='form-control'])[1]")
+    public WebElement gunAyYil;
 
     // ========== REVIEWS BOLUMU ==========
 
@@ -94,5 +130,7 @@ public class DoctorDetailPage {
     // Submit butonu (yeşil)
     @FindBy(id = "submit-review")
     public WebElement submitButton;
+
+
 
 }
