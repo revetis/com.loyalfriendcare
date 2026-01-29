@@ -10,7 +10,6 @@ import java.util.List;
 
 public class AdminLoyalFriendCare {
 
-
     public AdminLoyalFriendCare(){
         PageFactory.initElements(Driver.getDriver(),this);
 
