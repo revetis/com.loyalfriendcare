@@ -202,6 +202,11 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
+    public static void scrollToHeader() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, 0);");
+    }
+
     public static String getFutureDate(int plusDays) {
 
         LocalDate futureDate = LocalDate.now().plusDays(plusDays);
@@ -224,5 +229,16 @@ public class ReusableMethods {
         return text.replaceAll("[\\p{Z}\\s]+", " ").trim();
     }
 
+
+
+    public static String normalizeString(String url){
+        return url.replace("ç", "c")
+                .replaceAll("dr\\.", "")
+                .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                .trim()
+                .replace(" ", "-")
+                .replaceAll("[^a-z0-9-]", "");
+    }
 
 }
