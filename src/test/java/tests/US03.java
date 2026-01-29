@@ -14,6 +14,8 @@ import utilities.TestBaseRapor;
 
 import java.util.*;
 
+import static java.awt.SystemColor.text;
+
 /**
  * US_003: Ana Sayfa Header (Üst Bilgi) Fonksiyonellik ve Erişilebilirlik Testleri.
  */

@@ -201,40 +201,32 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0);");
     }
 
-<<<<<<< HEAD
         public static void jsClick (WebElement element) {
             JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
             js.executeScript("arguments[0].click();", element);
         }
 
 
+    public static String getFutureDate(int plusDays) {
+        LocalDate futureDate = LocalDate.now().plusDays(plusDays);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return futureDate.format(formatter);
+    }
+
+    public static String normalizeString(String url) {
+        return url.replace("ç", "c")
+                .replaceAll("dr\\.", "")
+                .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                .trim()
+                .replace(" ", "-")
+                .replaceAll("[^a-z0-9-]", "");
+    }
+
+    public static WebElement waitForClickablility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+
 }
-=======
-    // ==================================
-    // ==================================
-
-//    public static WebElement waitForClickablility(WebElement element, int timeout) {
-//        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
-//        return wait.until(ExpectedConditions.elementToBeClickable(element));
-//        public static String getFutureDate ( int plusDays){
-//
-//            LocalDate futureDate = LocalDate.now().plusDays(plusDays);
-//
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//
-//            return futureDate.format(formatter);
-        }
-
-
-//        public static String normalizeString (String url){
-//            return url.replace("ç", "c")
-//                    .replaceAll("dr\\.", "")
-//                    .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
-//                    .replace("ö", "o").replace("ş", "s").replace("ü", "u")
-//                    .trim()
-//                    .replace(" ", "-")
-//                    .replaceAll("[^a-z0-9-]", "");
-//        }
-//    }
-
->>>>>>> main
