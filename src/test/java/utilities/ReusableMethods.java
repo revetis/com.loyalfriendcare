@@ -200,7 +200,7 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
-    public static void scrollToHeader() {
+    public static v
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollTo(0, 0);");
     }
