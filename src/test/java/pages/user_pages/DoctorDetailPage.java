@@ -54,6 +54,9 @@ public class DoctorDetailPage {
     @FindBy(xpath = "//*[@*='Appointment Booking']")
     public WebElement doctorDetailBaslik;
 
+    @FindBy(xpath = "//select[@name='doctor_id']")
+    public WebElement doctorSelectionDropdown;
+
     // ========== APPOINTMENT BOOKING FORMU ==========
 
     // Appointment Booking başlığı
@@ -127,5 +130,7 @@ public class DoctorDetailPage {
     // Submit butonu (yeşil)
     @FindBy(id = "submit-review")
     public WebElement submitButton;
+
+
 
 }
