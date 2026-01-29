@@ -1,4 +1,4 @@
-package pages.user_pages;
+package pages.common_pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,4 +18,10 @@ public class HomePageBodySection {
 
     @FindBy(xpath = "//h2[normalize-space()='Vaccinations for Pets']")
     public WebElement vaccinationsTitle;
+
+    @FindBy(xpath = "//img[@alt='Feline Herpesvirus Vaccine']")
+    public WebElement felineHerpesvirusVaccineImg;
+
+    @FindBy(xpath = "//img[@alt='Feline Herpesvirus Vaccine']/ancestor::a[1]")
+    public WebElement felineHerpesvirusVaccineLink;
 }

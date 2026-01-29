@@ -29,10 +29,10 @@ public class US03 extends TestBaseRapor {
                 "Ana sayfanın en üstünde Header bölümünün varlığını doğrular.");
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
-        extentTest.info("Uygulama ana sayfası açıldı.");
+        extentTest.info("Uygulama ana sayfası açıldı: " + ConfigReader.getProperty("url"));
 
         Assert.assertTrue(layout.header.isDisplayed(), "HATA: Header bölümü sayfada görüntülenemedi!");
-        extentTest.info("Header bölümünün görünürlüğü fiziksel olarak doğrulandı.");
+        extentTest.info("Header (Üst Menü) bölümünün görünürlüğü fiziksel olarak doğrulandı.");
         extentTest.pass("TC_01 başarıyla tamamlandı.");
     }
 
@@ -45,14 +45,16 @@ public class US03 extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         extentTest.info("Test sayfası tazelendi.");
 
+        extentTest.info("Logonun tıklanabilirliği kontrol ediliyor.");
         Assert.assertTrue(ReusableMethods.isClickable(layout.headerLogo), "HATA: Header logosu tıklanabilir durumda değil!");
-        extentTest.info("Logonun tıklanabilir olduğu doğrulandı.");
 
+        extentTest.info("Logoya tıklanıyor.");
         layout.headerLogo.click();
-        extentTest.info("Logo tıklandı.");
 
-        Assert.assertEquals(Driver.getDriver().getCurrentUrl(), ConfigReader.getProperty("url"));
-        extentTest.info("Logo tıklandıktan sonra ana sayfada kalındığı/yönlenildiği doğrulandı.");
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        extentTest.info("Yönlendirme kontrolü yapılıyor. Mevcut URL: " + currentUrl);
+        Assert.assertEquals(currentUrl, ConfigReader.getProperty("url"));
+
         extentTest.pass("TC_02 başarıyla tamamlandı.");
     }
 
@@ -67,44 +69,46 @@ public class US03 extends TestBaseRapor {
         extentTest.info("Navigasyon menüleri kontrol ediliyor.");
 
         // Ana link kontrolleri
+        extentTest.info("--- Ana Menü Linklerinin Kontrolü ---");
+
+        extentTest.info("Departments ana linki kontrol ediliyor.");
         softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerDepartmentsLink, 3));
-        extentTest.info("Departments ana linki kontrol edildi.");
 
+        extentTest.info("Doctors ana linki kontrol ediliyor.");
         softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerDoctorsLink, 3));
-        extentTest.info("Doctors ana linki kontrol edildi.");
 
+        extentTest.info("Medicines ana linki kontrol ediliyor.");
         softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerMedicinesLink,3));
-        extentTest.info("Medicines ana linki kontrol edildi.");
 
+        extentTest.info("Vaccinations ana linki kontrol ediliyor.");
         softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(layout.headerVaccinationsLink,3));
-        extentTest.info("Vaccinations ana linki kontrol edildi.");
 
         // Duplicate ve Tıklama kontrolleri
-        extentTest.info("Dropdown içeriklerinde mükerrer kayıt ve URL yönlendirme kontrolleri başlıyor.");
+        extentTest.info("--- Dropdown İçerik ve URL Kontrolleri Başlıyor ---");
 
+        extentTest.info(">>> 1. Departments Menüsü Test Ediliyor <<<");
         softAssert.assertEquals(duplicateVarMi(layout.headerDepartmentsSubLinks, layout.headerDepartmentsLink), 0);
         softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerDepartmentsSubLinks, layout.headerDepartmentsLink));
-        extentTest.info("Departments dropdown menüsü tamamen tarandı.");
 
+        extentTest.info(">>> 2. Doctors Menüsü Test Ediliyor <<<");
         softAssert.assertEquals(duplicateVarMi(layout.headerDoctorSubLinks, layout.headerDoctorsLink), 0);
         softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerDoctorSubLinks, layout.headerDoctorsLink));
-        extentTest.info("Doctors dropdown menüsü tamamen tarandı.");
 
+        extentTest.info(">>> 3. Medicines Menüsü Test Ediliyor <<<");
         softAssert.assertEquals(duplicateVarMi(layout.headerMedicinesSubLinks, layout.headerMedicinesLink), 0);
         softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerMedicinesSubLinks, layout.headerMedicinesLink));
-        extentTest.info("Medicines dropdown menüsü tamamen tarandı.");
 
+        extentTest.info(">>> 4. Vaccinations Menüsü Test Ediliyor <<<");
         softAssert.assertEquals(duplicateVarMi(layout.headerVaccinationsSubLinks, layout.headerVaccinationsLink), 0);
         softAssert.assertTrue(fonksiyonelBaglantilaraTikla(layout.headerVaccinationsSubLinks, layout.headerVaccinationsLink));
-        extentTest.info("Vaccinations dropdown menüsü tamamen tarandı.");
 
         if (!functionalErrors.isEmpty() || !duplicateErrors.isEmpty()) {
-            extentTest.fail("Fonksiyonel veya duplicate hatalar tespit edildi, liste detayları aşağıdadır.");
+            extentTest.fail("Fonksiyonel veya duplicate hatalar tespit edildi.");
             List<List<String>> errors = new ArrayList<>();
             errors.add(functionalErrors);
             errors.add(duplicateErrors);
-            softAssert.fail("Hatalar:\n" + String.join("\n",errors.getFirst()));
-            softAssert.fail("Hatalar:\n" + String.join("\n",errors.getLast()));
+            softAssert.fail("Fonksiyonel Hatalar:\n" + String.join("\n",errors.getFirst()));
+            softAssert.fail("Duplicate Hatalar:\n" + String.join("\n",errors.getLast()));
             softAssert.assertAll();
         }
 
@@ -121,12 +125,16 @@ public class US03 extends TestBaseRapor {
         extentTest.info("Ana menü bağlantıları (Home/About Us) test ediliyor.");
 
         Assert.assertTrue(layout.headerHomeLink.isDisplayed());
-        extentTest.info("Home linki görünür.");
+        extentTest.info("Home linki görünür durumda.");
 
+        extentTest.info("About Us linkine tıklanıyor.");
         layout.headerAboutUsLink.click();
-        extentTest.info("About Us linki tıklandı.");
-        Assert.assertEquals(Driver.getDriver().getCurrentUrl(), ConfigReader.getProperty("aboutUsUrl"));
-        extentTest.info("About Us URL doğrulaması başarılı.");
+
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("aboutUsUrl");
+
+        extentTest.info("URL doğrulaması yapılıyor. Beklenen: " + expectedUrl + " | Gelen: " + currentUrl);
+        Assert.assertEquals(currentUrl, expectedUrl);
 
         extentTest.pass("Ana menü link geçişleri sorunsuz.");
     }
@@ -148,11 +156,12 @@ public class US03 extends TestBaseRapor {
 
         Actions actions = new Actions(Driver.getDriver());
 
+        extentTest.info("Header elementleri üzerinde TAB tuşu ile gezilmeye başlanıyor.");
         for (WebElement element : headerElements) {
             actions.sendKeys(Keys.TAB).perform();
             WebElement focusedElement = Driver.getDriver().switchTo().activeElement();
 
-            Assert.assertEquals(focusedElement, element, "Odak hatası!");
+            Assert.assertEquals(focusedElement, element, "Odak hatası! Beklenen elemente odaklanılamadı.");
             extentTest.info("TAB tuşu ile şu elemana başarıyla ulaşıldı: " + element.getText());
         }
         extentTest.pass("TAB tuşu ile header navigasyonu kusursuz çalışıyor.");
@@ -162,9 +171,12 @@ public class US03 extends TestBaseRapor {
     public int duplicateVarMi(List<WebElement> elementList, WebElement hoverTarget) {
         Set<String> set = new HashSet<>();
         int duplicateSayisi = 0;
+
+        extentTest.info("Menü açılıyor (Hover) ve içerik taranıyor...");
         ReusableMethods.hover(hoverTarget);
         ReusableMethods.bekle(1);
 
+        extentTest.info("Toplam " + elementList.size() + " adet alt link bulundu. Duplicate kontrolü yapılıyor.");
         for (WebElement el : elementList) {
             String text = el.getText().trim();
             if (text.isEmpty()) continue;
@@ -172,7 +184,7 @@ public class US03 extends TestBaseRapor {
             if (!set.add(text)) {
                 duplicateSayisi++;
                 duplicateErrors.add("Duplicate Hatası: '" + text + "'");
-                extentTest.warning("Mükerrer içerik raporlandı: " + text);
+                extentTest.warning("UYARI: Mükerrer içerik tespit edildi: " + text);
             }
         }
         return duplicateSayisi;
@@ -191,7 +203,7 @@ public class US03 extends TestBaseRapor {
                     .replace(" ", "-")
                     .replaceAll("[^a-z0-9-]", "");
 
-            extentTest.info("Alt linke tıklanıyor: " + text);
+            extentTest.info("[" + (i+1) + "/" + size + "] Alt linke tıklanıyor: " + element.getText());
             element.click();
 
             // URL Kontrolü ve geri dönme...
@@ -201,8 +213,13 @@ public class US03 extends TestBaseRapor {
                     .replace("dr.", "");
 
             if (!normalizedUrl.contains(text)){
+                extentTest.fail("URL Hatası! Beklenen parça: " + text + " | Gelen URL: " + currentUrl);
                 functionalErrors.add("Link Hatasi: Beklenen parça [" + text + "] URL'de yok. URL: " + currentUrl);
+            } else {
+                extentTest.info("URL doğrulaması başarılı: " + currentUrl);
             }
+
+            extentTest.info("Geri dönülüyor (Navigate Back).");
             Driver.getDriver().navigate().back();
             layout = new Layout();
         }
