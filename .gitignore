@@ -43,8 +43,10 @@ build/
 configuration.properties
 
 ### REPORT ###
+
 /test-output/
 /target/
+
 
 
 

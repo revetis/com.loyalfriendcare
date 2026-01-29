@@ -21,6 +21,8 @@ import java.util.Properties;
 
 public class US_004_Admin extends TestBaseRapor {
 
+<<<<<<< HEAD
+=======
     //==========================================================
     //==========================================================
     //==========     Admin AramaCubugu PozitivTest  ============
@@ -573,6 +575,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(3);
 
 
+>>>>>>> main
     }
 
 

@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -200,6 +202,11 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
+    public static void scrollToHeader() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, 0);");
+    }
+
     public static String getFutureDate(int plusDays) {
 
         LocalDate futureDate = LocalDate.now().plusDays(plusDays);
@@ -208,6 +215,8 @@ public class ReusableMethods {
 
         return futureDate.format(formatter);
     }
+
+
 
     public static String normalizeString(String url){
         return url.replace("ç", "c")
