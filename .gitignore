@@ -41,7 +41,9 @@ build/
 
 ### PROPERTIES ###
 ## Buraya kendi configuration.properties inizi yazin
+configuration.properties
 
 ### REPORT ###
+
 /test-output/
 /target/
