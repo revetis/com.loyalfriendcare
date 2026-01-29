@@ -50,9 +50,11 @@ public class UserPage {
     @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]/form/div[4]/div/div")
     public  WebElement appointmentFormDoctorsLink;
 
-
     @FindBy(xpath = "//*[@id=\"page\"]/main/div/div[2]")
     public WebElement departmentsList;
+
+    @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[3]/ul")
+    public WebElement userDepartmentsinHeaderDropdownMenü;
 
 
 }
