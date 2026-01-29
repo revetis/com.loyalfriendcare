@@ -56,6 +56,5 @@ public class AdminDashboardPage {
     @FindBy(xpath = "//h2[contains(text(),'Users in your Database')]")
     public WebElement adminDashboardUsersInDatabaseText;
 
-
 }
 
