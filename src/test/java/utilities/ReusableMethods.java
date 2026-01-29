@@ -209,4 +209,14 @@ public class ReusableMethods {
         return futureDate.format(formatter);
     }
 
+    public static String normalizeString(String url){
+        return url.replace("ç", "c")
+                .replaceAll("dr\\.", "")
+                .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                .trim()
+                .replace(" ", "-")
+                .replaceAll("[^a-z0-9-]", "");
+    }
+
 }
