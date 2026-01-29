@@ -70,7 +70,7 @@ public class US31 extends TestBaseRapor {
     }
 
     @Test(priority = 2, dependsOnMethods = "TC01_AdminGiris_YonetimSidebarMenudeDoctorsAccess")
-            public void TC02_DoctorsMenuOpenListPage() {
+    public void TC02_DoctorsMenuOpenListPage() {
         extentTest = extentReports.createTest("TC03",
                 "Doktor listesinin olduğu Doctors ekranını görüntüleyip,sayfadaki alanları ve detaylarını inceleme");
 
@@ -87,12 +87,12 @@ public class US31 extends TestBaseRapor {
         extentTest.info("Toplam doktor sayısı: " + doctorsListSize);
 
         // 3. Doctors Listenin açıldığını doğrula
-        Assert.assertFalse(adminDoctorsPage.doctorsListRows.isEmpty(),"Doktor listesi boş veya yüklenemedi!");
+        Assert.assertFalse(adminDoctorsPage.doctorsListRows.isEmpty(), "Doktor listesi boş veya yüklenemedi!");
         extentTest.pass("Doktor listesi başarıyla görüntülendi.");
 
         //Doctors sayfasinda Search/Arama Kutusu Gorunurluk Ve Islevsellik Kontrolu
-        Assert.assertTrue(adminDoctorsPage.searchInput.isDisplayed(),"Doctor Arama kutusu gorunmuyor");
-        Assert.assertTrue(adminDoctorsPage.searchInput.isEnabled(),"Arama kutusu aktif degil.");
+        Assert.assertTrue(adminDoctorsPage.searchInput.isDisplayed(), "Doctor Arama kutusu gorunmuyor");
+        Assert.assertTrue(adminDoctorsPage.searchInput.isEnabled(), "Arama kutusu aktif degil.");
 
         // Search/Arama İşlemi
         String arananDeger = "Daniel".toLowerCase();
@@ -119,8 +119,8 @@ public class US31 extends TestBaseRapor {
         wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//table[@id='tableWithSearch']/tbody/tr"), doctorsListSize));
 
         ReusableMethods.bekle(1);
-        Assert.assertEquals(adminDoctorsPage.doctorsListRows.size(),doctorsListSize,
-                            "Arama kutusu temizlenince butun doktorlar listelenmedi.");
+        Assert.assertEquals(adminDoctorsPage.doctorsListRows.size(), doctorsListSize,
+                "Arama kutusu temizlenince butun doktorlar listelenmedi.");
         ReusableMethods.bekle(2);
 
 
@@ -142,7 +142,7 @@ public class US31 extends TestBaseRapor {
                 editButton.click();
                 ReusableMethods.bekle(1);
                 extentTest.info("Bulunan ilk Edit butonuna başarıyla tıklandı.");
-             }
+            }
             softAssert.assertAll();
         }
 
@@ -185,7 +185,7 @@ public class US31 extends TestBaseRapor {
 
 
         // 4. Negatif Test: Boş Bırakma (Title/Name alanı)
-       // Driver.getDriver().navigate().refresh();
+        // Driver.getDriver().navigate().refresh();
         editBtnClick();
         boolean doctorsTitleInputGorunurVeTiklanabilirMi = ReusableMethods.isDisplayedAndClickable(adminDoctorsPage.doctorsTitleInput, 10);
         Assert.assertTrue(doctorsTitleInputGorunurVeTiklanabilirMi);
@@ -215,7 +215,7 @@ public class US31 extends TestBaseRapor {
                 }
             }
         }
-        
+
 
         // HTML5 validation mesajını doğrula
         String validationMsg = adminDoctorsPage.doctorsTitleInput.getAttribute("validationMessage");
@@ -256,7 +256,7 @@ public class US31 extends TestBaseRapor {
 
         AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
         // 4. Başarı mesajını ve listeden yok olduğunu doğrula
-        ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage,10);
+        ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 10);
         Assert.assertTrue(alertMessageLocators.errorMessage.isDisplayed());
 
         // Arama yaparak listede olmadığını teyit et
@@ -270,6 +270,5 @@ public class US31 extends TestBaseRapor {
         Assert.assertFalse(isStillPresent, "HATA: Silinen doktor hala listede!");
         extentTest.pass("Doktor başarıyla silindi.");
     }
-
 
 }

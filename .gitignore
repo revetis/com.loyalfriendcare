@@ -41,8 +41,6 @@ build/
 
 ### PROPERTIES ###
 configuration.properties
-configuration.properties.example
-
 
 ### REPORT ###
 /test-output/

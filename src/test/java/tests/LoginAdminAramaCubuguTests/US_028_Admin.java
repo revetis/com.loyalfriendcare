@@ -1,10 +1,12 @@
 package tests.LoginAdminAramaCubuguTests;
 
+import com.github.javafaker.Faker;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.admin_pages.AdminLoyalFriendCare;
-import pages.user_pages.UserLoyalFriendCare;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
@@ -12,7 +14,8 @@ import utilities.TestBaseRapor;
 
 import java.util.Properties;
 
-public class US_020_Admin extends TestBaseRapor {
+public class US_028_Admin extends TestBaseRapor {
+
 
     //================================================================
     //================================================================
@@ -35,10 +38,11 @@ public class US_020_Admin extends TestBaseRapor {
 
 
     @Test
-    public void US_020_AdminPaneli_YonetimAraclari01() {
+    public void US_028_AdminPaneli_YeniYatakOlusdurVeKaydiYataklarListesineEkle() {
 
         AdminLoyalFriendCare adminLoyalFriendCare = new AdminLoyalFriendCare();
-        extentTest = extentReports.createTest("US_020 Admin Paneli ve Yonetim Araclari ");
+        extentTest = extentReports.createTest("US_020 Admin olarak, yeni bir yatak oluşturabilmeli " +
+                "ve bu kaydı yataklar listesine ekleyebilmeli. ");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         ReusableMethods.bekle(3);
@@ -71,57 +75,33 @@ public class US_020_Admin extends TestBaseRapor {
                 .perform();
         Assert.assertTrue(adminLoyalFriendCare.adminSidebarHeader.isDisplayed());
 
-        // Yönetim araçlarından birini seç (ör. Kullanıcı Yönetimi)
+        // Ana sayfadan yatak yönetimi bölümüne git
         adminLoyalFriendCare.doctorElementSidebar.click();
         adminLoyalFriendCare.createDoctorButton.click();
         ReusableMethods.bekle(3);
 
-    }
-
-
-    //================================================================
-    //================================================================
-    //==========  Admin Paneli ve Yonetim Araclari  ============
-    //================================================================
-    //================================================================
-
-    // https://qa.loyalfriendcare.com/en url sayfasina gidin
-    // Sign In butonuna basin
-    // Yetkisiz kullanicinin admin paneline erisimi
-    // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
-    // Admin giriş ekranına git
-    // Yönetim araçları (kullanıcı yönetimi, içerik yönetimi vb.) görüntülenmelidir
-    // Yönetim araçlarından birini seç (ör. Kullanıcı Yönetimi)
-    // Seçilen yönetim aracına ait ekran açılmalıdır
-
-
-
-    @Test
-    public void US_020_AdminPaneli_YonetimAraclari_YetkisizEmailPassword02() {
-
-        AdminLoyalFriendCare adminLoyalFriendCare = new AdminLoyalFriendCare();
-        extentTest = extentReports.createTest("US_020 Admin Paneli ve Yonetim Araclari ");
-        // https://qa.loyalfriendcare.com/en url sayfasina gidi
-        Driver.getDriver().get(ConfigReader.getProperty("url"));
-        ReusableMethods.bekle(3);
-
-        // Sign In butonuna basin
-        adminLoyalFriendCare.signInButonu.click();
+        // Tüm zorunlu alanları geçerli bilgilerle doldur
+        Faker faker = new Faker();
+        adminLoyalFriendCare.newDoctorCreateGap1.sendKeys("Dr Daniel");
+        adminLoyalFriendCare.getNewDoctorCreateGap2.sendKeys("Aut sed iure inventore sequi eius nihil qui. " +
+                "Animi non magnam vero. " +
+                "Aut dicta repellat vel ut aut ea labore. Maxime ut et occaecati amet aliquid sit ut.");
+        adminLoyalFriendCare.doctorSave.click();
         ReusableMethods.bekle(2);
 
-        // Admin olarak siteye girin
-        adminLoyalFriendCare.adminLoginsayfasiEmailKutusu.sendKeys
-                (ConfigReader.getProperty("yetkisizAdmin_email"));
-        adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys
-                (ConfigReader.getProperty("yetkisizAdmin_password"));
-        adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
+        // Oluşturulan yeni yatakin gorunur oldugunu test edin.
+        Assert.assertTrue(adminLoyalFriendCare.doctorStoreSuccess.isDisplayed());
+        Driver.getDriver().navigate().back();
+        Driver.getDriver().navigate().back();
+        Driver.getDriver().navigate().forward();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
-        String expextedUrlİcerik = "qa.loyalfriendcare.com/en/admin";
-        String actualUrl = Driver.getDriver().getCurrentUrl();
+        adminLoyalFriendCare.newDoctorCreateGap1.sendKeys("Dr Daniel");
+        adminLoyalFriendCare.getNewDoctorCreateGap2.sendKeys("Aut sed iure inventore sequi eius nihil qui. " +
+                "Animi non magnam vero. " +
+                "Aut dicta repellat vel ut aut ea labore. Maxime ut et occaecati amet aliquid sit ut.");
+        adminLoyalFriendCare.doctorSave.click();
+        Assert.assertTrue(adminLoyalFriendCare.doctorStoreSuccess.isDisplayed());
         ReusableMethods.bekle(2);
-
-        Assert.assertTrue(actualUrl.contains(expextedUrlİcerik));
 
     }
 }
