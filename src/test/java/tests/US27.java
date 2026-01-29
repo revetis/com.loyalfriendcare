@@ -31,8 +31,8 @@ public class US27 extends TestBaseRapor {
 
     @AfterClass
     public void teardownTests() {
-            Driver.getDriver().get(ConfigReader.getProperty("url"));
-            SignOut.signOutAdmin();
+        Driver.getDriver().get(ConfigReader.getProperty("url"));
+        SignOut.signOutAdmin();
     }
 
     @AfterMethod
@@ -44,10 +44,10 @@ public class US27 extends TestBaseRapor {
     public void yatakOlustur() {
         Layout layout = new Layout();
         CreateBedPage createBedPage = new CreateBedPage();
-        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(1));
 
         ReusableMethods.hover(layout.adminSidebar);
-        ReusableMethods.waitForClickability(layout.adminSidebarBedmanagersButton, 5);
+        ReusableMethods.waitForClickability(layout.adminSidebarBedmanagersButton, 1);
         layout.adminSidebarBedmanagersButton.click();
 
         try {
@@ -94,9 +94,9 @@ public class US27 extends TestBaseRapor {
         try {
             Driver.getDriver().get(ConfigReader.getProperty("url"));
             Layout layout = new Layout();
-            WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+            WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(1));
 
-            ReusableMethods.waitForClickability(layout.headerAuthAdminDashboardButton, 5).click();
+            ReusableMethods.waitForClickability(layout.headerAuthAdminDashboardButton, 1).click();
             bedManagersSayfasinaGit();
 
             BedmanagersPage bedmanagersPage = new BedmanagersPage();
@@ -115,7 +115,7 @@ public class US27 extends TestBaseRapor {
             }
 
             WebElement deleteButton = bedmanagersPage.getTableRowMap(0).get("deleteButton");
-            ReusableMethods.waitForClickability(deleteButton, 3);
+            ReusableMethods.waitForClickability(deleteButton, 1);
             deleteButton.click();
 
             try {
@@ -239,9 +239,7 @@ public class US27 extends TestBaseRapor {
                 String errorMsg = "Sidebar menü: " + mainToolName + " -> Alt link " + j + " (" + subItemText + ") görünür/tıklanabilir değil.";
 
                 try {
-                    ReusableMethods.waitForVisibility(subItem, 2);
-                    softAssert.assertTrue(subItem.isDisplayed(), errorMsg);
-                    ReusableMethods.waitForClickability(subItem, 2);
+                    softAssert.assertTrue(ReusableMethods.isDisplayedAndClickable(subItem, timeout), errorMsg);
                     extentTest.info("   -> Alt menü OK: " + subItemText);
                 } catch (Exception e) {
                     extentTest.fail("   -> HATA: " + subItemText + " menüsüne erişilemedi!");
@@ -297,7 +295,7 @@ public class US27 extends TestBaseRapor {
         // Tablo verilerinin veritabanından gelmesi biraz sürebilir, ilk satırı bekletiyoruz
         extentTest.info("Tablo verilerinin yuklenmesi bekleniyor.");
         try {
-            if(!bedmanagersPage.tableBodyRows.isEmpty()){
+            if (!bedmanagersPage.tableBodyRows.isEmpty()) {
                 ReusableMethods.waitForVisibility(bedmanagersPage.tableBodyRows.get(0), 5);
             }
         } catch (Exception e) {
@@ -447,7 +445,7 @@ public class US27 extends TestBaseRapor {
         AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
         SoftAssert softAssert = new SoftAssert();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(3));
+        WebDriverWait shortWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(1));
 
         extentTest.info("Tablodaki ilk satirin verileri aliniyor.");
         Map<String, WebElement> firstRow = bedmanagersPage.getTableRowMap(0);
@@ -721,7 +719,7 @@ public class US27 extends TestBaseRapor {
 
         try {
             extentTest.info("Tarayici uzerinde JS Alert (Onay Kutusu) cikmasi bekleniyor.");
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(1));
             wait.until(ExpectedConditions.alertIsPresent());
 
             extentTest.info("Alert penceresi goruldu, 'OK' (Accept) secenegine tiklaniyor.");
@@ -738,7 +736,7 @@ public class US27 extends TestBaseRapor {
         // --- Regression / Cache Kontrolü ---
         extentTest.info("Tarayicidan Geri (Back) tusuna basilarak sayfa davranisi ve mesaj tekrari kontrol ediliyor.");
         Driver.getDriver().navigate().back();
-        ReusableMethods.waitForPageToLoad(2);
+        ReusableMethods.waitForPageToLoad(1);
 
         // Sayfa yenilendiği için elementleri tazelemek gerekebilir (Stale Element riskine karşı)
         bedmanagersPage = new BedmanagersPage();
@@ -746,7 +744,7 @@ public class US27 extends TestBaseRapor {
 
         try {
             // Burada mesajın GÖRÜNMEMESİNİ bekliyoruz, o yüzden try-catch mantığı ters çalışıyor
-            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 3); // Kısa bir süre bekle
+            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 1); // Kısa bir süre bekle
 
             // Eğer buraya düşerse mesaj görünmüş demektir -> HATA
             extentTest.fail("HATA: Geri tusuna basinca silindi bildirimi tekrar ekranda belirdi! (Cache/Session hatasi)");
@@ -773,7 +771,7 @@ public class US27 extends TestBaseRapor {
         Layout layout = new Layout();
         SoftAssert softAssert = new SoftAssert();
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(2));
 
         //yatak olusturalim once
         yatakOlustur();

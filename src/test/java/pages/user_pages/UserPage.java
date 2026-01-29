@@ -56,6 +56,4 @@ public class UserPage {
     @FindBy(xpath = "//*[@id=\"menu\"]/ul/li[3]/ul")
     public WebElement userDepartmentsinHeaderDropdownMenü;
 
-
 }
-
