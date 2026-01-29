@@ -55,7 +55,7 @@ public class US15 extends TestBaseRapor {
         actions.moveToElement(layout.headerDepartmentsLink).perform();
         ReusableMethods.bekle(1);
 
-        Assert.assertTrue(userPage.userDepartmentsinHeaderDropdownMenü.isDisplayed());
+        Assert.assertTrue(userPage.userDepartmentsInHeaderDropdownMenu.isDisplayed());
         extentTest.info("Header departments dropdown menü kontrol edildi");
 
 
