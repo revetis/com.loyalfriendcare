@@ -200,12 +200,6 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0)");
     }
 
-    public static v
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollTo(0, 0);");
-    }
-
-
     public static String getFutureDate(int plusDays) {
 
         LocalDate futureDate = LocalDate.now().plusDays(plusDays);
