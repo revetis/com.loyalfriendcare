@@ -1,4 +1,4 @@
-package tests.LoginAdminAramaCubuguTests;
+package tests;
 
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
