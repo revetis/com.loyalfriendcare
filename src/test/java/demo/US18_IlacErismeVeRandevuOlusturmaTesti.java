@@ -1,4 +1,4 @@
-package tests;
+package demo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -51,7 +51,9 @@ public class US18_IlacErismeVeRandevuOlusturmaTesti extends TestBaseRapor {
         // Login bilgilerini gir
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 2);
         loginPage.emailAddressInput.sendKeys("tural.seyidov.user@loyalfriendcare.com");
+        ReusableMethods.bekle(1);
         loginPage.passwordInput.sendKeys("Loyal.123123");
+        ReusableMethods.bekle(1);
         extentTest.info("Email: tural.seyidov.user@loyalfriendcare.com | Password: Loyal.123123");
 
         loginPage.signInButton.click();
@@ -280,7 +282,9 @@ public class US18_IlacErismeVeRandevuOlusturmaTesti extends TestBaseRapor {
 
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
+        ReusableMethods.bekle(1);
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
+        ReusableMethods.bekle(1);
         extentTest.info("Email: " + ConfigReader.getProperty("user_email"));
 
         loginPage.signInButton.click();
@@ -373,7 +377,9 @@ public class US18_IlacErismeVeRandevuOlusturmaTesti extends TestBaseRapor {
 
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("user_email"));
+        ReusableMethods.bekle(1);
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("user_password"));
+        ReusableMethods.bekle(1);
         loginPage.signInButton.click();
         ReusableMethods.bekle(3);
         extentTest.pass("Kullanıcı giriş yaptı");

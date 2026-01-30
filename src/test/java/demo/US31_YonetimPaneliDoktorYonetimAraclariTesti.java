@@ -1,10 +1,9 @@
-package tests;
+package demo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,7 +16,6 @@ import utilities.*;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -169,8 +167,10 @@ public class US31_YonetimPaneliDoktorYonetimAraclariTesti extends TestBaseRapor 
             e.printStackTrace();
         }
         adminDoctorsPage.doctorsTitleInput.sendKeys(updatedTitle);
+        ReusableMethods.bekle(1);
 
         ReusableMethods.scrollToElement(adminDoctorsPage.saveButton);
+        ReusableMethods.bekle(1);
         adminDoctorsPage.saveButton.click();
         ReusableMethods.bekle(2);
 
@@ -244,6 +244,7 @@ public class US31_YonetimPaneliDoktorYonetimAraclariTesti extends TestBaseRapor 
         // 2. Silme butonuna tıkla
         WebElement deleteBtn = rowToDelete.get("deleteButton");
         deleteBtn.click();
+        ReusableMethods.bekle(1);
 
         // 3. Onay (Alert) İşlemi
         try {

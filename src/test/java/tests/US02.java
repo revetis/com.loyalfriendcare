@@ -10,7 +10,7 @@ import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
-public class US_02_TestCases extends TestBaseRapor {
+public class US02 extends TestBaseRapor {
 
     Layout layout;
     LoginPage loginPage;

@@ -1,7 +1,6 @@
-package tests.LoginAdminAramaCubuguTests;
+package tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -15,11 +14,10 @@ import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
 
 
-public class US_004_Admin extends TestBaseRapor {
+public class US04 extends TestBaseRapor {
 
     //==========================================================
     //==========================================================

@@ -1,3 +1,4 @@
+package demo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -50,7 +51,9 @@ public class US04_AramaTesti extends TestBaseRapor {
 
         // Admin olarak siteye girin
         adminLoyalFriendCare.adminLoginsayfasiEmailKutusu.sendKeys(ConfigReader.getProperty("admin_email"));
+        ReusableMethods.bekle(1);
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
+        ReusableMethods.bekle(1);
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
         // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
@@ -410,7 +413,9 @@ public class US04_AramaTesti extends TestBaseRapor {
 
         // Admin olarak siteye girin
         userLoyalFriendCare.userLoginsayfasiEmailKutusu.sendKeys(ConfigReader.getProperty("user_email"));
+        ReusableMethods.bekle(1);
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
+        ReusableMethods.bekle(1);
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
         // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
