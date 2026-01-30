@@ -1,11 +1,16 @@
 package pages.user_pages;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
+import java.util.List;
+
 public class DoctorDetailPage {
+
+    public Actions categoryDropdown;
 
     public DoctorDetailPage(){
         PageFactory.initElements(Driver.getDriver(), this);
@@ -39,6 +44,9 @@ public class DoctorDetailPage {
     @FindBy(xpath = "//section[@id='description']//p")
     public WebElement doctorDetailInfos;
 
+    @FindBy(xpath = "//*[@*='Appointment Booking']")
+    public WebElement doctorDetailBaslik;
+
     // ========== APPOINTMENT BOOKING FORMU ==========
 
     // Appointment Booking başlığı
@@ -58,8 +66,17 @@ public class DoctorDetailPage {
     public WebElement wellnessDropdown;
 
     // Doctor selection dropdown (Dr. Alejandro Martinez)
+    @FindBy(xpath = "//li[contains(text(),'Dr. Olivia Bennett')]")
+    public WebElement doctorSectionName;
+
     @FindBy(xpath = "(//div[@class='nice-select wide'])[3]")
-    public WebElement doctorSelectionDropdown;
+    public WebElement doctorDetailSelection;
+
+    @FindBy(xpath = "//ul[@class='list']/li[@class='option']")
+    public List<WebElement> categoryOptions;
+
+    @FindBy(xpath = "//li[contains(text(),'Dermatology')]")
+    public WebElement anycategory;
 
     // Create Message textarea
     @FindBy(xpath = "//textarea[@placeholder='Create Message']")
@@ -69,9 +86,18 @@ public class DoctorDetailPage {
     @FindBy(id = "submit-contact-detail")
     public WebElement appointmentBookingButton;
 
+    @FindBy(xpath = "//*[@id=\"sidebar\"]/div/div[1]")
+    public WebElement sonucAcceptMessage;
+
+    @FindBy(xpath = "//*[@*='Create Message']")
+    public WebElement creatMessage;
+
     // "No money charged in this step" mesajı
     @FindBy(xpath = "//*[contains(text(), 'No money charged in this step')]")
     public WebElement noChargeMessage;
+
+    @FindBy(xpath = "(//input[@class='form-control'])[1]")
+    public WebElement gunAyYil;
 
     // ========== REVIEWS BOLUMU ==========
 
