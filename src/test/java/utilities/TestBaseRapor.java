@@ -55,17 +55,15 @@ public abstract class TestBaseRapor {
         } else if (result.getStatus() == ITestResult.SKIP) { // eğer test çalıştırılmadan geçilmezse
             extentTest.skip("Test Case is skipped: " + result.getName()); // Ignore olanlar
         }
-        Driver.quitDriver();
     }
 
 
     // Raporlandırmayı sonlandırmak icin
     @AfterTest(alwaysRun = true)
     public void tearDownTest() {
-        Locale.setDefault(new Locale("en", "US"));
-
         if (extentReports != null) {
             extentReports.flush();
         }
+        Driver.quitDriver();
     }
 }

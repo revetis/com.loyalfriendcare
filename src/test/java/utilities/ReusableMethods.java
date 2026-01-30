@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -188,6 +192,10 @@ public class ReusableMethods {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
+    public static void scrollToBottom() {
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
 
     public static void scrollToTop() {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
@@ -197,6 +205,26 @@ public class ReusableMethods {
     public static void scrollToHeader() {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollTo(0, 0);");
+    }
+
+    public static String getFutureDate(int plusDays) {
+
+        LocalDate futureDate = LocalDate.now().plusDays(plusDays);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        return futureDate.format(formatter);
+    }
+
+
+    public static String normalizeString(String url){
+        return url.replace("ç", "c")
+                .replaceAll("dr\\.", "")
+                .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
+                .replace("ö", "o").replace("ş", "s").replace("ü", "u")
+                .trim()
+                .replace(" ", "-")
+                .replaceAll("[^a-z0-9-]", "");
     }
 
 }

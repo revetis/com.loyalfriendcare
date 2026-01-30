@@ -11,6 +11,7 @@ import java.util.List;
 public class DoctorDetailPage {
 
     public Actions categoryDropdown;
+    public WebElement doctorSelectionDropdown;
 
     public DoctorDetailPage(){
         PageFactory.initElements(Driver.getDriver(), this);

@@ -110,9 +110,9 @@ public class US20 extends TestBaseRapor {
 
         // Admin olarak siteye girin
         adminLoyalFriendCare.adminLoginsayfasiEmailKutusu.sendKeys
-                                                         (ConfigReader.getProperty("yetkisizAdmin_email"));
+                (ConfigReader.getProperty("yetkisizAdmin_email"));
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys
-                                                         (ConfigReader.getProperty("yetkisizAdmin_password"));
+                (ConfigReader.getProperty("yetkisizAdmin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
         // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
