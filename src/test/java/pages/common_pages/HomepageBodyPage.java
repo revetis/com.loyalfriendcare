@@ -1,5 +1,6 @@
 package pages.common_pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Random;
 
 public class HomepageBodyPage {
+    public By headerSignIn;
+
     public HomepageBodyPage (){PageFactory.initElements(Driver.getDriver(),this);}
 
     //=============================================
@@ -94,9 +97,6 @@ public class HomepageBodyPage {
         WebElement randomDoctor = popularDoctorsItems.get(index);
         randomDoctor.click(); // Random doktoru klikləyir
     }
-
-    @FindBy(css = "#top_menu a.btn_add")
-    public WebElement headerSignIn;
 
 
 }

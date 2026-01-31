@@ -1,5 +1,4 @@
-package tests.LoginAdminAramaCubuguTests;
-
+package demo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,20 +17,18 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
+public class US04_AramaTesti extends TestBaseRapor {
 
-public class US_004_Admin extends TestBaseRapor {
-
-    //==========================================================
-    //==========================================================
-    //==========     Admin AramaCubugu PozitivTest  ============
-    //==========================================================
-    //==========================================================
-
+    // ==========================================================
+    // ==========================================================
+    // ========== Admin AramaCubugu PozitivTest ============
+    // ==========================================================
+    // ==========================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
@@ -54,10 +51,13 @@ public class US_004_Admin extends TestBaseRapor {
 
         // Admin olarak siteye girin
         adminLoyalFriendCare.adminLoginsayfasiEmailKutusu.sendKeys(ConfigReader.getProperty("admin_email"));
+        ReusableMethods.bekle(1);
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
+        ReusableMethods.bekle(1);
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -77,22 +77,20 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(1);
     }
 
-
-    //================================================================
-    //================================================================
-    //==========     Admin_AramaCubugu_KelimeninBirKismi  ============
-    //================================================================
-    //================================================================
+    // ================================================================
+    // ================================================================
+    // ========== Admin_AramaCubugu_KelimeninBirKismi ============
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına kelimenin bir kısmını gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
-
 
     @Test
     public void US_004Admin_AramaCubugu_KelimeninBirKismi02() {
@@ -101,7 +99,6 @@ public class US_004_Admin extends TestBaseRapor {
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         ReusableMethods.bekle(2);
-
 
         // Sign In butonuna basin
         adminLoyalFriendCare.signInButonu.click();
@@ -112,8 +109,8 @@ public class US_004_Admin extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(3);
@@ -133,23 +130,20 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(3);
     }
 
-
-    //================================================================
-    //================================================================
-    //==========     Admin_AramaCubugu_KelimeninBirKismi  ============
-    //================================================================
-    //================================================================
-
+    // ================================================================
+    // ================================================================
+    // ========== Admin_AramaCubugu_KelimeninBirKismi ============
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına sistemde olmayan bir kelime gir
     // Arama tusuna click et
     // Sistem kısmi eşleşen sonuçları listelemelidir
-
 
     @Test
     public void US_004Admin_AramaCubugu_Yalnis_Kelime03() {
@@ -168,7 +162,8 @@ public class US_004_Admin extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -187,26 +182,22 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
-
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========     Admin_AramaCubugu_Arama Alanini Bos Birak  ============
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Admin_AramaCubugu_Arama Alanini Bos Birak ============
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama cubugunu bos birak
     // Arama tusuna click et
     // Sistem ilgili sonuçları icermemelidir
-
 
     @Test
     public void US_004_Admin_AramaCubugu_Arama_Alanini_Bos_Birak04() {
@@ -225,7 +216,8 @@ public class US_004_Admin extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -244,29 +236,25 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
-
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========     Admin_AramaCubugu_İlgili hizmet =======================
-    //==========    "ilaç veya aşı detay sayfasınin gorunur olmasi  =======
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Admin_AramaCubugu_İlgili hizmet =======================
+    // ========== "ilaç veya aşı detay sayfasınin gorunur olmasi =======
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icermelidir
     // Arama sonuçlarından birine tıkla
     // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-
 
     @Test
     public void US_004_Admin_AramaCubugu_Ilgili_Hizmetler05() {
@@ -286,7 +274,8 @@ public class US_004_Admin extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -304,7 +293,6 @@ public class US_004_Admin extends TestBaseRapor {
         // Sistem ilgili sonuçları icerdigini test edin
         Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
-
         // Arama sonuçlarından birine tıkla
         adminLoyalFriendCare.sonucElementlerindenBiri.click();
         ReusableMethods.bekle(2);
@@ -313,22 +301,19 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
-
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========   Admin_AramaCubugu_SonuclarinGelmeSuresi   ===============
-    //======================================================================
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Admin_AramaCubugu_SonuclarinGelmeSuresi ===============
+    // ======================================================================
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
@@ -336,7 +321,6 @@ public class US_004_Admin extends TestBaseRapor {
     // Arama sonuçlarından birine tıkla
     // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
     // Arama sonuçları en geç 2 saniye içinde görüntülenmelidir
-
 
     @Test
     public void US_004_Admin_AramaCubugu_SonuclarinGelmeSuresi06() {
@@ -355,7 +339,8 @@ public class US_004_Admin extends TestBaseRapor {
         adminLoyalFriendCare.adminLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("admin_password"));
         adminLoyalFriendCare.adminLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -372,7 +357,6 @@ public class US_004_Admin extends TestBaseRapor {
 
         // Sistem ilgili sonuçları icerdigini test edin
         Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
-
 
         // Arama sonuçlarından birine tıkla
         adminLoyalFriendCare.sonucElementlerindenBiri.click();
@@ -394,34 +378,25 @@ public class US_004_Admin extends TestBaseRapor {
         long duration = endTime - startTime;
         System.out.println("Results loaded in: " + duration + " ms");
 
-
         Assert.assertTrue(duration <= 2000, "Results took longer than 2 seconds!");
         ReusableMethods.bekle(3);
 
-
     }
 
-
-
-    //==========================================================
-    //==========================================================
-    //==========     User AramaCubugu PozitivTest  ============
-    //==========================================================
-    //==========================================================
-
+    // ==========================================================
+    // ==========================================================
+    // ========== User AramaCubugu PozitivTest ============
+    // ==========================================================
+    // ==========================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
-
-
-
-
 
     @Test
     public void US_004_UserAramaCubugu_PozitivTest01() {
@@ -438,10 +413,13 @@ public class US_004_Admin extends TestBaseRapor {
 
         // Admin olarak siteye girin
         userLoyalFriendCare.userLoginsayfasiEmailKutusu.sendKeys(ConfigReader.getProperty("user_email"));
+        ReusableMethods.bekle(1);
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
+        ReusableMethods.bekle(1);
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -461,22 +439,20 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(3);
     }
 
-
-    //================================================================
-    //================================================================
-    //==========     User_AramaCubugu_KelimeninBirKismi  ============
-    //================================================================
-    //================================================================
+    // ================================================================
+    // ================================================================
+    // ========== User_AramaCubugu_KelimeninBirKismi ============
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına kelimenin bir kısmını gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
-
 
     @Test
     public void US_004_User_AramaCubugu_KelimeninBirKismi02() {
@@ -487,7 +463,6 @@ public class US_004_Admin extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         ReusableMethods.bekle(1);
 
-
         // Sign In butonuna basin
         userLoyalFriendCare.signInButonu.click();
         ReusableMethods.bekle(1);
@@ -497,8 +472,8 @@ public class US_004_Admin extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(1);
@@ -518,23 +493,20 @@ public class US_004_Admin extends TestBaseRapor {
 
     }
 
-
-    //================================================================
-    //================================================================
-    //==========     User_AramaCubugu_KelimeninBirKismi  ============
-    //================================================================
-    //================================================================
-
+    // ================================================================
+    // ================================================================
+    // ========== User_AramaCubugu_KelimeninBirKismi ============
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına sistemde olmayan bir kelime gir
     // Arama tusuna click et
     // Sistem kısmi eşleşen sonuçları listelemelidir
-
 
     @Test
     public void US_004_User_AramaCubugu_Yalnis_Kelime03() {
@@ -553,7 +525,8 @@ public class US_004_Admin extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(2);
@@ -572,26 +545,22 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(userLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
-
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========     User_AramaCubugu_Arama Alanini Bos Birak  ============
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== User_AramaCubugu_Arama Alanini Bos Birak ============
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama cubugunu bos birak
     // Arama tusuna click et
     // Sistem ilgili sonuçları icermemelidir
-
 
     @Test
     public void US_004_User_AramaCubugu_Arama_Alanini_Bos_Birak04() {
@@ -611,7 +580,8 @@ public class US_004_Admin extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(1);
@@ -629,29 +599,25 @@ public class US_004_Admin extends TestBaseRapor {
         // Sistem ilgili sonuçları icermedigini test edin
         Assert.assertTrue(userLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
-
-
     }
 
-    //======================================================================
-    //======================================================================
-    //==========     User_AramaCubugu_İlgili hizmet =======================
-    //==========    "ilaç veya aşı detay sayfasınin gorunur olmasi  =======
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== User_AramaCubugu_İlgili hizmet =======================
+    // ========== "ilaç veya aşı detay sayfasınin gorunur olmasi =======
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icermelidir
     // Arama sonuçlarından birine tıkla
     // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-
 
     @Test
     public void US_004_User_AramaCubugu_Ilgili_Hizmetler05() {
@@ -672,7 +638,8 @@ public class US_004_Admin extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(1);
@@ -697,7 +664,6 @@ public class US_004_Admin extends TestBaseRapor {
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
         Assert.assertTrue(userLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
-
         long startTime = System.currentTimeMillis();
 
         By resultsLocator = By.xpath("(//*[@*='container'])[1]");
@@ -710,26 +676,22 @@ public class US_004_Admin extends TestBaseRapor {
         long duration = endTime - startTime;
         System.out.println("Results loaded in: " + duration + " ms");
 
-
         Assert.assertTrue(duration <= 2000, "Results took longer than 2 seconds!");
         ReusableMethods.bekle(1);
 
-
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========   User_AramaCubugu_SonuclarinGelmeSuresi   ===============
-    //======================================================================
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== User_AramaCubugu_SonuclarinGelmeSuresi ===============
+    // ======================================================================
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
     // Sign In butonuna basin
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
@@ -756,7 +718,8 @@ public class US_004_Admin extends TestBaseRapor {
         userLoyalFriendCare.userLoginSayfasiPasswordKutusu.sendKeys(ConfigReader.getProperty("user_password"));
         userLoyalFriendCare.userLoginSayfasiLoginButonu.click();
 
-        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Admin sayfasinda olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini
+        // test edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
         ReusableMethods.bekle(1);
@@ -794,41 +757,36 @@ public class US_004_Admin extends TestBaseRapor {
         long duration = endTime - startTime;
         System.out.println("Results loaded in: " + duration + " ms");
 
-
         Assert.assertTrue(duration <= 2000, "Results took longer than 2 seconds!");
         ReusableMethods.bekle(1);
 
     }
 
-
-
-    //==========================================================
-    //==========================================================
-    //========== Ziyaretci AramaCubugu PozitivTest  ============
-    //==========================================================
-    //==========================================================
-
+    // ==========================================================
+    // ==========================================================
+    // ========== Ziyaretci AramaCubugu PozitivTest ============
+    // ==========================================================
+    // ==========================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
-    ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
-
+    ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
 
     @Test
     public void US_004_ZiyaretciAramaCubugu_PozitivTest01() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci AramaCubugu PozitivTest");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-
-        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
@@ -846,32 +804,30 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(ziyaretciPage.aramaSonucElementi.isDisplayed());
     }
 
-
-    //================================================================
-    //================================================================
-    //==========     Ziyaretci AramaCubugu KelimeninBirKismi  ========
-    //================================================================
-    //================================================================
+    // ================================================================
+    // ================================================================
+    // ========== Ziyaretci AramaCubugu KelimeninBirKismi ========
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına kelimenin bir kısmını gir
     // Arama tusuna click et
     // Sistem ilgili sonuçları icerdigini test edin
 
-
     @Test
     public void US_004_Ziyaretci_AramaCubugu_KelimeninBirKismi02() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci_AramaCubugu_KelimeninBirKismi");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-
-        // ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
@@ -889,80 +845,72 @@ public class US_004_Admin extends TestBaseRapor {
         Assert.assertTrue(ziyaretciPage.aramaSonucElementi.isDisplayed());
     }
 
-
-
-    //================================================================
-    //================================================================
-    //==========  Ziyaretci_AramaCubugu_Yalnis Kelime  ===============
-    //================================================================
-    //================================================================
-
+    // ================================================================
+    // ================================================================
+    // ========== Ziyaretci_AramaCubugu_Yalnis Kelime ===============
+    // ================================================================
+    // ================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama alanına sistemde olmayan bir kelime gir
     // Arama tusuna click et
     // Sistem kısmi eşleşen sonuçları listelemelidir
 
-
     @Test
     public void US_004_Ziyaretci_AramaCubugu_Yalnis_Kelime03() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci_AramaCubugu_Yalnis_Kelime");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-
-        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
         Assert.assertTrue(actualUrl.contains(expextedUrlİcerik));
 
-        // Arama çubuğuna yalnis  bir hizmet / ilaç / aşı adı girin
+        // Arama çubuğuna yalnis bir hizmet / ilaç / aşı adı girin
         ziyaretciPage.ziyaretciAramaCubugu.sendKeys("Nutella");
         ReusableMethods.bekle(1);
 
         // Arama tusuna click et
-        ziyaretciPage .searchButonu.click();
+        ziyaretciPage.searchButonu.click();
         ReusableMethods.bekle(1);
 
         // Sistem ilgili sonuçları icermedigini test edin
-        Assert.assertTrue(ziyaretciPage .aramaSonucElementi.isDisplayed());
-
+        Assert.assertTrue(ziyaretciPage.aramaSonucElementi.isDisplayed());
 
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========  Ziyaretci AramaCubugu_Arama Alanini Bos Birak  ===========
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Ziyaretci AramaCubugu_Arama Alanini Bos Birak ===========
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama cubugunu bos birak
     // Arama tusuna click et
     // Sistem ilgili sonuçları icermemelidir
 
-
     @Test
     public void US_004_Ziyaretci_AramaCubugu_Arama_Alanini_Bos_Birak04() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci_AramaCubugu_Arama Alanini Bos Birak");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-
-        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
@@ -979,20 +927,18 @@ public class US_004_Admin extends TestBaseRapor {
         // Sistem ilgili sonuçları icermedigini test edin
         Assert.assertTrue(ziyaretciPage.aramaSonucElementi.isDisplayed());
 
-
     }
 
-    //======================================================================
-    //======================================================================
-    //==========   Ziyaretci_AramaCubugu_İlgili hizmet =====================
-    //==========   "ilaç veya aşı detay sayfasınin gorunur olmasi  =========
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Ziyaretci_AramaCubugu_İlgili hizmet =====================
+    // ========== "ilaç veya aşı detay sayfasınin gorunur olmasi =========
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
@@ -1000,17 +946,17 @@ public class US_004_Admin extends TestBaseRapor {
     // Arama sonuçlarından birine tıkla
     // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
 
-
     @Test
     public void US_004_Ziyaretci_AramaCubugu_Ilgili_Hizmetler05() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci_AramaCubugu_İlgili hizmet, " +
                 "ilaç veya aşı detay sayfasınin gorunur olmasi");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
@@ -1034,7 +980,6 @@ public class US_004_Admin extends TestBaseRapor {
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
         Assert.assertTrue(ziyaretciPage.aramaSonucElementi.isDisplayed());
 
-
         long startTime = System.currentTimeMillis();
 
         By resultsLocator = By.xpath("(//*[@*='container'])[1]");
@@ -1047,24 +992,20 @@ public class US_004_Admin extends TestBaseRapor {
         long duration = endTime - startTime;
         System.out.println("Results loaded in: " + duration + " ms");
 
-
         Assert.assertTrue(duration <= 2000, "Results took longer than 2 seconds!");
-
 
     }
 
-
-    //======================================================================
-    //======================================================================
-    //==========   Ziyaretci_AramaCubugu_SonuclarinGelmeSuresi   ===========
-    //======================================================================
-    //======================================================================
-    //======================================================================
-
+    // ======================================================================
+    // ======================================================================
+    // ========== Ziyaretci_AramaCubugu_SonuclarinGelmeSuresi ===========
+    // ======================================================================
+    // ======================================================================
+    // ======================================================================
 
     // Uc farkli test method'u olusturun
     // https://qa.loyalfriendcare.com/en url sayfasina gidi
-    // Ayrilikda admin, uye, ziyaterci olaral siteye  gidip
+    // Ayrilikda admin, uye, ziyaterci olaral siteye gidip
     // url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
     // Arama çubuğuna geçerli bir hizmet / ilaç / aşı adı gir
     // Arama tusuna click et
@@ -1076,12 +1017,13 @@ public class US_004_Admin extends TestBaseRapor {
     @Test
     public void US_004_Ziyaretci_AramaCubugu_SonuclarinGelmeSuresi06() {
 
-        ZiyaretciPage ziyaretciPage =new ZiyaretciPage();
+        ZiyaretciPage ziyaretciPage = new ZiyaretciPage();
         extentTest = extentReports.createTest("US_004 Ziyaretci_SonuclarinGelmeSuresi");
         // https://qa.loyalfriendcare.com/en url sayfasina gidi
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test edin
+        // Ziyaretci olarak url'in qa.loyalfriendcare.com kelimeleri icerdigini test
+        // edin
         String expextedUrlİcerik = "qa.loyalfriendcare.com";
         String actualUrl = Driver.getDriver().getCurrentUrl();
 
@@ -1118,14 +1060,8 @@ public class US_004_Admin extends TestBaseRapor {
         long duration = endTime - startTime;
         System.out.println("Results loaded in: " + duration + " ms");
 
-
         Assert.assertTrue(duration <= 2000, "Results took longer than 2 seconds!");
-
 
     }
 
-
 }
-
-
-

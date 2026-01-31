@@ -1,19 +1,13 @@
-package tests.LoginAdminAramaCubuguTests;
+package tests;
 
 
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.common_pages.HomePageBodySection;
 import pages.common_pages.HomepageBodyPage;
 import pages.user_pages.*;
 import utilities.ConfigReader;
@@ -21,15 +15,10 @@ import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 
-import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 
 
-
-
-public class US_012_User extends TestBaseRapor {
+public class US12 extends TestBaseRapor {
 
 
     //==========================================================
@@ -121,7 +110,7 @@ public class US_012_User extends TestBaseRapor {
                 .sendKeys(Keys.TAB).perform();
 
         WebElement wellDrop = Driver.getDriver().findElement
-                (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
+                  (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
         wellDrop.click();
         doctorDetailPage.anycategory.click();
         doctorDetailPage.doctorDetailSelection.click();
@@ -188,7 +177,7 @@ public class US_012_User extends TestBaseRapor {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("window.scrollBy(0,1300)");
         ReusableMethods.bekle(1);
-        HomePageBodySection homePageBodySection = new HomePageBodySection();
+        HomePageBodySection homePageBodySection =new HomePageBodySection();
         Assert.assertTrue(homePageBodySection.popularDoctorsTitle.isDisplayed());
 
         // Doktorlarin listelendigini  konturol edin
@@ -240,7 +229,6 @@ public class US_012_User extends TestBaseRapor {
 
 
     }
-
 
 
 }

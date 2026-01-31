@@ -38,8 +38,8 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//*[@class='sidebar-header']")
     public WebElement adminYatakListesi;
 
-   @FindBy(xpath = "(//*[@*='container'])[1]")
-    public WebElement AramaSonucElementi;
+    @FindBy(xpath = "(//*[@*='container'])[1]")
+    public WebElement aramaSonucElementi;
 
     @FindBy(xpath = "(//*[@*='img-fluid'])[1]")
     public WebElement sonucElementlerindenBiri;
@@ -68,10 +68,9 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//span[normalize-space()='Doctors Store successfully.']")
     public WebElement doctorStoreSuccess;
 
-    @FindBy(xpath = "(//*[@*='container'])[1]")
-    public WebElement aramaSonucElementi;
-
     public String getResultTitle(int row) {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
+
+

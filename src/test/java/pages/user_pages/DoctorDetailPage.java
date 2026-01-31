@@ -1,23 +1,17 @@
 package pages.user_pages;
 
-import com.github.javafaker.Faker;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.Driver;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 public class DoctorDetailPage {
 
     public Actions categoryDropdown;
+    public WebElement doctorSelectionDropdown;
 
     public DoctorDetailPage(){
         PageFactory.initElements(Driver.getDriver(), this);
@@ -53,9 +47,6 @@ public class DoctorDetailPage {
 
     @FindBy(xpath = "//*[@*='Appointment Booking']")
     public WebElement doctorDetailBaslik;
-
-    @FindBy(xpath = "//select[@name='doctor_id']")
-    public WebElement doctorSelectionDropdown;
 
     // ========== APPOINTMENT BOOKING FORMU ==========
 
@@ -130,7 +121,5 @@ public class DoctorDetailPage {
     // Submit butonu (yeşil)
     @FindBy(id = "submit-review")
     public WebElement submitButton;
-
-
 
 }
