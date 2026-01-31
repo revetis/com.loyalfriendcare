@@ -70,7 +70,7 @@ public class Layout {
     @FindBy(css = "#top_menu li:nth-child(1) a")
     public WebElement signInLink;
 
-    //For Auth Admin
+    //For Auth Admin btn_add
     @FindBy(css = "#top_menu li:nth-child(1) a")
     public WebElement headerAuthAdminDashboardButton;
 

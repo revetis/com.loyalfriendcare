@@ -29,31 +29,6 @@ import java.util.Locale;
 
 public class US16 extends TestBaseRapor {
 
-
-    @BeforeMethod
-    public void setupSteps(Method method) {
-        String methodName = method.getName();
-
-        Layout layout = new Layout();
-        DoctorsPage doctorsPage = new DoctorsPage();
-
-        // TC_01, TC_02 haricindeki tüm testler için çalış
-        if (!methodName.startsWith("TC_01") && !methodName.startsWith("TC_02")) {
-            Driver.getDriver().get(ConfigReader.getProperty("url"));
-            // Her test case öncesi login yapılması gerekiyor (Pre-condition)
-            SignIn.signInUser();
-            ReusableMethods.bekle(2);
-
-            // Doctors linkine tıkla
-            layout.headerDoctorsLink.click();
-            ReusableMethods.bekle(2);
-
-            // Doctorun detay sayfasına git
-            doctorsPage.doctorNames.get(0).click();
-            ReusableMethods.bekle(2);
-        }
-    }
-
     @Test(priority = 1)
     public void TC_01_User_HomePageToDoctorsPageNavigationTest() {
         // setupSteps çalışmaz, kendi login'ini yapar
@@ -163,7 +138,7 @@ public class US16 extends TestBaseRapor {
 
     }
 
-        @Test(priority = 3)
+        @Test(priority = 3, dependsOnMethods = "TC_02_DoctorsPageDoctorInformationTest")
         public void TC_03_DoctorDetailPageDisplayAndValidationTest() {
             extentTest = extentReports.createTest("TC_03 - Doktor Detay Sayfasında Doktor detay kartı ve Randevu Formu Görüntüleme, İnceleme",
                     "Doktor detay sayfasında Doktor'un detay kartı ve sağ tarafta randevu oluşturma formu kontrol edilir ve alanların doğru çalıştığı test edilir");

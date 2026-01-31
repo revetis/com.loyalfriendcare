@@ -38,6 +38,7 @@ public class AdminLoyalFriendCare {
     @FindBy(xpath = "//*[@class='sidebar-header']")
     public WebElement adminYatakListesi;
 
+
     @FindBy(xpath = "(//*[@*='container'])[1]")
     public WebElement aramaSonucElementi;
 

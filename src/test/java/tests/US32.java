@@ -52,7 +52,7 @@ public class US32 extends TestBaseRapor {
 
         // Gerekli bilgileri girin
         adminDoctorsPage.doctorsTitleInput.sendKeys("Dr.Hasan");
-        adminDoctorsPage.doctorsContent.sendKeys("Hasans");
+       // adminDoctorsPage.doctorsContent.sendKeys("Hasans");
 
         // Doktors save butonuna tıklayın
         adminDoctorsPage.saveButton.click();

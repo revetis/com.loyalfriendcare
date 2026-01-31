@@ -20,7 +20,6 @@ import java.util.Properties;
 
 public class US12 extends TestBaseRapor {
 
-
     //==========================================================
     //==========================================================
     //==========  User Randevu Talebinin Olusdurulmasi  ========
