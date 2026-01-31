@@ -50,6 +50,9 @@ public class US30 extends TestBaseRapor {
      //   ReusableMethods.waitForVisibility(adminDashboardPage.adminDasboardNesrinBora, 10);
      //   adminDashboardPage.adminDasboardNesrinBora.click();
 
+        ReusableMethods.waitForVisibility(layout.headerAuthUserDashboardButton, 10);
+        layout.headerAuthUserDashboardButton.click();
+
         extentTest.pass("Admin login başarılı");
     }
 

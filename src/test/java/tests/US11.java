@@ -3,7 +3,9 @@ package tests;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -28,14 +30,11 @@ public class US11 extends TestBaseRapor {
         SignIn.signInUser();
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDownTests(ITestResult result){
         // Mobil testlerden (TC_08) sonra pencereyi eski haline getir
         Driver.getDriver().manage().window().maximize();
 
-        if (result.getStatus() == ITestResult.SUCCESS) {
-            SignOut.signOutUser();
-        }
     }
 
     @DataProvider(name = "negatifVeriler")
@@ -107,7 +106,14 @@ public class US11 extends TestBaseRapor {
         extentTest.info("Departments linkinin aktif olduğu doğrulandı.");
 
         extentTest.info("Linke tiklaniyor ve sayfa yonlendirmesi bekleniyor.");
-        homePageDepartmentSection.departmentsLink.click();
+        Actions actions = new Actions(Driver.getDriver());
+
+        actions.sendKeys(Keys.PAGE_UP).perform();
+
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].click()",homePageDepartmentSection.departmentsLink);
+
+        ReusableMethods.waitForPageToLoad(2);
 
         String expectedUrl = ConfigReader.getProperty("departmentsUrl");
         extentTest.info("Gidilen URL kontrol ediliyor. Beklenen: " + expectedUrl);
@@ -119,6 +125,9 @@ public class US11 extends TestBaseRapor {
     @Test(priority = 4)
     public void TC_04_DepartmanKartlariVeDetaySayfasiKontrolu() {
         extentTest = extentReports.createTest("TC_04 - Departman Görsel Kartları ve Detay Sayfası Kontrolü");
+        Driver.getDriver().navigate().back();
+
+        homePageDepartmentSection = new HomePageDepartmentSection();
 
         // 1. Resimlerin yüklenmesi kontrolü
         extentTest.info("Departman gorsellerinin yuklenip yuklenmedigi kontrol ediliyor.");
@@ -240,9 +249,6 @@ public class US11 extends TestBaseRapor {
     public void TC_06_DepartmanAyrintiSayfasiFormuPozitifTestiDinamik(String tarih, String telefon, String mesaj){
         extentTest = extentReports.createTest("TC_06","Departman Ayrıntı Sayfası Form Pozitif Testi");
 
-        homePageDepartmentSection.departmentsImageLinks.getFirst().click();
-        ReusableMethods.waitForPageToLoad(timeout);
-
         DepartmentPage departmentPage = new DepartmentPage();
         extentTest.info("TEST VERILERI -> Tarih: " + tarih + " | Tel: " + telefon + " | Mesaj: " + mesaj);
 
@@ -255,11 +261,11 @@ public class US11 extends TestBaseRapor {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         // 3. Departman Seç (Wellness)
         js.executeScript("arguments[0].value='56';", departmentPage.hiddenDepartmentSelect);
-        extentTest.info("Departman secildi (Wellness).");
+        extentTest.info("Departman secildi.");
 
         // 4. Doktor Seç (Dr. Marcus)
         js.executeScript("arguments[0].value='21';", departmentPage.hiddenDoctorSelect);
-        extentTest.info("Doktor secildi (Dr. Marcus).");
+        extentTest.info("Doktor secildi.");
 
         // 5. Mesaj Yaz
         departmentPage.departmentFormTextArea.sendKeys(mesaj);
@@ -298,13 +304,12 @@ public class US11 extends TestBaseRapor {
         // 4. Formu Gönder
         extentTest.info("Gecersiz verilerle form gonderiliyor.");
         departmentPage.departmentFormSubmitButton.submit();
-        ReusableMethods.waitForPageToLoad(timeout);
 
         AlertMessageLocators alertMessageLocators = new AlertMessageLocators();
 
         try {
             extentTest.info("Hata mesaji (Error Toast) bekleniyor.");
-            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, timeout);
+            ReusableMethods.waitForVisibility(alertMessageLocators.errorMessage, 1);
             Assert.assertTrue(alertMessageLocators.errorMessage.isDisplayed());
             extentTest.pass("Sistem gecersiz veri girisine karsi beklenen hata mesajini verdi.");
         } catch (Exception e) {
