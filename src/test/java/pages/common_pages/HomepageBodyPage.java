@@ -12,13 +12,15 @@ import java.util.List;
 import java.util.Random;
 
 public class HomepageBodyPage {
-    public HomepageBodyPage (){PageFactory.initElements(Driver.getDriver(),this);}
+    public HomepageBodyPage() {
+        PageFactory.initElements(Driver.getDriver(), this);
+    }
 
-    //=============================================
-    //=============================================
-    //==========     Body Locators   ============
-    //=============================================
-    //=============================================
+    // =============================================
+    // =============================================
+    // ========== Body Locators ============
+    // =============================================
+    // =============================================
 
     // Karşılama metni başlığı
     @FindBy(xpath = "//div[@class='container text-center']/h3")
@@ -59,7 +61,7 @@ public class HomepageBodyPage {
     public List<WebElement> popularDoctorsItems;
 
     @FindBy(xpath = "//*[@*='Dr. Marcus Rodriguez']")
-    public WebElement popularDoctorLocate ;
+    public WebElement popularDoctorLocate;
 
     public boolean DoktorKartlarininClickable() {
         for (WebElement each : popularDoctorsItems) {
@@ -71,7 +73,7 @@ public class HomepageBodyPage {
     }
 
     public boolean popularDoctorlarListesininGorunurlugu() {
-        return popularDoctorsItems.size()>0;
+        return popularDoctorsItems.size() > 0;
     }
 
     // Listeden random doktora klik edir
@@ -97,6 +99,5 @@ public class HomepageBodyPage {
 
     @FindBy(css = "#top_menu a.btn_add")
     public WebElement headerSignIn;
-
 
 }
