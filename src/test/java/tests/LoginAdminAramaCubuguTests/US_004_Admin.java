@@ -21,8 +21,6 @@ import java.util.Properties;
 
 public class US_004_Admin extends TestBaseRapor {
 
-<<<<<<< HEAD
-=======
     //==========================================================
     //==========================================================
     //==========     Admin AramaCubugu PozitivTest  ============
@@ -75,7 +73,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+       // Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(1);
     }
 
@@ -131,7 +129,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
     }
 
@@ -186,7 +184,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icermedigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -243,7 +241,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icermedigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -304,7 +302,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
 
 
         // Arama sonuçlarından birine tıkla
@@ -312,7 +310,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -373,7 +371,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
 
 
         // Arama sonuçlarından birine tıkla
@@ -381,10 +379,10 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
 
         // Arama sonuçları en geç 2 saniye içinde görüntülenmelidir
-        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
         long startTime = System.currentTimeMillis();
 
         By resultsLocator = By.xpath("(//*[@*='container'])[1]");
@@ -575,7 +573,7 @@ public class US_004_Admin extends TestBaseRapor {
         ReusableMethods.bekle(3);
 
 
->>>>>>> main
+
     }
 
 

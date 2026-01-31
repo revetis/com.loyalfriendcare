@@ -30,9 +30,6 @@ import java.util.Random;
 
 
 public class US_012_User extends TestBaseRapor {
-<<<<<<< HEAD
-=======
-
 
     //==========================================================
     //==========================================================
@@ -244,5 +241,4 @@ public class US_012_User extends TestBaseRapor {
     }
 
 
->>>>>>> main
 }
