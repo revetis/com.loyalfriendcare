@@ -1,10 +1,9 @@
-package tests.LoginAdminAramaCubuguTests;
+package tests;
 
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.admin_pages.AdminLoyalFriendCare;
-import pages.user_pages.UserLoyalFriendCare;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
@@ -12,7 +11,7 @@ import utilities.TestBaseRapor;
 
 import java.util.Properties;
 
-public class US_020_Admin extends TestBaseRapor {
+public class US20 extends TestBaseRapor {
 
     //================================================================
     //================================================================
@@ -122,6 +121,9 @@ public class US_020_Admin extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         Assert.assertTrue(actualUrl.contains(expextedUrlİcerik));
+
+
+
 
     }
 }

@@ -10,6 +10,7 @@ import pages.common_pages.Layout;
 import pages.common_pages.LoginPage;
 import utilities.ConfigReader;
 import utilities.Driver;
+import utilities.SignIn;
 import utilities.TestBaseRapor;
 
 public class US24 extends TestBaseRapor {
@@ -21,7 +22,7 @@ public class US24 extends TestBaseRapor {
     AdminRolesPages adminRolesPages = new AdminRolesPages();
 
     @Test
-    public void US24_rolOlusturma(){
+    public void US24_rolOlusturma() {
 
         extentTest = extentReports.createTest("Rol olusturma testi");
 
@@ -84,9 +85,8 @@ public class US24 extends TestBaseRapor {
     }
 
 
-
     @Test
-    public void rolOlusturma(){
+    public void rolOlusturma() {
 
         Layout layout1 = new Layout();
         LoginPage loginPage1 = new LoginPage();
@@ -99,19 +99,12 @@ public class US24 extends TestBaseRapor {
         // https://qa.loyalfriendcare.com/en anasayfaya gidin
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        // Sing In butonuna tıklanıp login sayfası açılmalı
-        layout1.signInLink.click();
+        layout1 = new Layout();
+        loginPage1 = new LoginPage();
+        adminLoyalFriendCare1 = new AdminLoyalFriendCare();
+        adminAddUserPage1 = new AdminAddUserPage();
+        adminRolesPages1 = new AdminRolesPages();
 
-        // Admin E-mail adres kutusuna mail adresini girebilmeli
-        loginPage1.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
-
-        // Admin password kutusuna passwor'dü girebilmeli
-
-        loginPage1.passwordInput.sendKeys(ConfigReader.getProperty("admin_password"));
-
-        // Sing In butonuna tıklayıp login olmalı
-
-        loginPage1.signInButton.click();
 
         // Ana sayfada sag üst kösedeki isminin yazili oldugu butona tiklayın
         adminLoyalFriendCare1.adminPanelineGirisButonu.click();
