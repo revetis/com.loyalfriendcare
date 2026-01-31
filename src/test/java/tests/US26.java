@@ -20,7 +20,7 @@ import utilities.TestBaseRapor;
 import java.time.Duration;
 import java.util.List;
 
-public class US_026_TestCases extends TestBaseRapor {
+public class US26 extends TestBaseRapor {
 
     Layout layout;
     LoginPage loginPage;

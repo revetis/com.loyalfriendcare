@@ -7,21 +7,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import pages.common_pages.Layout;
+import org.testng.annotations.Test;
 import pages.common_pages.LoginPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import java.io.IOException;
 import java.util.List;
 
-public class US_033_TestCases extends TestBaseRapor {
+public class US33 extends TestBaseRapor {
 
     Layout layout;
     LoginPage loginPage;
@@ -29,7 +26,8 @@ public class US_033_TestCases extends TestBaseRapor {
     // ========================================
     // TC_01: Admin Panel Medicines Menü Erişimi
     // ========================================
-    @Test(priority = 1, description = "Admin paneline giriş yaparak Medicines menüsüne erişim doğrulamak")
+    @Test (priority = 1,
+            description = "Admin paneline giriş yaparak Medicines menüsüne erişim doğrulamak")
     public void tc01_AdminPanelMedicinesMenuAccessTest() {
 
         layout = new Layout();
@@ -115,12 +113,12 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
         ReusableMethods.waitForVisibility(sidebar, 10);
 
-// Sidebar'ı açmak için hover
+        // Sidebar'ı açmak için hover
         actions.moveToElement(sidebar).perform();
         ReusableMethods.bekle(1);
         extentTest.info("Sidebar'a hover yapıldı, sidebar açıldı");
 
-// Medicines ana menüsünü bul (ana başlık)
+        // Medicines ana menüsünü bul (ana başlık)
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
@@ -130,7 +128,8 @@ public class US_033_TestCases extends TestBaseRapor {
 
         extentTest.pass("✅ STEP 5 PASSED: Sidebar açıldı ve Medicines ana menüsü görünür");
 
-// 6. Medicines menüsünün alt menülerinin görünür olduğunu doğrula (hover öncelikli, gerekirse click fallback)
+        // 6. Medicines menüsünün alt menülerinin görünür olduğunu doğrula (hover öncelikli,
+        // gerekirse click fallback)
         extentTest.info("6. Medicines menüsünün alt menülerini (hover ile) doğrula");
 
         By subMedicines = By.xpath(
@@ -141,7 +140,8 @@ public class US_033_TestCases extends TestBaseRapor {
 
         By subCreateMedicines = By.xpath(
                 "//a[normalize-space()='Create Medicines' and (" +
-                        "contains(@href,'/Dashboard/Instagrams/create') or contains(@href,'Dashboard/Instagrams/create')" +
+                        "contains(@href,'/Dashboard/Instagrams/create') " +
+                        "or contains(@href,'Dashboard/Instagrams/create')" +
                         ")]"
         );
 
@@ -197,8 +197,8 @@ public class US_033_TestCases extends TestBaseRapor {
     // TC_02: Medicines menüsüne tıklayarak ilaç listesi
     // sayfasına erişimi doğrulama
     // ========================================
-
-    @Test(priority = 2, description = "Medicines menüsüne tıklayarak ilaç listesi sayfasına " +
+    @Test (priority = 2,
+            description = "Medicines menüsüne tıklayarak ilaç listesi sayfasına " +
             "erişimi doğrular (Instagrams route)")
     public void tc02_MedicinesMenu_ShouldOpenListPage() {
 
@@ -309,8 +309,7 @@ public class US_033_TestCases extends TestBaseRapor {
     // TC_03: İlaç listesi sayfasında tüm ilaçların
     // bilgilerinin görüntülenmesini  doğrulama
     // ========================================
-
-    @Test(priority = 3,
+    @Test (priority = 3,
             description = "Medicines list sayfasında tüm ilaç bilgilerinin görüntülenmesini " +
                     "ve scroll ile erişilebilir olduğunu doğrular")
     public void tc03_MedicinesList_AllMedicinesDisplayed_WithScrollCheck() {
@@ -455,7 +454,7 @@ public class US_033_TestCases extends TestBaseRapor {
     // ========================================
     // TC_04: İlaç Arama Fonksiyonunun Çalışması ve Filtreleme
     // ========================================
-    @Test(priority = 4,
+    @Test (priority = 4,
             description = "Medicines listesinde ilaç arama ve filtreleme fonksiyonunu doğrular")
     public void tc04_MedicinesSearchFunctionTest() {
 
@@ -478,7 +477,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 10).click();
+        ReusableMethods.waitForClickability(layout.signInLink, 10).click();
         ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
 
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
@@ -490,7 +489,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 10).click();
+        ReusableMethods.waitForClickability(adminUserButton, 10).click();
         ReusableMethods.waitForPageToLoad(10);
 
         // Sidebar → Medicines → Medicines List
@@ -502,13 +501,13 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 10).click();
+        ReusableMethods.waitForClickability(medicinesMainMenu, 10).click();
 
         WebElement medicinesListMenu = Driver.getDriver().findElement(
                 By.xpath("//a[normalize-space()='Medicines' " +
                         "and contains(@href,'Dashboard/Instagrams')]")
         );
-        ReusableMethods.waitForClickablility(medicinesListMenu, 10).click();
+        ReusableMethods.waitForClickability(medicinesListMenu, 10).click();
 
         ReusableMethods.waitForPageToLoad(10);
 
@@ -601,7 +600,7 @@ public class US_033_TestCases extends TestBaseRapor {
     // ========================================
     // TC_05: İlaç Detay Görüntüleme Butonlarının Olmaması (BUG)
     // ========================================
-    @Test(priority = 5, description = "İlaç detay görüntüleme ekranının işlevselliği " +
+    @Test (priority = 5, description = "İlaç detay görüntüleme ekranının işlevselliği " +
             "ve butonların görünürlüğünü doğrulamak (Bug Test)")
     public void tc05_MedicineDetailViewButtonsMissingTest() {
 
@@ -622,7 +621,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 2);
+        ReusableMethods.waitForClickability(layout.signInLink, 2);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -638,7 +637,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 2);
+        ReusableMethods.waitForClickability(adminUserButton, 2);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -651,7 +650,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[text()='Medicines']/parent::a | //a[./span[text()='Medicines']]")
         );
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 10);
+        ReusableMethods.waitForClickability(medicinesMainMenu, 10);
         medicinesMainMenu.click();
         ReusableMethods.bekle(1);
 
@@ -660,7 +659,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[contains(@href,'Dashboard/Instagrams') " +
                         "and contains(text(),'Medicines')]")
         );
-        ReusableMethods.waitForClickablility(medicinesListLink, 2);
+        ReusableMethods.waitForClickability(medicinesListLink, 2);
         medicinesListLink.click();
         ReusableMethods.bekle(1);
 
@@ -740,7 +739,7 @@ public class US_033_TestCases extends TestBaseRapor {
     // ========================================
     // TC_06: İlaç Düzenleme (Edit) İşleminin Çalışması
     // ========================================
-    @Test(priority = 6, description = "İlaç düzenleme (edit) işleminin çalışmasını " +
+    @Test (priority = 6, description = "İlaç düzenleme (edit) işleminin çalışmasını " +
             "ve listenin güncellenmesini doğrulamak")
     public void tc06_MedicineEditFunctionalityTest() {
 
@@ -762,7 +761,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 3);
+        ReusableMethods.waitForClickability(layout.signInLink, 3);
         layout.signInLink.click();
         ReusableMethods.bekle(1);
 
@@ -778,7 +777,7 @@ public class US_033_TestCases extends TestBaseRapor {
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 3);
+        ReusableMethods.waitForClickability(adminUserButton, 3);
         adminUserButton.click();
         ReusableMethods.bekle(1);
 
@@ -792,7 +791,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//span[text()='Medicines']/parent::a |" +
                         " //a[./span[text()='Medicines']]")
         );
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 3);
+        ReusableMethods.waitForClickability(medicinesMainMenu, 3);
         medicinesMainMenu.click();
         ReusableMethods.bekle(1);
 
@@ -801,7 +800,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//a[contains(@href,'Dashboard/Instagrams') " +
                         "and contains(text(),'Medicines')]")
         );
-        ReusableMethods.waitForClickablility(medicinesListLink, 3);
+        ReusableMethods.waitForClickability(medicinesListLink, 3);
         medicinesListLink.click();
         ReusableMethods.bekle(1);
 
@@ -830,7 +829,7 @@ public class US_033_TestCases extends TestBaseRapor {
                         "and contains(@href,'/edit')]")
         );
 
-        ReusableMethods.waitForClickablility(editLink, 2);
+        ReusableMethods.waitForClickability(editLink, 2);
         js.executeScript("arguments[0].scrollIntoView({block:'center'});", editLink);
         ReusableMethods.bekle(1);
         js.executeScript("arguments[0].click();", editLink);
@@ -896,7 +895,7 @@ public class US_033_TestCases extends TestBaseRapor {
                 By.xpath("//button[contains(@class,'fa-save') and @type='submit']")
         );
 
-        ReusableMethods.waitForClickablility(saveButton, 3);
+        ReusableMethods.waitForClickability(saveButton, 3);
         js.executeScript("arguments[0].scrollIntoView({block:'center'});", saveButton);
         ReusableMethods.bekle(1);
         js.executeScript("arguments[0].click();", saveButton);
@@ -943,7 +942,7 @@ public class US_033_TestCases extends TestBaseRapor {
     // ========================================
     // TC_07: İlaç Silme (Delete) - Confirmation kontrolü (beklenen yok → FAIL)
     // ========================================
-    @Test(priority = 7, description = "Delete tıklanınca confirmation popup çıkmalı; " +
+    @Test (priority = 7, description = "Delete tıklanınca confirmation popup çıkmalı; " +
             "çıkmadığı için test FAIL olmalı")
     public void tc07_MedicineDeleteConfirmation_ShouldFail() {
 
@@ -952,13 +951,12 @@ public class US_033_TestCases extends TestBaseRapor {
 
         extentTest = extentReports.createTest(
                 "US_033_TC_07 - Delete Confirmation Test (Expected FAIL)",
-                "Delete tıklandığında confirmation popup beklenir; " +
-                        "sistem göstermediği için FAIL edilir"
+                "Delete tıklandığında confirmation popup beklenir; sistem göstermediği için FAIL edilir"
         );
 
         Actions actions = new Actions(Driver.getDriver());
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
 
         // =========================
         // PRE-CONDITION: Login + Admin panel + Medicines list
@@ -969,40 +967,39 @@ public class US_033_TestCases extends TestBaseRapor {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         wait.until(ExpectedConditions.urlContains("http"));
 
-        ReusableMethods.waitForClickablility(layout.signInLink, 2).click();
-        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 2);
+        ReusableMethods.waitForClickability(layout.signInLink, 10).click();
+        ReusableMethods.waitForVisibility(loginPage.emailAddressInput, 10);
 
         loginPage.emailAddressInput.sendKeys(ConfigReader.getProperty("admin_email"));
         loginPage.passwordInput.sendKeys(ConfigReader.getProperty("admin_password"));
         loginPage.signInButton.click();
 
-        ReusableMethods.waitForPageToLoad(2);
+        ReusableMethods.waitForPageToLoad(10);
 
         // Admin panel butonu
         WebElement adminUserButton = Driver.getDriver().findElement(
                 By.xpath("//a[contains(@class,'btn_add')] | //*[@id='top_menu']//a[1]")
         );
-        ReusableMethods.waitForClickablility(adminUserButton, 2).click();
-        ReusableMethods.waitForPageToLoad(2);
+        ReusableMethods.waitForClickability(adminUserButton, 10).click();
+        ReusableMethods.waitForPageToLoad(10);
 
         // Sidebar hover + Medicines
         WebElement sidebar = Driver.getDriver().findElement(By.cssSelector("nav.page-sidebar"));
-        ReusableMethods.waitForVisibility(sidebar, 2);
+        ReusableMethods.waitForVisibility(sidebar, 10);
         actions.moveToElement(sidebar).perform();
         ReusableMethods.bekle(1);
 
         WebElement medicinesMainMenu = Driver.getDriver().findElement(
                 By.xpath("//span[normalize-space()='Medicines']/ancestor::a[1]")
         );
-        ReusableMethods.waitForClickablility(medicinesMainMenu, 3).click();
+        ReusableMethods.waitForClickability(medicinesMainMenu, 10).click();
         ReusableMethods.bekle(1);
 
         WebElement medicinesListLink = Driver.getDriver().findElement(
-                By.xpath("//a[contains(@href,'Dashboard/Instagrams') " +
-                        "and normalize-space()='Medicines']")
+                By.xpath("//a[contains(@href,'Dashboard/Instagrams') and normalize-space()='Medicines']")
         );
-        ReusableMethods.waitForClickablility(medicinesListLink, 3).click();
-        ReusableMethods.waitForPageToLoad(2);
+        ReusableMethods.waitForClickability(medicinesListLink, 10).click();
+        ReusableMethods.waitForPageToLoad(10);
 
         // ✅ Burada artık gerçekten sayfadayız
         wait.until(ExpectedConditions.urlContains("/Dashboard/Instagrams"));
@@ -1029,7 +1026,7 @@ public class US_033_TestCases extends TestBaseRapor {
                         "and .//span[normalize-space()='Delete']]")
         );
 
-        ReusableMethods.waitForClickablility(deleteButton, 2);
+        ReusableMethods.waitForClickability(deleteButton, 10);
         js.executeScript("arguments[0].scrollIntoView({block:'center'});", deleteButton);
         ReusableMethods.bekle(1);
         js.executeScript("arguments[0].click();", deleteButton);
@@ -1067,8 +1064,7 @@ public class US_033_TestCases extends TestBaseRapor {
 
         // ❌ Beklenen confirmation yok → burası FAIL olmalı
         Assert.assertTrue(confirmationDisplayed,
-                "❌ FAIL (Expected): Delete tıklanınca confirmation popup görünmeliydi, " +
-                        "fakat görüntülenmedi. " +
+                "❌ FAIL (Expected): Delete tıklanınca confirmation popup görünmeliydi, fakat görüntülenmedi. " +
                         "Sistem direkt silme yapıyor.");
 
         // Normalde buraya gelmez
