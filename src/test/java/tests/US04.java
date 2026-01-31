@@ -127,7 +127,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
     }
 
@@ -182,7 +182,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icermedigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -239,7 +239,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icermedigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -300,7 +300,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
 
         // Arama sonuçlarından birine tıkla
@@ -308,7 +308,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         ReusableMethods.bekle(3);
 
 
@@ -369,7 +369,7 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // Sistem ilgili sonuçları icerdigini test edin
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
 
         // Arama sonuçlarından birine tıkla
@@ -377,10 +377,10 @@ public class US04 extends TestBaseRapor {
         ReusableMethods.bekle(2);
 
         // İlgili hizmet, ilaç veya aşı detay sayfası açılmalıdır
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
 
         // Arama sonuçları en geç 2 saniye içinde görüntülenmelidir
-        Assert.assertTrue(adminLoyalFriendCare.AramaSonucElementi.isDisplayed());
+        Assert.assertTrue(adminLoyalFriendCare.aramaSonucElementi.isDisplayed());
         long startTime = System.currentTimeMillis();
 
         By resultsLocator = By.xpath("(//*[@*='container'])[1]");
