@@ -15,7 +15,7 @@ public class ConfigReader {
 
     static {
 
-        String filePath= "configuration.properties";
+        String filePath = System.getProperty("user.dir") + "/configuration.properties";
         try {
 
             FileInputStream fis= new FileInputStream(filePath);

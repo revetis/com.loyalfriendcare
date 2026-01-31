@@ -10,19 +10,17 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.common_pages.Layout;
 import pages.common_pages.LoginPage;
-import pages.admin_pages.AdminDashboardPages;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
 
 
 import java.time.Duration;
 import java.util.List;
 
-public class US_025_TestCases extends TestBaseRapor {
+public class US25 extends TestBaseRapor {
 
     Layout layout;
     LoginPage loginPage;
@@ -310,6 +308,7 @@ public class US_025_TestCases extends TestBaseRapor {
         Assert.assertTrue(errorLike.isEmpty(), "Sayfada hata mesajı görünüyor!");
         extentTest.pass("✅ STEP 5 PASSED: Sayfa hatasız yüklendi");
     }
+
 
     // ========================================
     // TC_03: Kullanıcı listesi sayfasında tüm kullanıcı bilgilerinin görüntülenmesini doğrulamak
@@ -795,7 +794,8 @@ public class US_025_TestCases extends TestBaseRapor {
 
     // ========================================
     // TC_06: Kullanıcı düzenleme (edit) işlevinin çalışmasını ve listenin güncellenmesini doğrulamak
-    // (Edit sayfasına girilir, Phone ve Password alanları doldurulur, Save yapılarak başarı mesajı doğrulanır.)
+    // (Edit sayfasına girilir, Phone ve Password alanları doldurulur,
+    // Save yapılarak başarı mesajı doğrulanır.)
     // ========================================
     @Test(priority = 6, description = "Admin Margarito kullanıcısını editler, " +
             "telefon ve şifre bilgilerini güncelleyerek kaydeder.")
@@ -960,12 +960,14 @@ public class US_025_TestCases extends TestBaseRapor {
         extentTest.pass("✅ STEP 5 PASSED: Başarı mesajı görüldü: " + successMsg.getText());
     }
 
+
     // ========================================
     // TC_07: Delete işleminde confirmation çıkmalı
     // Gerçekte confirmation yok, kullanıcı direkt siliniyor.
     // "User deleted successfully" görüldüğü anda test FAIL ile bitirilir.
     // ========================================
-    @Test(priority = 7, description = "Users listesinde cecelia.wolf aranır, Delete tıklanır; confirmation yerine direkt 'User deleted successfully' görüldüğü anda FAIL.")
+    @Test(priority = 7, description = "Users listesinde cecelia.wolf aranır, " +
+            "Delete tıklanır; confirmation yerine direkt 'User deleted successfully' görüldüğü anda FAIL.")
     public void tc07_AdminPanelDeleteUserConfirmationMissingFailTest() {
 
         layout = new Layout();

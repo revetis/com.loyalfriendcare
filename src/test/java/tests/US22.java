@@ -49,8 +49,13 @@ public class US22 extends TestBaseRapor {
         loginPage.signInButton.click();
 
         // Login sonrası NesrinBora alanına tıkla
+
+     //   ReusableMethods.waitForVisibility(adminDashboardPage.adminDasboardNesrinBora, 10);
+      //  adminDashboardPage.adminDasboardNesrinBora.click();
+
         ReusableMethods.waitForVisibility(layout.headerAuthUserDashboardButton, 10);
         layout.headerAuthUserDashboardButton.click();
+
 
         extentTest.pass("Admin kullanıcı sisteme başarıyla giriş yaptı ve NesrinBora alanına tıkladı");
     }

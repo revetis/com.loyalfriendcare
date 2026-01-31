@@ -116,13 +116,14 @@ public class ReusableMethods {
         }
     }
 
-    public static boolean isDisplayedAndClickable(WebElement element,int timeout){
-        try{
+    public static boolean isDisplayedAndClickable(WebElement element, int timeout) {
+        try {
             WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
-            if (wait.until(ExpectedConditions.visibilityOf(element)  )!= null && wait.until(ExpectedConditions.elementToBeClickable(element) )!= null) return true;
+            if (wait.until(ExpectedConditions.visibilityOf(element)) != null && wait.until(ExpectedConditions.elementToBeClickable(element)) != null)
+                return true;
 
-        }catch (Exception e){
-            System.out.println("Gorunurluk ve tiklanabilirlik kontrol edilirken hata olustu: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Gorunurluk ve tiklanabilirlik kontrol edilirken hata olustu: " + e.getMessage());
         }
         return false;
     }
@@ -182,11 +183,6 @@ public class ReusableMethods {
         js.executeScript("window.scrollBy(0,500)");
     }
 
-    public static void scrollUp() {
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
-        js.executeScript("window.scrollBy(0,-500)");
-    }
-
     public static void scrollToElement(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", element);
@@ -207,17 +203,19 @@ public class ReusableMethods {
         js.executeScript("window.scrollTo(0, 0);");
     }
 
+        public static void jsClick (WebElement element) {
+            JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+            js.executeScript("arguments[0].click();", element);
+        }
+
+
     public static String getFutureDate(int plusDays) {
-
         LocalDate futureDate = LocalDate.now().plusDays(plusDays);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
         return futureDate.format(formatter);
     }
 
-
-    public static String normalizeString(String url){
+    public static String normalizeString(String url) {
         return url.replace("ç", "c")
                 .replaceAll("dr\\.", "")
                 .replace("ç", "c").replace("ğ", "g").replace("ı", "i")
@@ -226,5 +224,11 @@ public class ReusableMethods {
                 .replace(" ", "-")
                 .replaceAll("[^a-z0-9-]", "");
     }
+
+    public static WebElement waitForClickablility(WebElement element, int timeout) {
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
 
 }

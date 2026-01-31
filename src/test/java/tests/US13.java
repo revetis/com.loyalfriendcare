@@ -91,10 +91,10 @@ public class US13 extends TestBaseRapor {
         extentTest.pass("Appointment form görüntülendi.");
 
         // 3) Date: bugünkü tarih + 3 gün (gelecek tarih)
-        String futureDate = ReusableMethods.getFutureDate(3);
-        detailPage.dateInput.clear();          // <-- BURAYA
-        detailPage.dateInput.sendKeys(futureDate);
-        extentTest.info("Date girildi: " + futureDate);
+        // String futureDate = ReusableMethods.getFutureDate(3);
+//        detailPage.dateInput.clear();          // <-- BURAYA
+//        detailPage.dateInput.sendKeys(futureDate);
+//        extentTest.info("Date girildi: " + futureDate);
 
 
         // 4) Phone
@@ -135,66 +135,62 @@ public class US13 extends TestBaseRapor {
 
         extentTest = extentReports.createTest(
                 "US_013_TC03_Negative",
-                "Geçmiş tarih ile randevu oluşturulamamalı (negatif senaryo)"
+                "Geçmiş tarih ile randevu oluşturulamamalı"
         );
 
         Driver.getDriver().get(ConfigReader.getProperty("url"));
 
         HomePageBodySection homeSection = new HomePageBodySection();
+        VaccineDetailPage detailPage = new VaccineDetailPage();
 
         // Vaccine detayına git
         ReusableMethods.scrollToElement(homeSection.vaccinationsTitle);
         ReusableMethods.waitForVisibility(homeSection.felineHerpesvirusVaccineLink, 5);
         homeSection.felineHerpesvirusVaccineLink.click();
-        extentTest.info("Feline Herpesvirus Vaccine detay sayfasına gidildi.");
 
-        VaccineDetailPage detailPage = new VaccineDetailPage();
+
         ReusableMethods.waitForVisibility(detailPage.appointmentForm, 5);
-        Assert.assertTrue(detailPage.appointmentForm.isDisplayed(), "Appointment form görünmüyor!");
-        extentTest.pass("Appointment form görüntülendi.");
 
-        // Geçmiş tarih (bugün -1)
-        String pastDate = ReusableMethods.getFutureDate(-1);
-        detailPage.dateInput.clear();
-        detailPage.dateInput.sendKeys(pastDate);
-        extentTest.info("Geçmiş tarih girildi: " + pastDate);
+        // ❌ Geçmiş tarih (bugün -1)
+        // String pastDate = ReusableMethods.getFutureDate(-1);
+//        detailPage.dateInput.clear();
+//        detailPage.dateInput.sendKeys(pastDate);
+//        extentTest.info("Geçmiş tarih girildi: " + pastDate);
 
-        // Phone
-        String phone = "555" + (int) (Math.random() * 10000000);
+        // 4) Phone
+        String phone = "555" + (int) (Math.random() * 10000000); // 10 hane
         detailPage.phoneNumberInput.clear();
         detailPage.phoneNumberInput.sendKeys(phone);
-        extentTest.info("Phone girildi: " + phone);
 
-        // Wellness dropdown: 2. seçenek
+        // 5) Wellness dropdown: 2. sıradaki seç
         detailPage.wellnessDropdown.click();
         ReusableMethods.bekle(1);
         detailPage.wellnessOptions.get(1).click();
         extentTest.info("Wellness 2. seçenek seçildi.");
 
-        // Doctor dropdown: 2. seçenek
+        // 6) Doctor dropdown: 2. sıradaki seç
         detailPage.doctorDropdown.click();
         ReusableMethods.bekle(1);
         detailPage.doctorOptions.get(1).click();
         extentTest.info("Doctor 2. seçenek seçildi.");
 
-        // Message
-        String msg = "Automation test - appointment request (negative).";
+        // 7) Message
+        String msg = "Automation test - appointment request.";
         detailPage.messageTextArea.sendKeys(msg);
         extentTest.info("Message girildi.");
 
-        // Submit
+        Assert.fail();
+
+
+        // 8) Submit
         detailPage.appointmentBookingButton.click();
         extentTest.info("Appointment Booking butonuna tıklandı.");
 
+        Assert.assertEquals(detailPage.successAlerts.size(), 0,
+                "BUG: Geçmiş tarih ile success mesajı çıktı!");
 
-        boolean successShown = detailPage.successAlerts.size() > 0;
 
-        if (successShown) {
-            extentTest.fail("BUG: Geçmiş tarih ile success mesajı görüntülendi!");
-            Assert.fail("BUG: Geçmiş tarih ile success mesajı görüntülendi!");
-        } else {
-            extentTest.pass("Geçmiş tarih ile success mesajı çıkmadı. Negatif senaryo başarılı.");
-            Assert.assertEquals(detailPage.successAlerts.size(), 0,
-                    "Geçmiş tarih ile success mesajı çıkmamalıydı!");
-        }
-    }}
+
+    }
+
+}

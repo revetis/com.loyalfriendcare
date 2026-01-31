@@ -20,7 +20,6 @@ import java.util.Properties;
 
 public class US12 extends TestBaseRapor {
 
-
     //==========================================================
     //==========================================================
     //==========  User Randevu Talebinin Olusdurulmasi  ========
@@ -110,7 +109,7 @@ public class US12 extends TestBaseRapor {
                 .sendKeys(Keys.TAB).perform();
 
         WebElement wellDrop = Driver.getDriver().findElement
-                (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
+                  (By.xpath("//div[@class='box_detail booking']//div[3]//div[1]//div[1]"));
         wellDrop.click();
         doctorDetailPage.anycategory.click();
         doctorDetailPage.doctorDetailSelection.click();
