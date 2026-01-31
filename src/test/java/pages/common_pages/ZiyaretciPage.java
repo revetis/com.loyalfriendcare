@@ -1,5 +1,4 @@
 package pages.common_pages;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,8 +9,8 @@ import java.util.List;
 
 public class ZiyaretciPage {
 
-    public ZiyaretciPage() {
-        PageFactory.initElements(Driver.getDriver(), this);
+    public ZiyaretciPage(){
+        PageFactory.initElements(Driver.getDriver(),this);
     }
 
     @FindBy(xpath = "//*[@*='form-control']")
@@ -39,3 +38,9 @@ public class ZiyaretciPage {
         return searchResults.get(row).findElement(By.xpath("div/div/div/h3/a")).getText();
     }
 }
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package pages.common_pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,15 +13,15 @@ import java.util.List;
 import java.util.Random;
 
 public class HomepageBodyPage {
-    public HomepageBodyPage() {
-        PageFactory.initElements(Driver.getDriver(), this);
-    }
+    public By headerSignIn;
 
-    // =============================================
-    // =============================================
-    // ========== Body Locators ============
-    // =============================================
-    // =============================================
+    public HomepageBodyPage (){PageFactory.initElements(Driver.getDriver(),this);}
+
+    //=============================================
+    //=============================================
+    //==========     Body Locators   ============
+    //=============================================
+    //=============================================
 
     // Karşılama metni başlığı
     @FindBy(xpath = "//div[@class='container text-center']/h3")
@@ -61,7 +62,7 @@ public class HomepageBodyPage {
     public List<WebElement> popularDoctorsItems;
 
     @FindBy(xpath = "//*[@*='Dr. Marcus Rodriguez']")
-    public WebElement popularDoctorLocate;
+    public WebElement popularDoctorLocate ;
 
     public boolean DoktorKartlarininClickable() {
         for (WebElement each : popularDoctorsItems) {
@@ -73,7 +74,7 @@ public class HomepageBodyPage {
     }
 
     public boolean popularDoctorlarListesininGorunurlugu() {
-        return popularDoctorsItems.size() > 0;
+        return popularDoctorsItems.size()>0;
     }
 
     // Listeden random doktora klik edir
@@ -97,7 +98,5 @@ public class HomepageBodyPage {
         randomDoctor.click(); // Random doktoru klikləyir
     }
 
-    @FindBy(css = "#top_menu a.btn_add")
-    public WebElement headerSignIn;
 
 }
